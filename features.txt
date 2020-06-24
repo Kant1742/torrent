@@ -1,0 +1,16 @@
+parsers
+        torrent files from yts
+        subtitles from yify (?)
+
+subtitles (all languages)
+
+
+optional
+    GUI (for sale)
+
+
+# ------------------------------------------------- #
+TODO
+    templates
+        VPN (your IP, use vpn and so on)
+    
