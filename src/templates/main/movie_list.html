@@ -19,10 +19,8 @@
                                     {{ movie.title }}
                                 </a>
                             </h4>
-                            {% for rating in movie.rating_set.all %}
-                                <p>Rates - {{ rating.rates }}</p>
-                                {{ rating.stars }}/10
-                            {% endfor %}
+                            Rating - {{ movie.rating.stars }} <br>
+                            Rates - {{ movie.rating.rates }}
                             <ul class="stars">
                                 <li><a href="#">
                                         <span class="fa fa-star" aria-hidden="true">

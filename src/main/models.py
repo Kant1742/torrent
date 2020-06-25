@@ -18,6 +18,7 @@ class Director(models.Model):
     # def get_absolute_url(self):
     #     return reverse('main:director_movies', kwargs={"slug": self.name})
 
+
 class Actor(models.Model):
     """Actors"""
     name = models.CharField(max_length=100)
@@ -40,11 +41,6 @@ class Genre(models.Model):
         return self.title
 
 
-class File(models.Model):
-    file = models.FileField(upload_to='files')
-    # movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-
-
 class Movie(models.Model):
     title = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
@@ -56,10 +52,12 @@ class Movie(models.Model):
     )
     published = models.DateTimeField(default=timezone.now)
 
+    # quality = models.ManyToManyField(Quality)
+
     actors = models.ManyToManyField(Actor, related_name="film_actor")
     directors = models.ManyToManyField(Director, related_name="film_director")
     genres = models.ManyToManyField(Genre)
-    file = models.ForeignKey(File, on_delete=models.CASCADE, blank=True, null=True)
+    # files = models.ForeignKey(Quality, on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
         ordering = ('-published',)
@@ -86,38 +84,62 @@ class Movie(models.Model):
             img.save(self.image.path)
 
 
-class Rating(models.Model):
-    stars = models.IntegerField()  # 1-10
-    rates = models.CharField(max_length=5)  # Number of rates
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-
-
 class Quality(models.Model):
     """
     The quality of movies
     """
-    STATUS_CHOICES = (
-        ('360', '360p'),
-        ('480', '480p'),
-        ('720', 'HD 720p'),
-        ('1080', 'FullHD 1080p'),
-    )
-    quality = models.CharField(max_length=4,
-                               choices=STATUS_CHOICES)
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-    file = models.ForeignKey(File, on_delete=models.CASCADE, blank=True, null=True)
+    # STATUS_CHOICES = (
+    #     ('360', '360p'),
+    #     ('480', '480p'),
+    #     ('720', 'HD 720p'),
+    #     ('1080', 'FullHD 1080p'),
+    # )
+    # quality = models.CharField(max_length=4, null=True, blank=True)
+    # file = models.FileField(upload_to='files', null=True, blank=True)
+    quality_360 = models.FileField(
+        upload_to='files', null=True, blank=True)
+    quality_480 = models.FileField(
+        upload_to='files', null=True, blank=True)
+    quality_720 = models.FileField(
+        upload_to='files', null=True, blank=True)
+    quality_1080 = models.FileField(
+        upload_to='files', null=True, blank=True)
 
-    def __str__(self):
-        return self.quality
+    movie = models.OneToOneField(
+        Movie, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name_plural = 'Qualities'
+
+    # def __str__(self):
+    #     try:
+    #         return self.movie
+    #     except:
+    #         pass
+
+
+LANGUAGE_CHOICES = (
+    ('en', 'English'),
+    ('ru', 'Russian'),
+    ('de', 'German'),
+)
 
 
 class Subtitles(models.Model):
-    language = models.CharField(max_length=55)
+    language = models.CharField(
+        max_length=55, choices=LANGUAGE_CHOICES, default='en')
+    sub_file = models.FileField(upload_to='subtitles', null=True, blank=True)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-    file = models.ForeignKey(File, on_delete=models.CASCADE)  # (?)
 
     def __str__(self):
         return self.language
+
+
+class Rating(models.Model):
+    stars = models.FloatField()  # FROM IMDb
+    rates = models.CharField(max_length=5)  # Number of rates
+    # movie = models.ManyToManyField(Movie)
+    movie = models.OneToOneField(Movie, on_delete=models.CASCADE)
 
 
 class Reviews(models.Model):
@@ -132,3 +154,13 @@ class Reviews(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.movie}"
+
+
+class MovieShots(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField()
+    image = models.ImageField(upload_to="movie_shots/")
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title

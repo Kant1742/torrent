@@ -1,14 +1,50 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from .models import (Movie, Genre, File, Quality, Director,
-                     Subtitles, Rating, Actor, Reviews)
+from .models import (Movie, Genre, Quality, Director,
+                     Subtitles, Rating, Actor, Reviews, MovieShots)
+
+
+class MovieShotsInline(admin.TabularInline):
+    model = MovieShots
+    extra = 1
+    readonly_fields = ("get_image",)
+
+    def get_image(self, obj):
+        return mark_safe(f'<img src={obj.image.url} width="100" height="110"')
 
 
 class ReviewInline(admin.TabularInline):
     model = Reviews
+    readonly_fields = ("name", "email", 'text')
+    show_change_link = True
+    fieldsets = (
+        (None, {
+            # "classes": ("collapse",),
+            "fields": (("name", "email", 'text', 'parent'),)
+        }),
+    )
+
+
+class QualityInline(admin.TabularInline):
+    model = Quality
+    # readonly_fields = ("quality", "file")
+    show_change_link = True
+
+
+class RatingInline(admin.TabularInline):
+    model = Rating
+    readonly_fields = ("stars", "rates")
+    show_change_link = True
+    can_delete = False
+
+
+class SubtitlesInline(admin.TabularInline):
+    model = Subtitles
     extra = 1
-    readonly_fields = ("name", "email")
+    fields = ('language', 'sub_file')
+    show_change_link = True
+    can_delete = False
 
 
 @admin.register(Actor)
@@ -22,7 +58,7 @@ class ActorAdmin(admin.ModelAdmin):
 
     get_image.short_description = "Image"
 
-# TODO Add rating, quality, files
+# TODO Add MovieShots
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
     list_display = ('get_image', 'title', 'description', 'year')
@@ -31,7 +67,7 @@ class MovieAdmin(admin.ModelAdmin):
     search_fields = ('title', "genres__title")
     prepopulated_fields = {'slug': ('title',)}
     readonly_fields = ('get_image', )
-    inlines = [ReviewInline]
+    inlines = [QualityInline, RatingInline, SubtitlesInline]
     save_on_top = True
 
     def get_image(self, obj):
@@ -41,7 +77,7 @@ class MovieAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Main', {
-            "fields": ("title", 'year', "genres", 'description', 'published', 'slug')
+            "fields": (("title", 'year', 'slug'), ('description', 'published', "genres"), )
         }),
         ('Image', {
             "fields": ("image", "get_image")
@@ -71,10 +107,10 @@ class RatingAdmin(admin.ModelAdmin):
     list_display = ("movie", "stars", "rates")
 
 
-admin.site.register(File)
 admin.site.register(Quality)
 admin.site.register(Subtitles)
 admin.site.register(Director)
+admin.site.register(MovieShots)
 
 
 admin.site.site_title = "Torrent movies with subtitles"

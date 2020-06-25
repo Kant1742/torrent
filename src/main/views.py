@@ -39,7 +39,7 @@ class MovieDetailView(GenreYear, DetailView):
 
 
 class AddReview(View):
-    """Отзывы"""
+    """Reviews"""
 
     def post(self, request, pk):
         form = ReviewForm(request.POST)

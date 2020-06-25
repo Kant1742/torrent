@@ -44,9 +44,16 @@
                     </li>
 
                     <li>
-                        <span><b>Premiere:</b> {{ movie.year }}</span>
+                        <span><b>Premiere: </b>{{ movie.year }}</span>
                     </li>
-
+                    <li>
+                        <span><b> Rating: </b>{{ movie.rating.stars }}</span>
+                    </li>
+                    <li>
+                        <span><b> Rates: </b>{{ movie.rating.rates }}</span>
+                    </li>
+                     <br>
+                    
                 </ul>
                     <div class="clearfix">
                         <p class="editContent">
@@ -56,25 +63,21 @@
                 </div>
             </div>
         </div>
-        <div class="row sub-para-w3layouts mt-5">
-        
-    <div class="files">
-        <li style="list-style: none">
-            <span><b>Quality:</b>
-            {% for q in movie.quality_set.all %}
-                {% with q.file.file as f %}
-                    <a href="{{ f.url }}">{{ f }}</a>
-                {% endwith %}
-                <a href="{{ q.file.file }}">
-                    {{ q.quality }}
-                </a>
-            {% endfor %}
-            </span>
-        </li>
-    </div>
+        <div class="files">
+            <li style="list-style: none">
+                <span><b>Quality:</b>
+                <!-- In case we do not have a torrent file -->
+                    <a href="{{ movie.quality.quality_360 }}">
+                        {{ movie.quality.quality_360 }}
+                        {{ movie.quality.quality_480 }}
+                        {{ movie.quality.quality_720 }}
+                        {{ movie.quality.quality_1080 }}
+                    </a>
 
+                </span>
+            </li>
         </div>
-        <hr>
+
         <div class="row">
             <div class="single-form-left">
                 <!-- contact form grid -->
@@ -119,7 +122,7 @@
         </div>
         {% for review in movie.get_review %}
             <div class="media py-5">
-                <img src="{% static 'images/te2.jpg' %}" class="mr-3 img-fluid" alt="image">
+                <img src="{% static 'default-user.jpg' %}" class="img-fluid avatar" alt="image">
                 <div class="media-body mt-4">
                     <h5 class="mt-0 editContent">
                         {{ review.name }}
@@ -128,16 +131,18 @@
                         {{ review.text }}
                     </p>
                     <a href="#formReview"
-                       onclick="addReview('{{ review.name }}', '{{ review.id }}')">Reply</a>
+                       onclick="addReview('{{ review.name }}', '{{ review.id }}')">Reply</a><hr>
                     {% for rew in review.reviews_set.all %}
                         <div class="media mt-5 editContent">
                             <a class="pr-3" href="#">
-                                <img src="{% static 'images/te2.jpg' %}" class="img-fluid "
+                                <img src="{% static 'default-user.jpg' %}" class="img-fluid avatar"
                                      alt="image">
                             </a>
                             <div class="media-body">
                                 <h5 class="mt-0 editContent">{{ rew.name }}</h5>
                                 <p class="mt-2 editContent">{{ rew.text }}</p>
+                                <!-- <p class="mt-2 editContent">{{ rew.avatar }}</p> -->
+                                <hr>
                             </div>
                         </div>
                     {% endfor %}

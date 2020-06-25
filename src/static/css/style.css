@@ -176,6 +176,12 @@ nav .menu li a:hover {
     color: #ff4c4c !important;
 }
 
+
+.avatar {
+    width: 50px;
+    height: 50px;
+}
+
 /* Hide Dropdowns by Default
  * and giving it a position of absolute */
 
