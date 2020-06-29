@@ -252,5 +252,4 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-
-# End of https://www.toptal.com/developers/gitignore/api/venv,python,django,windows,visualstudiocode
+src/my_torrent_data/torrents**
