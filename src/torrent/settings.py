@@ -1,4 +1,5 @@
 import os
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -29,6 +30,7 @@ INSTALLED_APPS = [
     # third party
     'psycopg2',
     'debug_toolbar',
+    'rest_framework',
 
     # local
     'main',
@@ -36,6 +38,11 @@ INSTALLED_APPS = [
 ]
 
 SITE_ID = 1
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 INTERNAL_IPS = [
     '127.0.0.1',
@@ -145,3 +152,13 @@ STATICFILES_DIRS = [STATIC_DIR]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT  = os.path.join(BASE_DIR, 'media')
+
+# Languages
+
+LANGUAGES = [
+    ('de', _('German')),
+    ('en', _('English')),
+    ('ru', _('Russian')),
+]
+
+DJANGO_SETTINGS_MODULE = 'torrent.settings'

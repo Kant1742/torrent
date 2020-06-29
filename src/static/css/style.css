@@ -2,7 +2,6 @@ html,
 body {
     margin: 0;
     font-size: 100%;
-    background: #fff;
     font-family: 'Lato', sans-serif;
     scroll-behavior: smooth;
 }
@@ -1388,6 +1387,29 @@ a.move-top span {
     border: none;
     line-height: 2em;
     background: #4a4b4c;
+}
+
+.quality {
+    background: rgba(25,25,29,.66);
+    margin-bottom: 5px;
+    color: white;
+    
+}
+
+#movie-info p a, .quality-tags {
+    background: rgba(27,27,35,.4);
+    padding: 5px 12px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border: 1px solid rgba(255,255,255,.16);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    font-size: .8em;
+    color: #fff;
+    transition: color .15s ease-in-out;
+    -moz-transition: color .15s ease-in-out;
+    -webkit-transition: color .15s ease-in-out;
 }
 
 /*-- //to-top --*/

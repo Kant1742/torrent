@@ -96,27 +96,26 @@ class Quality(models.Model):
     # )
     # quality = models.CharField(max_length=4, null=True, blank=True)
     # file = models.FileField(upload_to='files', null=True, blank=True)
-    quality_360 = models.FileField(
-        upload_to='files', null=True, blank=True)
-    quality_480 = models.FileField(
-        upload_to='files', null=True, blank=True)
-    quality_720 = models.FileField(
-        upload_to='files', null=True, blank=True)
-    quality_1080 = models.FileField(
-        upload_to='files', null=True, blank=True)
+
+    quality_720_bluray = models.URLField(null=True, blank=True)
+    quality_720_web = models.URLField(null=True, blank=True)
+    quality_1080_bluray = models.URLField(null=True, blank=True)
+    quality_1080_web = models.URLField(null=True, blank=True)
+
+    # quality_360 = models.FileField(
+    #     upload_to='files', null=True, blank=True)
+    # quality_480 = models.FileField(
+    #     upload_to='files', null=True, blank=True)
+    # quality_720 = models.FileField(
+    #     upload_to='files', null=True, blank=True)
+    # quality_1080 = models.FileField(
+    #     upload_to='files', null=True, blank=True)
 
     movie = models.OneToOneField(
         Movie, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = 'Qualities'
-
-    # def __str__(self):
-    #     try:
-    #         return self.movie
-    #     except:
-    #         pass
-
 
 LANGUAGE_CHOICES = (
     ('en', 'English'),

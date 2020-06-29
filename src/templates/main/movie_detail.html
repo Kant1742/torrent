@@ -3,13 +3,15 @@
 {% block title %} {{ movie.title }} {% endblock title %}
 
 {% block content %}
-<h1>I am a fucking navbar</h1> <hr>
-    <div class="left-ads-display col-lg-8">
+
+<h1><a href="/">I am a fucking navbar</a></h1> <hr>
+    <div class="col-lg-8">
         <div class="row">
-            <div class="desc1-left col-md-6">
+            <div class="col-md-6">
                 <img src="{{ movie.image.url }}" class="img-fluid" alt="">
             </div>
-            <div class="desc1-right col-md-6 pl-lg-4">
+        
+            <div class="desc1-right col-md-3 pl-lg-4">
                 <h3 class="editContent">
                     {{ movie.title }}
                 </h3>
@@ -53,32 +55,41 @@
                         <span><b> Rates: </b>{{ movie.rating.rates }}</span>
                     </li>
                      <br>
-                    
                 </ul>
-                    <div class="clearfix">
-                        <p class="editContent">
-                            {{ movie.description|safe }}
-                        </p>
-                    </div>
                 </div>
+                <div id="movie-info" class="col-md-3">
+                    <li style="list-style: none">
+                        <span><b>Download:</b>
+                        <!-- TODO Right now this shit is working but I do not want
+                        to have so many 'if' statements -->
+                        
+                        {% if movie.quality.quality_360 %}
+                        <!-- TODO add images -->
+                            <img src="/quality/1080p-quality.svg" alt=""> <a href="{{ movie.quality.quality_360.url }}" class="quality">360px</a>
+                        {% endif %}
+                        {% if movie.quality.quality_480 %}
+                            <a href="{{ movie.quality.quality_480.url }}" class="quality">480px</a>
+                        {% endif %}
+                        {% if movie.quality.quality_720 %}
+                            <a href="{{ movie.quality.quality_720.url }}" class="quality">720px</a>
+                        {% endif %}
+                        {% if movie.quality.quality_1080 %}
+                            <a href="{{ movie.quality.quality_1080.url }}" class="quality">1080px</a>
+                        {% endif %}
+                        </span>
+                    </li>
+                </div>
+                <div style="left: 5px;">
+                    <p>
+                        {{ movie.description|safe }}
+                    </p>
+                </div>
+                
             </div>
         </div>
-        <div class="files">
-            <li style="list-style: none">
-                <span><b>Quality:</b>
-                <!-- In case we do not have a torrent file -->
-                    <a href="{{ movie.quality.quality_360 }}">
-                        {{ movie.quality.quality_360 }}
-                        {{ movie.quality.quality_480 }}
-                        {{ movie.quality.quality_720 }}
-                        {{ movie.quality.quality_1080 }}
-                    </a>
 
-                </span>
-            </li>
-        </div>
 
-        <div class="row">
+        <div class="col-lg-6">
             <div class="single-form-left">
                 <!-- contact form grid -->
                 <div class="contact-single">
