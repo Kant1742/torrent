@@ -1,0 +1,71 @@
+[
+    {
+        "model": "main.genre",
+        "pk": 1,
+        "fields": {
+            "title": "Anime"
+        }
+    },
+    {
+        "model": "main.genre",
+        "pk": 2,
+        "fields": {
+            "title": "Comedy"
+        }
+    },
+    {
+        "model": "main.movie",
+        "pk": 1,
+        "fields": {
+            "imdb_code": null,
+            "title": "Legend",
+            "slug": "legend",
+            "year": 1242,
+            "rating": null,
+            "runtime": null,
+            "description_full": "214fsdkjfhdiufhidshfksdhfj",
+            "yt_trailer_code": "12323",
+            "background_image": "MV5BMjE0MjkyODQ3NF5BMl5BanBnXkFtZTgwNDM1OTk1NjE._V1_SY1000_CR006791000_AL_.jpg",
+            "background_image_original": "MV5BMjE0MjkyODQ3NF5BMl5BanBnXkFtZTgwNDM1OTk1NjE._V1_SY1000_CR006791000_AL__yjdL5OT.jpg",
+            "small_cover_image": "MV5BMjE0MjkyODQ3NF5BMl5BanBnXkFtZTgwNDM1OTk1NjE._V1_SY1000_CR006791000_AL__wywvgy2.jpg",
+            "medium_cover_image": "MV5BMjE0MjkyODQ3NF5BMl5BanBnXkFtZTgwNDM1OTk1NjE._V1_SY1000_CR006791000_AL__W7jh6LQ.jpg",
+            "large_cover_image": "podcast-image_for_example.jpg",
+            "medium_screenshot_image1": "1920x1080_1440718_www.ArtFile.ru.jpg",
+            "medium_screenshot_image2": "MV5BMjE0MjkyODQ3NF5BMl5BanBnXkFtZTgwNDM1OTk1NjE._V1_SY1000_CR006791000_AL__8b2TT1X.jpg",
+            "medium_screenshot_image3": "podcast-image_for_example_n6xwptw.jpg",
+            "large_screenshot_image1": "podcast-image_for_example_42L4Rw0.jpg",
+            "large_screenshot_image2": "podcast-image_for_example_fAGsgxa.jpg",
+            "large_screenshot_image3": "podcast-image_for_example_1PoBAaY.jpg",
+            "genres": []
+        }
+    },
+    {
+        "model": "main.quality",
+        "pk": 1,
+        "fields": {
+            "quality_720_bluray": "http://127.0.0.1:8000/admin/main/movie/add/",
+            "quality_720_web": "http://127.0.0.1:8000/admin/main/movie/add/",
+            "quality_1080_bluray": "http://127.0.0.1:8000/admin/main/movie/add/",
+            "quality_1080_web": "http://127.0.0.1:8000/admin/main/movie/add/",
+            "movie": 1
+        }
+    },
+    {
+        "model": "main.subtitles",
+        "pk": 1,
+        "fields": {
+            "language": "en",
+            "sub_file": "subtitles/legend-2015-1080p_dPXcmxF.torrent",
+            "movie": 1
+        }
+    },
+    {
+        "model": "main.subtitles",
+        "pk": 2,
+        "fields": {
+            "language": "ru",
+            "sub_file": "subtitles/legend-2015-1080p_9oqJAGH.torrent",
+            "movie": 1
+        }
+    }
+]

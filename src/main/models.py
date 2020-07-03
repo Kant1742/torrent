@@ -5,6 +5,12 @@ from django.contrib.auth.models import User
 from PIL import Image
 from django.urls import reverse
 
+LANGUAGE_CHOICES = (
+    ('en', 'English'),
+    ('ru', 'Russian'),
+    ('de', 'German'),
+)
+
 
 class Director(models.Model):
     """Directors"""
@@ -19,11 +25,14 @@ class Director(models.Model):
     #     return reverse('main:director_movies', kwargs={"slug": self.name})
 
 
-class Actor(models.Model):
+class Cast(models.Model):
     """Actors"""
     name = models.CharField(max_length=100)
-    born = models.DateField(blank=True, null=True)
-    image = models.ImageField(upload_to="actors/")
+    # born = models.DateField(blank=True, null=True)
+    character_name = models.CharField(max_length=100, blank=True, null=True)
+    url_small_image = models.ImageField(
+        upload_to="cast/", blank=True, null=True)
+    imdb_code = models.CharField(blank=True, null=True, max_length=25)
 
     def __str__(self):
         return self.name
@@ -34,33 +43,50 @@ class Actor(models.Model):
 
 class Genre(models.Model):
     title = models.CharField(max_length=55)
-    description = models.TextField()
-    slug = models.SlugField(max_length=125, unique=True)
+    # description = models.TextField()
+    # slug = models.SlugField(max_length=125, unique=True)
+    # movie = models.ManyToManyField(Movie)
 
     def __str__(self):
         return self.title
 
 
 class Movie(models.Model):
+    # id = models.CharField(max_length=10)
+    imdb_code = models.CharField(max_length=25, null=True, blank=True)
     title = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
-    year = models.IntegerField()
-    description = models.TextField()
+    year = models.IntegerField(null=True, blank=True)
+    rating = models.FloatField(null=True, blank=True)
+    runtime = models.IntegerField(null=True, blank=True)
 
-    image = models.ImageField(
-        upload_to='movie-images', null=True, blank=True
-    )
-    published = models.DateTimeField(default=timezone.now)
-
-    # quality = models.ManyToManyField(Quality)
-
-    actors = models.ManyToManyField(Actor, related_name="film_actor")
-    directors = models.ManyToManyField(Director, related_name="film_director")
     genres = models.ManyToManyField(Genre)
+
+    # torrents = models.ManyToManyField(
+    # Torrents)
+
+    description_full = models.TextField(null=True, blank=True)
+    yt_trailer_code = models.CharField(max_length=25, null=True, blank=True)
+    background_image = models.URLField(null=True, blank=True)
+    background_image_original = models.URLField(null=True, blank=True)
+    small_cover_image = models.URLField(null=True, blank=True)
+    medium_cover_image = models.URLField(null=True, blank=True)
+    large_cover_image = models.URLField(null=True, blank=True)
+    medium_screenshot_image1 = models.URLField(null=True, blank=True)
+    medium_screenshot_image2 = models.URLField(null=True, blank=True)
+    medium_screenshot_image3 = models.URLField(null=True, blank=True)
+    large_screenshot_image1 = models.URLField(null=True, blank=True)
+    large_screenshot_image2 = models.URLField(null=True, blank=True)
+    large_screenshot_image3 = models.URLField(null=True, blank=True)
+
+    # published = models.DateTimeField(default=timezone.now)
+
+    # cast = models.ManyToManyField(Cast, related_name="film_actor", )
+    # directors = models.ManyToManyField(Director, related_name="film_director")
     # files = models.ForeignKey(Quality, on_delete=models.CASCADE, blank=True, null=True)
 
-    class Meta:
-        ordering = ('-published',)
+    # class Meta:
+    #     ordering = ('-published',)
 
     def __str__(self):
         return self.title
@@ -72,56 +98,42 @@ class Movie(models.Model):
         return reverse('main:movie_detail',
                        kwargs={'slug': self.slug})
 
-    # Resizing the image
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-
-        img = Image.open(self.image.path)
-
-        if img.height > 300 and img.width > 300:
-            output_size = (300, 300)
-            img.thumbnail(output_size)
-            img.save(self.image.path)
+    @property
+    def torrents(self):
+        return self.torrents_set.all()
 
 
-class Quality(models.Model):
+    @property
+    def genres(self):
+        return self.genres.objects.all()
+
+
+    # # Resizing the image
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
+
+    #     img = Image.open(self.image.path)
+
+    #     if img.height > 300 and img.width > 300:
+    #         output_size = (300, 300)
+    #         img.thumbnail(output_size)
+    #         img.save(self.image.path)
+
+
+class Torrents(models.Model):
     """
-    The quality of movies
+    Torrent files
     """
-    # STATUS_CHOICES = (
-    #     ('360', '360p'),
-    #     ('480', '480p'),
-    #     ('720', 'HD 720p'),
-    #     ('1080', 'FullHD 1080p'),
-    # )
-    # quality = models.CharField(max_length=4, null=True, blank=True)
-    # file = models.FileField(upload_to='files', null=True, blank=True)
 
-    quality_720_bluray = models.URLField(null=True, blank=True)
-    quality_720_web = models.URLField(null=True, blank=True)
-    quality_1080_bluray = models.URLField(null=True, blank=True)
-    quality_1080_web = models.URLField(null=True, blank=True)
+    url = models.URLField(null=True, blank=True)
+    size = models.CharField(max_length=15, null=True, blank=True)
+    quality = models.CharField(max_length=15, null=True, blank=True)
 
-    # quality_360 = models.FileField(
-    #     upload_to='files', null=True, blank=True)
-    # quality_480 = models.FileField(
-    #     upload_to='files', null=True, blank=True)
-    # quality_720 = models.FileField(
-    #     upload_to='files', null=True, blank=True)
-    # quality_1080 = models.FileField(
-    #     upload_to='files', null=True, blank=True)
-
-    movie = models.OneToOneField(
-        Movie, on_delete=models.CASCADE)
+    movie = models.ForeignKey(
+        Movie, on_delete=models.CASCADE, null=True, blank=True, related_name='torrents')
 
     class Meta:
-        verbose_name_plural = 'Qualities'
-
-LANGUAGE_CHOICES = (
-    ('en', 'English'),
-    ('ru', 'Russian'),
-    ('de', 'German'),
-)
+        verbose_name_plural = 'Torrents'
 
 
 class Subtitles(models.Model):
@@ -134,11 +146,11 @@ class Subtitles(models.Model):
         return self.language
 
 
-class Rating(models.Model):
-    stars = models.FloatField()  # FROM IMDb
-    rates = models.CharField(max_length=5)  # Number of rates
-    # movie = models.ManyToManyField(Movie)
-    movie = models.OneToOneField(Movie, on_delete=models.CASCADE)
+# class Rating(models.Model):
+#     stars = models.FloatField()  # FROM IMDb
+#     rates = models.CharField(max_length=5)  # Number of rates
+#     movie = models.ManyToManyField(Movie)
+#     # movie = models.OneToOneField(Movie, on_delete=models.CASCADE)
 
 
 class Reviews(models.Model):

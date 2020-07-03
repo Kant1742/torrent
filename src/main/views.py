@@ -3,7 +3,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.base import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Movie, Genre, Quality
+from .models import Movie, Genre, Torrents
 from .forms import ReviewForm
 from django.http import HttpResponse
 

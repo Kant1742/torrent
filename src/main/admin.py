@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from .models import (Movie, Genre, Quality, Director,
-                     Subtitles, Rating, Actor, Reviews, MovieShots)
+from .models import (Movie, Genre, Torrents, Director,
+                     Subtitles, Cast, Reviews, MovieShots)
 
 
 class MovieShotsInline(admin.TabularInline):
@@ -26,17 +26,17 @@ class ReviewInline(admin.TabularInline):
     )
 
 
-class QualityInline(admin.TabularInline):
-    model = Quality
-    # readonly_fields = ("quality", "file")
-    show_change_link = True
+# class TorrentsInline(admin.TabularInline):
+#     model = Torrents
+#     # readonly_fields = ("Torrents", "file")
+#     show_change_link = True
 
 
-class RatingInline(admin.TabularInline):
-    model = Rating
-    readonly_fields = ("stars", "rates")
-    show_change_link = True
-    can_delete = False
+# class RatingInline(admin.TabularInline):
+#     model = Rating
+#     readonly_fields = ("stars", "rates")
+#     show_change_link = True
+#     can_delete = False
 
 
 class SubtitlesInline(admin.TabularInline):
@@ -47,10 +47,10 @@ class SubtitlesInline(admin.TabularInline):
     can_delete = False
 
 
-@admin.register(Actor)
-class ActorAdmin(admin.ModelAdmin):
+@admin.register(Cast)
+class CastAdmin(admin.ModelAdmin):
     """Acotrs and directors"""
-    list_display = ("name", "born", "get_image")
+    list_display = ("name", "character_name", "url_small_image", "imdb_code")
     readonly_fields = ("get_image",)
 
     def get_image(self, obj):
@@ -58,40 +58,56 @@ class ActorAdmin(admin.ModelAdmin):
 
     get_image.short_description = "Image"
 
-# TODO Add MovieShots
+
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
-    list_display = ('get_image', 'title', 'description', 'year')
-    list_display_links = ('title', 'get_image',)
-    list_filter = ('year', "genres__title")
-    search_fields = ('title', "genres__title")
+    list_display = ('title', 'description_full', 'year')
+    list_display_links = ('title',)
+    list_filter = ('year',)
+    # list_filter = ('year', "genres__title")
+    search_fields = ('title',)
+    # search_fields = ('title', "genres__title")
     prepopulated_fields = {'slug': ('title',)}
-    readonly_fields = ('get_image', )
-    inlines = [QualityInline, RatingInline, SubtitlesInline]
+    # readonly_fields = ('get_image', )
+    inlines = [SubtitlesInline]
     save_on_top = True
 
-    def get_image(self, obj):
-        return mark_safe(f'<img src={obj.image.url} width="100" height="110"')
+    # def get_image(self, obj):
+    #     return mark_safe(f'<img src={obj.image.url} width="100" height="110"')
 
-    get_image.short_description = "Movie Image"
+    # get_image.short_description = "Movie Image"
 
-    fieldsets = (
-        ('Main', {
-            "fields": (("title", 'year', 'slug'), ('description', 'published', "genres"), )
-        }),
-        ('Image', {
-            "fields": ("image", "get_image")
-        }),
-        ("Crew", {
-            "fields": (("actors", "directors"),)
-        }),
-    )
+    # fieldsets = (
+    #     ('Main', {
+    #         "fields": (("title", 'year', 'slug'), 'description_full',
+    #                    'yt_trailer_code',
+    #                    'qualities',
+    #                    'genres',
+    #                    'background_image',
+    #                    'background_image_original',
+    #                    'small_cover_image',
+    #                    'medium_cover_image',
+    #                    'large_cover_image',
+    #                    'medium_screenshot_image1',
+    #                    'medium_screenshot_image2',
+    #                    'medium_screenshot_image3',
+    #                    'large_screenshot_image1',
+    #                    'large_screenshot_image2',
+    #                    'large_screenshot_image3')
+    #     }),
+    #     # ('Image', {
+    #     #     "fields": ("image", "get_image")
+    #     # }),
+    #     # ("Crew", {
+    #     #     "fields": (("cast",),)
+    #     # }),
+    # )
 
 
 @admin.register(Genre)
 class GenreAdmin(admin.ModelAdmin):
     """Genres"""
-    list_display = ("title", "slug")
+    list_display = ("title",)
 
 
 @admin.register(Reviews)
@@ -101,13 +117,13 @@ class ReviewAdmin(admin.ModelAdmin):
     readonly_fields = ("name", "email")
 
 
-@admin.register(Rating)
-class RatingAdmin(admin.ModelAdmin):
-    """Movie rating"""
-    list_display = ("movie", "stars", "rates")
+# @admin.register(Rating)
+# class RatingAdmin(admin.ModelAdmin):
+#     """Movie rating"""
+#     list_display = ("movie", "stars", "rates")
 
 
-admin.site.register(Quality)
+admin.site.register(Torrents)
 admin.site.register(Subtitles)
 admin.site.register(Director)
 admin.site.register(MovieShots)
