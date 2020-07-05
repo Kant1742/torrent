@@ -103,9 +103,9 @@ class Movie(models.Model):
         return self.torrents_set.all()
 
 
-    @property
-    def genres(self):
-        return self.genres.objects.all()
+    # @property
+    # def genres(self):
+    #     return self.genres.objects.all()
 
 
     # # Resizing the image
