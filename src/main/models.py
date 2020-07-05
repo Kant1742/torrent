@@ -54,8 +54,8 @@ class Genre(models.Model):
 class Movie(models.Model):
     # id = models.CharField(max_length=10)
     imdb_code = models.CharField(max_length=25, null=True, blank=True)
-    title = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True)
+    title = models.CharField(max_length=100, null=True, blank=True)
+    slug = models.SlugField(unique=True, null=True, blank=True)
     year = models.IntegerField(null=True, blank=True)
     rating = models.FloatField(null=True, blank=True)
     runtime = models.IntegerField(null=True, blank=True)
