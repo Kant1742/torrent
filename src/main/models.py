@@ -41,15 +41,6 @@ class Cast(models.Model):
     #     return reverse('main:actor_movies', kwargs={"slug": self.name})
 
 
-class Genre(models.Model):
-    title = models.CharField(max_length=55)
-    # description = models.TextField()
-    # slug = models.SlugField(max_length=125, unique=True)
-    # movie = models.ManyToManyField(Movie)
-
-    def __str__(self):
-        return self.title
-
 
 class Movie(models.Model):
     # id = models.CharField(max_length=10)
@@ -59,9 +50,7 @@ class Movie(models.Model):
     year = models.IntegerField(null=True, blank=True)
     rating = models.FloatField(null=True, blank=True)
     runtime = models.IntegerField(null=True, blank=True)
-
-    genres = models.ManyToManyField(Genre)
-
+    # genres = models.ManyToManyField(Genre)
     # torrents = models.ManyToManyField(
     # Torrents)
 
@@ -118,6 +107,16 @@ class Movie(models.Model):
     #         output_size = (300, 300)
     #         img.thumbnail(output_size)
     #         img.save(self.image.path)
+
+
+class Genre(models.Model):
+    title = models.CharField(max_length=55)
+    # description = models.TextField()
+    # slug = models.SlugField(max_length=125, unique=True)
+    movie = models.ManyToManyField(Movie, related_name='genres')
+
+    def __str__(self):
+        return self.title
 
 
 class Torrents(models.Model):
