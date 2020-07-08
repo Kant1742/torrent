@@ -12,14 +12,17 @@ data = {
     "title": "FROM sending_requests.py",
     "title_english": "Employee of the Month",
     "title_long": "Employee of the Month (2006)",
-    "slug": "emplwsaoyeasfsddsefde-ssofd-the-sadamonth-2006",
+    "slug": "emplwsaoyeasflksddsefde-ssofd-the-sadamonth-2006",
     "year": 2006,
     "rating": 5.5,
     "runtime": 103,
     "genres": [
-            "Action",
-            "Comedy",
-            "Romance"
+        {
+            "title":"Action",
+            "title":"Comedy",
+            "title":"Romance"
+        }
+
     ],
     "summary": "Slacker Zack Bradley works as a box boy at Super Club, a warehouse club store. It is the lowest in the j rewarded with entrance into the ...",
     "description_full": "Slacker Zack Bradley wor be rewarded with entrance into the ...",

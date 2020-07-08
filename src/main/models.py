@@ -41,6 +41,19 @@ class Cast(models.Model):
     #     return reverse('main:actor_movies', kwargs={"slug": self.name})
 
 
+class Genre(models.Model):
+    title = models.CharField(max_length=55)
+    # description = models.TextField()
+    # slug = models.SlugField(max_length=125, unique=True)
+    # movie = models.ManyToManyField(Movie, related_name='genres')
+
+    # def __str__(self):
+    #     return self.title
+
+    # @property
+    # def movie(self):
+    #     return self.movie.all()
+
 
 class Movie(models.Model):
     # id = models.CharField(max_length=10)
@@ -50,9 +63,8 @@ class Movie(models.Model):
     year = models.IntegerField(null=True, blank=True)
     rating = models.FloatField(null=True, blank=True)
     runtime = models.IntegerField(null=True, blank=True)
-    # genres = models.ManyToManyField(Genre)
-    # torrents = models.ManyToManyField(
-    # Torrents)
+
+    genres = models.ManyToManyField(Genre)
 
     description_full = models.TextField(null=True, blank=True)
     yt_trailer_code = models.CharField(max_length=25, null=True, blank=True)
@@ -91,11 +103,9 @@ class Movie(models.Model):
     def torrents(self):
         return self.torrents_set.all()
 
-
     # @property
     # def genres(self):
-    #     return self.genres.objects.all()
-
+    #     return self.genres.all()
 
     # # Resizing the image
     # def save(self, *args, **kwargs):
@@ -107,16 +117,6 @@ class Movie(models.Model):
     #         output_size = (300, 300)
     #         img.thumbnail(output_size)
     #         img.save(self.image.path)
-
-
-class Genre(models.Model):
-    title = models.CharField(max_length=55)
-    # description = models.TextField()
-    # slug = models.SlugField(max_length=125, unique=True)
-    movie = models.ManyToManyField(Movie, related_name='genres')
-
-    def __str__(self):
-        return self.title
 
 
 class Torrents(models.Model):
