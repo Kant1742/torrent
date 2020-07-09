@@ -35,14 +35,12 @@ class MovieSerializer(serializers.ModelSerializer):
 
 
     # РАБОЧАЯ ВЕРСИЯ
-    # TODO If genre doesn't exist, create it
     def create(self, validated_data):
         torrents = validated_data.pop('torrents')
         genres = validated_data.pop('genres')
         movie = Movie.objects.create(**validated_data)
         for tor in torrents:
             Torrents.objects.create(movie=movie, **tor)
-        print(genres)
         movie.genres.add(*genres)
         return movie
 
