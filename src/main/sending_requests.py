@@ -4,6 +4,12 @@ import requests
 # defining the api-endpoint
 API_ENDPOINT = "http://127.0.0.1:8000/api/v1/"
 
+# with open('torrent30_copy.json') as f:
+#     from_file = f.read()
+#     hui = requests.post(url=API_ENDPOINT, data=from_file, auth=("admin", "admin"))
+#     vivod = hui.text
+#     print("HUETA - :%s" % vivod)
+
 # data to be sent to api
 data = {
     "id": 1049,
@@ -17,11 +23,8 @@ data = {
     "rating": 5.5,
     "runtime": 103,
     "genres": [
-        {
-            "title":"Action",
-            "title":"Comedy",
-            "title":"Romance"
-        }
+        "Action",
+        "Comedy"
 
     ],
     "summary": "Slacker Zack Bradley works as a box boy at Super Club, a warehouse club store. It is the lowest in the j rewarded with entrance into the ...",

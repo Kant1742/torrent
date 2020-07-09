@@ -18,7 +18,8 @@ class GenreSerializer(serializers.ModelSerializer):
 
 class MovieSerializer(serializers.ModelSerializer):
     torrents = TorrentsSerializer(many=True)
-    genres = serializers.SlugRelatedField(queryset=Genre.objects.all(), many=True, slug_field='title')
+    genres = serializers.SlugRelatedField(
+        queryset=Genre.objects.all(), many=True, slug_field='title')
     # genres = GenreSerializer(many=True)
 
     # def update(self, instance, validated_data, *args, **kwargs):
@@ -32,47 +33,29 @@ class MovieSerializer(serializers.ModelSerializer):
         # fields = ('genres', 'title')
         depth = 2
 
-    # def create(self, validated_data):
-    #     tags = validated_data.pop('tags')
-    #     article = Article.objects.create(**validated_data)
-    #     article.tags.add(*tags)
-    #     return article
 
-    # РАБОЧАЯ ВЕРСИЯ, НО БЕЗ ДОБАВЛЕНИЯ ЖАНРОВ
+    # РАБОЧАЯ ВЕРСИЯ
+    # TODO If genre doesn't exist, create it
     def create(self, validated_data):
         torrents = validated_data.pop('torrents')
         genres = validated_data.pop('genres')
         movie = Movie.objects.create(**validated_data)
         for tor in torrents:
             Torrents.objects.create(movie=movie, **tor)
+        print(genres)
         movie.genres.add(*genres)
         return movie
 
-    # def create(self, validated_data):
-    #     torrents = validated_data.pop('torrents')
-    #     genres = validated_data.pop('genres')
-    #     movie = Movie.objects.create(**validated_data)
-    #     for tor in torrents:
-    #         Torrents.objects.create(movie=movie, **tor)
-    #     movie.genres.add(*genres)
-    #     return movie
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        representation['torrents'] = TorrentsSerializer(
-            instance.torrents.all(), many=True).data
-        # representation['genres'] = MovieSerializer(instance.genres.all(), many=True).data
-        representation['genres'] = GenreSerializer(
-            instance.genres.all(), many=True).data
+        # representation['torrents'] = TorrentsSerializer(
+            # instance.torrents.all(), many=True).data
+        # representation['genres'] = MovieSerializer(
+        #     instance.genres.all(), many=True).data  # Doesn't needed
+        # representation['genres'] = GenreSerializer(
+        #     instance.genres.all(), many=True).data
         return representation
-
-
-    # def update(self, instance, validated_data):
-    #     torrents = validated_data.pop('torrents')
-    #     instance.title = validated_data.get('title', instance.title)
-    #     instance.save()
-    #     keep_torrents = []
-    #     existing_torrents = [t.url for t in instance.torrents]
 
 
 class GenreSerializer(serializers.ModelSerializer):
