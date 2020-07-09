@@ -42,7 +42,6 @@ class MovieSerializer(serializers.ModelSerializer):
         movie = Movie.objects.create(**validated_data)
         for tor in torrents:
             Torrents.objects.create(movie=movie, **tor)
-        print(genres)
         movie.genres.add(*genres)
         return movie
 
