@@ -23,17 +23,37 @@ class MovieViewSet(viewsets.ModelViewSet):
     serializer_class = MovieSerializer
 
     def create(self, request, *args, **kwargs):
+        # TODO optimisation
+        movies = Movie.objects.all()
+        movie_slugs = [m.slug for m in movies]
         all_genre_titles = get_all_genre_titles()
 
-        number_of_movies = len(request.data)
-        for num in range(number_of_movies):
-            for i in request.data[num]['genres']:
-                if i not in all_genre_titles:
-                    Genre.objects.create(title=i)
-                    all_genre_titles = get_all_genre_titles()
+        requested_data = request.data
+        number_of_movies = len(requested_data)
+
+        # FIXME UNIQUE constraint failed: main_movie.slug
+
+        # loop through all the requested_data.
+        # if we have this slug then delete this movie from request
+        # but then we have to lower our iteration number because we've just
+        # deleted the previous movie and the next one took its place.
+        num = 0
+        while num < number_of_movies:
+            if requested_data[num]["slug"] in movie_slugs:
+                del requested_data[num]
+                number_of_movies -= 1
+                print(requested_data)
+            else:
+                # if we don't have this slug in movie_slugs then just create genres
+                # and we have nothing to do with request
+                for i in requested_data[num]['genres']:
+                    if i not in all_genre_titles: # TODO Genres.objects.filter(title__contains=i)
+                        Genre.objects.create(title=i)
+                        all_genre_titles = get_all_genre_titles()
+                num += 1
 
         serializer = self.get_serializer(
-            data=request.data, many=isinstance(request.data, list))
+        data=requested_data, many=isinstance(requested_data, list))
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
