@@ -1,10 +1,17 @@
 from rest_framework import serializers
-from main.models import Movie, Genre, Torrents
+from main.models import Movie, Genre, Torrents, Cast
 
 
 class TorrentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Torrents
+        # queryset = Torrents.objects.all()
+        fields = '__all__'
+        # depth = 1
+    
+class CastSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Cast
         # queryset = Torrents.objects.all()
         fields = '__all__'
         # depth = 1
@@ -20,6 +27,7 @@ class MovieSerializer(serializers.ModelSerializer):
     torrents = TorrentsSerializer(many=True)
     genres = serializers.SlugRelatedField(
         queryset=Genre.objects.all(), many=True, slug_field='title')
+    cast = CastSerializer(many=True)
     # genres = GenreSerializer(many=True)
 
     # def update(self, instance, validated_data, *args, **kwargs):
@@ -38,10 +46,14 @@ class MovieSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         torrents = validated_data.pop('torrents')
         genres = validated_data.pop('genres')
+        print(validated_data)
+        cast = validated_data.pop('cast')
         movie = Movie.objects.create(**validated_data)
         for tor in torrents:
             Torrents.objects.create(movie=movie, **tor)
         movie.genres.add(*genres)
+        print(cast)
+        movie.cast.add(*cast)
         return movie
 
 

@@ -27,12 +27,10 @@ class Director(models.Model):
 
 class Cast(models.Model):
     """Actors"""
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, blank=True, null=True)
     # born = models.DateField(blank=True, null=True)
-    character_name = models.CharField(max_length=100, blank=True, null=True)
-    url_small_image = models.ImageField(
-        upload_to="cast/", blank=True, null=True)
-    imdb_code = models.CharField(blank=True, null=True, max_length=25)
+    url_small_image = models.URLField(blank=True, null=True)
+    imdb_code = models.CharField(max_length=25, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -41,14 +39,25 @@ class Cast(models.Model):
     #     return reverse('main:actor_movies', kwargs={"slug": self.name})
 
 
+class CharacterName(models.Model):
+    character_name = models.CharField(max_length=100, blank=True, null=True)
+    cast = models.ForeignKey(
+        Cast, on_delete=models.CASCADE,
+        related_name='character_name',
+        blank=True, null=True)
+
+    def __str__(self):
+        return self.character_name
+
+
 class Genre(models.Model):
     title = models.CharField(max_length=55)
     # description = models.TextField()
     # slug = models.SlugField(max_length=125, unique=True)
     # movie = models.ManyToManyField(Movie, related_name='genres')
 
-    # def __str__(self):
-    #     return self.title
+    def __str__(self):
+        return self.title
 
     # @property
     # def movie(self):
@@ -63,8 +72,10 @@ class Movie(models.Model):
     year = models.IntegerField(null=True, blank=True)
     rating = models.FloatField(null=True, blank=True)
     runtime = models.IntegerField(null=True, blank=True)
+    language = models.CharField(max_length=50, blank=True, null=True)
 
     genres = models.ManyToManyField(Genre)
+    cast = models.ManyToManyField(Cast)
 
     description_full = models.TextField(null=True, blank=True)
     yt_trailer_code = models.CharField(max_length=25, null=True, blank=True)
@@ -82,7 +93,6 @@ class Movie(models.Model):
 
     # published = models.DateTimeField(default=timezone.now)
 
-    # cast = models.ManyToManyField(Cast, related_name="film_actor", )
     # directors = models.ManyToManyField(Director, related_name="film_director")
     # files = models.ForeignKey(Quality, on_delete=models.CASCADE, blank=True, null=True)
 
