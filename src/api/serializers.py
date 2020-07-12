@@ -52,6 +52,7 @@ class MovieSerializer(serializers.ModelSerializer):
         for tor in torrents:
             Torrents.objects.create(movie=movie, **tor)
         movie.genres.add(*genres)
+        print(genres)
         print(cast)
         movie.cast.add(*cast)
         return movie
