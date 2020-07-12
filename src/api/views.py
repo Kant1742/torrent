@@ -74,8 +74,6 @@ class MovieViewSet(viewsets.ModelViewSet):
                     url_small_image=requested_data[num]['cast'][0]['url_small_image'],
                     imdb_code=requested_data[num]['cast'][0]['imdb_code']
                     )
-                # print(requested_data[num]['cast'][0]['character_name'])
-                # print(a)
                 a.character_name.create(character_name=requested_data[num]['cast'][0]['character_name'],
                                         cast=requested_data[num]['cast'][0]["name"])
                 # print(a.character_name)
@@ -84,7 +82,6 @@ class MovieViewSet(viewsets.ModelViewSet):
                 #     character_name=requested_data[num]['cast'][0]['character_name'],
                 #     cast__name=requested_data[num]['cast'][0]['name'])
 
-# Я МОГУ БРАТЬ СУЩЕСТВУЮЩЕГО АКТЕРА И К НЕМУ ДОБАВЛЯТЬ РОЛЬ
 
                 # cast_iteration = 0
                 # # print(requested_data[num]['cast'][cast_iteration]['name'])
