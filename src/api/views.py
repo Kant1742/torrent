@@ -68,16 +68,21 @@ class MovieViewSet(viewsets.ModelViewSet):
                     if i not in all_genre_titles:
                         Genre.objects.create(title=i)
                         all_genre_titles = get_all_genre_titles()
-                print(requested_data[num]['cast'][0]["name"])
-                Cast.objects.create(
+                # print(requested_data[num]['cast'][0]["name"])
+                a = Cast.objects.create(
                     name=requested_data[num]['cast'][0]["name"],
                     url_small_image=requested_data[num]['cast'][0]['url_small_image'],
                     imdb_code=requested_data[num]['cast'][0]['imdb_code']
-                    ) 
+                    )
+                # print(requested_data[num]['cast'][0]['character_name'])
+                # print(a)
+                a.character_name.create(character_name=requested_data[num]['cast'][0]['character_name'],
+                                        cast=requested_data[num]['cast'][0]["name"])
+                # print(a.character_name)
                     # character_name__character_name=requested_data[num]['cast'][0]['character_name']
                 # CharacterName.objects.create(
                 #     character_name=requested_data[num]['cast'][0]['character_name'],
-                #     __name=requested_data[num]['cast'][0]['name'])
+                #     cast__name=requested_data[num]['cast'][0]['name'])
 
 # Я МОГУ БРАТЬ СУЩЕСТВУЮЩЕГО АКТЕРА И К НЕМУ ДОБАВЛЯТЬ РОЛЬ
 
