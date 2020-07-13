@@ -3,7 +3,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.base import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Movie, Genre, Torrents
+from .models import Movie, Genre, Torrents, Cast
 from .forms import ReviewForm
 from django.http import HttpResponse
 
@@ -34,17 +34,10 @@ class MovieDetailView(GenreYear, DetailView):
     model = Movie
 
     # def get_context_data(self, *args, **kwargs):
-    #     context = super().get_context_data(*args, **kwargs)
-    #     movie = get_object_or_404(Movie)
-    #     if movie.quality.quality_360:
-    #         context['quality_360'] = movie.quality.quality_360
-    #     if movie.quality.quality_480:
-    #         context['quality_480'] = movie.quality.quality_480
-    #     if movie.quality.quality_720:
-    #         context['quality_720'] = movie.quality.quality_720
-    #     if movie.quality.quality_1080:
-    #         context['quality_1080'] = movie.quality.quality_1080
-    #     return context
+        # context = super().get_context_data(*args, **kwargs)
+        # context['all_cast'] = Cast.objects.all()
+        # movie = get_object_or_404(Movie)
+        # return context
 
 
 class AddReview(View):

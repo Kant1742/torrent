@@ -60,22 +60,15 @@
                 <div id="movie-info" class="col-md-3">
                     <li style="list-style: none">
                         <span><b>Download:</b>
-                        <!-- TODO Right now this shit is working but I do not want
-                        to have so many 'if' statements -->
-                        
-                        {% if movie.quality.quality_360 %}
-                        <!-- TODO add images -->
-                            <img src="/quality/1080p-quality.svg" alt=""> <a href="{{ movie.quality.quality_360.url }}" class="quality">360px</a>
-                        {% endif %}
-                        {% if movie.quality.quality_480 %}
-                            <a href="{{ movie.quality.quality_480.url }}" class="quality">480px</a>
-                        {% endif %}
-                        {% if movie.quality.quality_720 %}
-                            <a href="{{ movie.quality.quality_720.url }}" class="quality">720px</a>
-                        {% endif %}
-                        {% if movie.quality.quality_1080 %}
-                            <a href="{{ movie.quality.quality_1080.url }}" class="quality">1080px</a>
-                        {% endif %}
+                        </span>
+                    </li>
+                </div>
+                <div id="movie-info" class="col-md-3">
+                    <li style="list-style: none">
+                        <span><b>CAST:</b>
+                            {% for m in movie.cast.all  %}
+                                +++ {{ m.name }} +++
+                            {% endfor %}
                         </span>
                     </li>
                 </div>

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from main.models import Movie, Genre, Torrents, Cast
+from main.models import Movie, Genre, Torrents, Cast, CharacterName
 
 
 class TorrentsSerializer(serializers.ModelSerializer):
@@ -8,13 +8,34 @@ class TorrentsSerializer(serializers.ModelSerializer):
         # queryset = Torrents.objects.all()
         fields = '__all__'
         # depth = 1
-    
+
+
+class CharacterNameSerializer(serializers.ModelSerializer):
+    # cast = serializers.SlugRelatedField(
+    #     queryset=CharacterName.objects.all(), slug_field='cast__name')
+    class Meta:
+        model = CharacterName
+        fields = '__all__'
+        depth = 1
+
+"""
+>>> Movie.objects.filter(cast__character_name__character_name__isnull=True)
+<QuerySet [<Movie: Legend>, <Movie: Legend>, <Movie: DROPtfPEDd>,
+<Movie: DROPtfPEDd>, <Movie: DROPtfPEDd>, <Movie: DROPtfPEDd>]>
+"""
 class CastSerializer(serializers.ModelSerializer):
+    # character_names = serializers.SlugRelatedField(
+    #     queryset=CharacterName.objects.all(), slug_field='characters_name')
+    # character_name = CharacterName.objects.filter()
+    # movie = serializers.SlugRelatedField(queryset=Movie.objects.all(), slug_field='title')
+    # character_name = CharacterNameSerializer()
+    # character_name = serializers.StringRelatedField(many=True)
+
     class Meta:
         model = Cast
         # queryset = Torrents.objects.all()
         fields = '__all__'
-        # depth = 1
+        depth = 1
 
 
 class GenreSerializer(serializers.ModelSerializer):
@@ -27,6 +48,8 @@ class MovieSerializer(serializers.ModelSerializer):
     torrents = TorrentsSerializer(many=True)
     genres = serializers.SlugRelatedField(
         queryset=Genre.objects.all(), many=True, slug_field='title')
+    # cast = serializers.SlugRelatedField(
+        # queryset=Cast.objects.all(), many=True, slug_field='name')
     cast = CastSerializer(many=True)
     # genres = GenreSerializer(many=True)
 
@@ -41,8 +64,8 @@ class MovieSerializer(serializers.ModelSerializer):
         # fields = ('genres', 'title')
         depth = 2
 
-
     # РАБОЧАЯ ВЕРСИЯ
+
     def create(self, validated_data):
         torrents = validated_data.pop('torrents')
         genres = validated_data.pop('genres')
@@ -52,16 +75,15 @@ class MovieSerializer(serializers.ModelSerializer):
         for tor in torrents:
             Torrents.objects.create(movie=movie, **tor)
         movie.genres.add(*genres)
-        print(genres)
-        print(cast)
-        movie.cast.add(*cast)
+        # print(genres)
+        # print(cast)
+        # movie.cast.add(*cast)
         return movie
-
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         # representation['torrents'] = TorrentsSerializer(
-            # instance.torrents.all(), many=True).data
+        # instance.torrents.all(), many=True).data
         # representation['genres'] = MovieSerializer(
         #     instance.genres.all(), many=True).data  # Doesn't needed
         # representation['genres'] = GenreSerializer(

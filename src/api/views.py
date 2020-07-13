@@ -36,6 +36,7 @@ def get_all_char_names():
     return all_char_names
 
 
+
 class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
@@ -47,6 +48,7 @@ class MovieViewSet(viewsets.ModelViewSet):
         movie_slugs = get_all_movie_slugs()
         all_cast_names = get_all_cast_names()
         all_char_names = get_all_char_names()
+        # Another way of validation - MyModel.objects.filter(id__in=list_of_ids)
 
         requested_data = request.data
         number_of_movies = len(requested_data)
@@ -68,18 +70,18 @@ class MovieViewSet(viewsets.ModelViewSet):
                     if i not in all_genre_titles:
                         Genre.objects.create(title=i)
                         all_genre_titles = get_all_genre_titles()
-                # print(requested_data[num]['cast'][0]["name"])
+
                 a = Cast.objects.create(
                     name=requested_data[num]['cast'][0]["name"],
                     url_small_image=requested_data[num]['cast'][0]['url_small_image'],
-                    imdb_code=requested_data[num]['cast'][0]['imdb_code']
-                    )
+                    imdb_code=requested_data[num]['cast'][0]['imdb_code'],
+                    movie=requested_data[num]['title']
+                )
+                # a.movies.update_or_create(requested_data[num]['title'])
                 # print(requested_data[num]['cast'][0]['character_name'])
-                # print(a)
                 a.character_name.create(character_name=requested_data[num]['cast'][0]['character_name'],
                                         cast=requested_data[num]['cast'][0]["name"])
-                # print(a.character_name)
-                    # character_name__character_name=requested_data[num]['cast'][0]['character_name']
+                # character_name__character_name=requested_data[num]['cast'][0]['character_name']
                 # CharacterName.objects.create(
                 #     character_name=requested_data[num]['cast'][0]['character_name'],
                 #     cast__name=requested_data[num]['cast'][0]['name'])
@@ -88,8 +90,6 @@ class MovieViewSet(viewsets.ModelViewSet):
 
                 # cast_iteration = 0
                 # # print(requested_data[num]['cast'][cast_iteration]['name'])
-                # total_cast_len = len(
-                #     requested_data[num]['cast'][cast_iteration])
                 # total_cast_len = len(
                 #     requested_data[num]['cast'][cast_iteration])
                 # while cast_iteration > total_cast_len:
@@ -123,4 +123,9 @@ class TorrentsViewSet(viewsets.ModelViewSet):
 
 class GenreViewSet(viewsets.ModelViewSet):
     queryset = Genre.objects.all()
+    serializer_class = GenreSerializer
+
+
+class CastViewSet(viewsets.ModelViewSet):
+    queryset = Cast.objects.all()
     serializer_class = GenreSerializer

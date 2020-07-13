@@ -35,6 +35,10 @@ class Cast(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def movies(self):
+        return self.movie_set.all()
+
     # def get_absolute_url(self):
     #     return reverse('main:actor_movies', kwargs={"slug": self.name})
 
