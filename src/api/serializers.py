@@ -8,6 +8,7 @@ class TorrentsSerializer(serializers.ModelSerializer):
         # queryset = Torrents.objects.all()
         fields = '__all__'
         # depth = 1
+<<<<<<< HEAD
 
 
 class CharacterNameSerializer(serializers.ModelSerializer):
@@ -30,14 +31,33 @@ class CastSerializer(serializers.ModelSerializer):
     # movie = serializers.SlugRelatedField(queryset=Movie.objects.all(), slug_field='title')
     # character_name = CharacterNameSerializer()
     # character_name = serializers.StringRelatedField(many=True)
+=======
+# ----------------------------------------------------------------------------
+
+class CharacterNameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CharacterName
+        fields = '__all__'
+
+
+class CastSerializer(serializers.ModelSerializer):
+    # character_name = CharacterNameSerializer(many=True)
+    character_name = serializers.SlugRelatedField(
+        queryset=CharacterName.objects.all(), slug_field='name')
+>>>>>>> 4d424a818e075dd2f7c9d2a96d495e540c19198b
 
     class Meta:
         model = Cast
         # queryset = Torrents.objects.all()
         fields = '__all__'
+<<<<<<< HEAD
         depth = 1
 
+=======
+        depth = 2
+>>>>>>> 4d424a818e075dd2f7c9d2a96d495e540c19198b
 
+# ----------------------------------------------------------------------------
 class GenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
@@ -70,11 +90,13 @@ class MovieSerializer(serializers.ModelSerializer):
         torrents = validated_data.pop('torrents')
         genres = validated_data.pop('genres')
         print(validated_data)
-        cast = validated_data.pop('cast')
+        # cast = validated_data.pop('cast')
+        print(cast)
         movie = Movie.objects.create(**validated_data)
         for tor in torrents:
             Torrents.objects.create(movie=movie, **tor)
         movie.genres.add(*genres)
+<<<<<<< HEAD
         # print(genres)
         # print(cast)
         # movie.cast.add(*cast)
@@ -89,6 +111,22 @@ class MovieSerializer(serializers.ModelSerializer):
         # representation['genres'] = GenreSerializer(
         #     instance.genres.all(), many=True).data
         return representation
+=======
+        print(genres)
+        # print(cast[0]['name'])
+        movie.cast.add(*cast)
+        return movie
+
+    # def to_representation(self, instance):
+    #     representation = super().to_representation(instance)
+    #     # representation['torrents'] = TorrentsSerializer(
+    #         # instance.torrents.all(), many=True).data
+    #     # representation['genres'] = MovieSerializer(
+    #     #     instance.genres.all(), many=True).data  # Doesn't needed
+    #     # representation['genres'] = GenreSerializer(
+    #     #     instance.genres.all(), many=True).data
+    #     return representation
+>>>>>>> 4d424a818e075dd2f7c9d2a96d495e540c19198b
 
 
 class GenreSerializer(serializers.ModelSerializer):

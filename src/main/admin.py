@@ -47,11 +47,19 @@ class SubtitlesInline(admin.TabularInline):
     can_delete = False
 
 
+class CharacterNameInline(admin.TabularInline):
+    model = CharacterName
+    extra = 0
+    fields = ('character_name',)
+    show_change_link = True
+
+
 @admin.register(Cast)
 class CastAdmin(admin.ModelAdmin):
     """Acotrs and directors"""
     list_display = ("name", "url_small_image", "imdb_code")
     readonly_fields = ("get_image",)
+    inlines = [CharacterNameInline]
 
     def get_image(self, obj):
         return mark_safe(f'<img src={obj.image.url} width="50" height="60"')
