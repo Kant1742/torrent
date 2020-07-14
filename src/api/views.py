@@ -11,7 +11,9 @@ from .serializers import (
     TorrentsSerializer,
 )
 
-
+""" Commit info
+Do not create the last item and only if we added a char_name
+"""
 def get_all_genre_titles():
     all_genres = Genre.objects.all()
     all_genres_titles = [g.title for g in all_genres]
@@ -34,7 +36,6 @@ def get_all_char_names():
     all_char = CharacterName.objects.all()
     all_char_names = [c.character_name for c in all_char]
     return all_char_names
-
 
 
 class MovieViewSet(viewsets.ModelViewSet):
@@ -71,40 +72,45 @@ class MovieViewSet(viewsets.ModelViewSet):
                         Genre.objects.create(title=i)
                         all_genre_titles = get_all_genre_titles()
 
-                a = Cast.objects.create(
-                    name=requested_data[num]['cast'][0]["name"],
-                    url_small_image=requested_data[num]['cast'][0]['url_small_image'],
-                    imdb_code=requested_data[num]['cast'][0]['imdb_code'],
-                    movie=requested_data[num]['title']
-                )
-                # a.movies.update_or_create(requested_data[num]['title'])
-                # print(requested_data[num]['cast'][0]['character_name'])
-                a.character_name.create(character_name=requested_data[num]['cast'][0]['character_name'],
-                                        cast=requested_data[num]['cast'][0]["name"])
-                # character_name__character_name=requested_data[num]['cast'][0]['character_name']
-                # CharacterName.objects.create(
-                #     character_name=requested_data[num]['cast'][0]['character_name'],
-                #     cast__name=requested_data[num]['cast'][0]['name'])
+            # -----------------------------------------------------------------
+            iteration_num = 0
+            number_of_casts = len(requested_data[num]['cast'])
+            for c in range(number_of_casts):
+                print(c)
+                if requested_data[num]['cast'][iteration_num]["name"] not in all_cast_names:
+                    a = Cast.objects.create(
+                        name=requested_data[num]['cast'][iteration_num]["name"],
+                        url_small_image=requested_data[num]['cast'][iteration_num]['url_small_image'],
+                        imdb_code=requested_data[num]['cast'][iteration_num]['imdb_code'],
+                        movie=requested_data[num]['title']
+                    )
+                    a.character_name.create(character_name=requested_data[num]['cast'][iteration_num]['character_name'],
+                                            cast=requested_data[num]['cast'][iteration_num]["name"])
+                    # a.movies.update_or_create(requested_data[num]['title'])
+                    # character_name__character_name=requested_data[num]['cast'][iteration_num]['character_name']
+                    # CharacterName.objects.create(
+                    #     character_name=requested_data[num]['cast'][iteration_num]['character_name'],
+                    #     cast__name=requested_data[num]['cast'][iteration_num]['name'])
+                iteration_num += 1
+            # -----------------------------------------------------------------
 
-# Я МОГУ БРАТЬ СУЩЕСТВУЮЩЕГО АКТЕРА И К НЕМУ ДОБАВЛЯТЬ РОЛЬ
+            # cast_iteration = 0
+            # # print(requested_data[num]['cast'][cast_iteration]['name'])
+            # total_cast_len = len(
+            #     requested_data[num]['cast'][cast_iteration])
+            # while cast_iteration > total_cast_len:
+            #     for c in requested_data[num]['cast'][cast_iteration]['name']:
+            #         print(requested_data[num]['cast']
+            #               [cast_iteration]['name'])
+            #         # TODO Cast.objects.filter(name__contains=i)
+            #         if c not in all_cast_names:
+            #             Cast.objects.create(name=c['name'])
+            #             CharacterName.objects.create(character_name=c["character_name"])
+            #             all_cast_names = get_all_cast_names()
+            #             all_char_names = get_all_char_names()
+            #             cast_iteration += 1
 
-                # cast_iteration = 0
-                # # print(requested_data[num]['cast'][cast_iteration]['name'])
-                # total_cast_len = len(
-                #     requested_data[num]['cast'][cast_iteration])
-                # while cast_iteration > total_cast_len:
-                #     for c in requested_data[num]['cast'][cast_iteration]['name']:
-                #         print(requested_data[num]['cast']
-                #               [cast_iteration]['name'])
-                #         # TODO Cast.objects.filter(name__contains=i)
-                #         if c not in all_cast_names:
-                #             Cast.objects.create(name=c['name'])
-                #             CharacterName.objects.create(character_name=c["character_name"])
-                #             all_cast_names = get_all_cast_names()
-                #             all_char_names = get_all_char_names()
-                #             cast_iteration += 1
-
-                num += 1
+            num += 1
 
         serializer = self.get_serializer(
             data=requested_data, many=isinstance(requested_data, list))

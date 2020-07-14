@@ -69,7 +69,7 @@ class MovieSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         torrents = validated_data.pop('torrents')
         genres = validated_data.pop('genres')
-        print(validated_data)
+        # print(validated_data)
         cast = validated_data.pop('cast')
         movie = Movie.objects.create(**validated_data)
         for tor in torrents:
