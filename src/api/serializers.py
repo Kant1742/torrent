@@ -38,6 +38,7 @@ class CastSerializer(serializers.ModelSerializer):
         depth = 1
 
 
+# ----------------------------------------------------------------------------
 class GenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
