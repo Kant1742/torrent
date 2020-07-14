@@ -75,6 +75,9 @@ class MovieViewSet(viewsets.ModelViewSet):
             # -----------------------------------------------------------------
             iteration_num = 0
             number_of_casts = len(requested_data[num]['cast'])
+            # for c in range(number_of_casts+1): # This shit 
+            # if requested_data[num]['cast'][iteration_num]["name"] not in all_cast_names:
+            # IndexError: list index out of range
             for c in range(number_of_casts):
                 print(c)
                 if requested_data[num]['cast'][iteration_num]["name"] not in all_cast_names:
