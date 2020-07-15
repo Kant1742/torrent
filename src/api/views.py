@@ -14,6 +14,8 @@ from .serializers import (
 """ Commit info
 Do not create the last item and only if we added a char_name
 """
+
+
 def get_all_genre_titles():
     all_genres = Genre.objects.all()
     all_genres_titles = [g.title for g in all_genres]
@@ -75,7 +77,7 @@ class MovieViewSet(viewsets.ModelViewSet):
             # -----------------------------------------------------------------
             iteration_num = 0
             number_of_casts = len(requested_data[num]['cast'])
-            # for c in range(number_of_casts+1): # This shit 
+            # for c in range(number_of_casts+1): # This shit
             # if requested_data[num]['cast'][iteration_num]["name"] not in all_cast_names:
             # IndexError: list index out of range
             for c in range(number_of_casts):
@@ -87,8 +89,19 @@ class MovieViewSet(viewsets.ModelViewSet):
                         imdb_code=requested_data[num]['cast'][iteration_num]['imdb_code'],
                         movie=requested_data[num]['title']
                     )
-                    a.character_name.create(character_name=requested_data[num]['cast'][iteration_num]['character_name'],
-                                            cast=requested_data[num]['cast'][iteration_num]["name"])
+                    a.character_name.create(
+                        character_name=requested_data[num]['cast'][iteration_num]['character_name'],
+                        cast=requested_data[num]['cast'][iteration_num]["name"]
+                    )
+                    all_cast_names = get_all_cast_names()
+                    all_char_names = get_all_char_names()
+                if requested_data[num]['cast'][iteration_num]['character_name'] not in all_char_names:
+                    b = Cast.objects.get(name=requested_data[num]['cast'][iteration_num]["name"])
+                    b.character_name.create(
+                        character_name=requested_data[num]['cast'][iteration_num]['character_name'],
+                        cast=requested_data[num]['cast'][iteration_num]["name"]
+                    )
+                    all_char_names = get_all_char_names()
                     # a.movies.update_or_create(requested_data[num]['title'])
                     # character_name__character_name=requested_data[num]['cast'][iteration_num]['character_name']
                     # CharacterName.objects.create(
