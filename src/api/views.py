@@ -57,6 +57,7 @@ class MovieViewSet(viewsets.ModelViewSet):
         number_of_movies = len(requested_data)
 
         # FIXME UNIQUE constraint failed: main_movie.slug
+        # FIXME list index out of range
 
         # loop through all the requested_data.
         # if we have this slug then delete this movie from request
@@ -66,6 +67,11 @@ class MovieViewSet(viewsets.ModelViewSet):
                 del requested_data[num]
                 number_of_movies -= 1
             else:
+                # print(requested_data[0]['title'])
+                # for m in requested_data[num]:
+                #     Movie.objects.create(title=requested_data[num]['title'],
+                #                         cast=requested_data[num]['cast'][0])
+                # print(requested_data[num])
                 # if we don't have this slug in movie_slugs then just create  and cast
                 # and we have nothing to do with request
                 for i in requested_data[num]['genres']:
@@ -81,18 +87,23 @@ class MovieViewSet(viewsets.ModelViewSet):
             # if requested_data[num]['cast'][iteration_num]["name"] not in all_cast_names:
             # IndexError: list index out of range
             for c in range(number_of_casts):
-                print(c)
                 if requested_data[num]['cast'][iteration_num]["name"] not in all_cast_names:
                     a = Cast.objects.create(
                         name=requested_data[num]['cast'][iteration_num]["name"],
                         url_small_image=requested_data[num]['cast'][iteration_num]['url_small_image'],
                         imdb_code=requested_data[num]['cast'][iteration_num]['imdb_code'],
-                        movie=requested_data[num]['title']
+                        # movie=requested_data[num]['title']
                     )
+                    # print(a)
+                    getted = Cast.objects.get(name=a)
+                    # print(getted)
+                    a.movie = getted
+                    # print(a.movie)
                     a.character_name.create(
                         character_name=requested_data[num]['cast'][iteration_num]['character_name'],
                         cast=requested_data[num]['cast'][iteration_num]["name"]
                     )
+                    a.save()
                     all_cast_names = get_all_cast_names()
                     all_char_names = get_all_char_names()
                 if requested_data[num]['cast'][iteration_num]['character_name'] not in all_char_names:
@@ -109,23 +120,6 @@ class MovieViewSet(viewsets.ModelViewSet):
                     #     cast__name=requested_data[num]['cast'][iteration_num]['name'])
                 iteration_num += 1
             # -----------------------------------------------------------------
-
-            # cast_iteration = 0
-            # # print(requested_data[num]['cast'][cast_iteration]['name'])
-            # total_cast_len = len(
-            #     requested_data[num]['cast'][cast_iteration])
-            # while cast_iteration > total_cast_len:
-            #     for c in requested_data[num]['cast'][cast_iteration]['name']:
-            #         print(requested_data[num]['cast']
-            #               [cast_iteration]['name'])
-            #         # TODO Cast.objects.filter(name__contains=i)
-            #         if c not in all_cast_names:
-            #             Cast.objects.create(name=c['name'])
-            #             CharacterName.objects.create(character_name=c["character_name"])
-            #             all_cast_names = get_all_cast_names()
-            #             all_char_names = get_all_char_names()
-            #             cast_iteration += 1
-
             num += 1
 
         serializer = self.get_serializer(
@@ -134,7 +128,7 @@ class MovieViewSet(viewsets.ModelViewSet):
         # serializer.is_valid()
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
-        # return Response(serializer.data, headers=headers)
+        # return Response(serializer.data, *args, **kwargs)
         return Response(serializer.data, headers=headers)
 
 

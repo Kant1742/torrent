@@ -117,6 +117,7 @@ class Movie(models.Model):
     def torrents(self):
         return self.torrents_set.all()
 
+
     # @property
     # def genres(self):
     #     return self.genres.all()

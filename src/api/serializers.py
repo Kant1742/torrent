@@ -18,11 +18,14 @@ class CharacterNameSerializer(serializers.ModelSerializer):
         fields = '__all__'
         depth = 1
 
+
 """
 >>> Movie.objects.filter(cast__character_name__character_name__isnull=True)
 <QuerySet [<Movie: Legend>, <Movie: Legend>, <Movie: DROPtfPEDd>,
 <Movie: DROPtfPEDd>, <Movie: DROPtfPEDd>, <Movie: DROPtfPEDd>]>
 """
+
+
 class CastSerializer(serializers.ModelSerializer):
     # character_names = serializers.SlugRelatedField(
     #     queryset=CharacterName.objects.all(), slug_field='characters_name')
@@ -50,7 +53,7 @@ class MovieSerializer(serializers.ModelSerializer):
     genres = serializers.SlugRelatedField(
         queryset=Genre.objects.all(), many=True, slug_field='title')
     # cast = serializers.SlugRelatedField(
-        # queryset=Cast.objects.all(), many=True, slug_field='name')
+    #     queryset=Cast.objects.filter(), many=True, slug_field='name')
     cast = CastSerializer(many=True)
     # genres = GenreSerializer(many=True)
 
@@ -66,20 +69,34 @@ class MovieSerializer(serializers.ModelSerializer):
         depth = 2
 
     # РАБОЧАЯ ВЕРСИЯ
-
     def create(self, validated_data):
         torrents = validated_data.pop('torrents')
         genres = validated_data.pop('genres')
-        # print(validated_data)
         cast = validated_data.pop('cast')
         movie = Movie.objects.create(**validated_data)
         for tor in torrents:
             Torrents.objects.create(movie=movie, **tor)
         movie.genres.add(*genres)
-        # print(genres)
-        # print(cast)
-        # movie.cast.add(*cast)
+        movie.save()
+        for i in cast:
+            print(i['name'])
+            print('\n\n')
+            print(cast)
+            new_cast = Cast.objects.create(name=i['name'],
+                                           url_small_image=i['url_small_image'],
+                                           imdb_code=i['imdb_code']
+            )
+            movie.cast.add(new_cast)
+        movie.save()
+        # print(cast[0]['name'])
+        """ По сути здесь я нихуя не менял, кроме того, что вместо *cast
+        добавляют его ID.
+        Решения: получение id от cast 
+                 SlugRelatedField (или PrimaryKeyRelatedField)
+                 заебенить это добавление во вьюхе, там и получать через слаг"""
+        # movie.cast.add(cast[0]['name'])
         return movie
+
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
