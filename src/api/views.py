@@ -4,6 +4,10 @@ from rest_framework import status, viewsets
 
 from requests.models import Response
 
+from main.services import (get_all_cast_names,
+                           get_all_char_names,
+                           get_all_genre_titles,
+                           get_all_movie_slugs)
 from main.models import Torrents, Movie, Genre, Cast, CharacterName
 from .serializers import (
     MovieSerializer,
@@ -14,30 +18,6 @@ from .serializers import (
 """ Commit info
 Do not create the last item and only if we added a char_name
 """
-
-
-def get_all_genre_titles():
-    all_genres = Genre.objects.all()
-    all_genres_titles = [g.title for g in all_genres]
-    return all_genres_titles
-
-
-def get_all_movie_slugs():
-    movies = Movie.objects.all()
-    movie_slugs = [m.slug for m in movies]
-    return movie_slugs
-
-
-def get_all_cast_names():
-    all_cast = Cast.objects.all()
-    all_cast_names = [c.name for c in all_cast]
-    return all_cast_names
-
-
-def get_all_char_names():
-    all_char = CharacterName.objects.all()
-    all_char_names = [c.character_name for c in all_char]
-    return all_char_names
 
 
 class MovieViewSet(viewsets.ModelViewSet):
@@ -67,11 +47,6 @@ class MovieViewSet(viewsets.ModelViewSet):
                 del requested_data[num]
                 number_of_movies -= 1
             else:
-                # print(requested_data[0]['title'])
-                # for m in requested_data[num]:
-                #     Movie.objects.create(title=requested_data[num]['title'],
-                #                         cast=requested_data[num]['cast'][0])
-                # print(requested_data[num])
                 # if we don't have this slug in movie_slugs then just create  and cast
                 # and we have nothing to do with request
                 for i in requested_data[num]['genres']:
@@ -107,17 +82,13 @@ class MovieViewSet(viewsets.ModelViewSet):
                     all_cast_names = get_all_cast_names()
                     all_char_names = get_all_char_names()
                 if requested_data[num]['cast'][iteration_num]['character_name'] not in all_char_names:
-                    b = Cast.objects.get(name=requested_data[num]['cast'][iteration_num]["name"])
+                    b = Cast.objects.get(
+                        name=requested_data[num]['cast'][iteration_num]["name"])
                     b.character_name.create(
                         character_name=requested_data[num]['cast'][iteration_num]['character_name'],
                         cast=requested_data[num]['cast'][iteration_num]["name"]
                     )
                     all_char_names = get_all_char_names()
-                    # a.movies.update_or_create(requested_data[num]['title'])
-                    # character_name__character_name=requested_data[num]['cast'][iteration_num]['character_name']
-                    # CharacterName.objects.create(
-                    #     character_name=requested_data[num]['cast'][iteration_num]['character_name'],
-                    #     cast__name=requested_data[num]['cast'][iteration_num]['name'])
                 iteration_num += 1
             # -----------------------------------------------------------------
             num += 1

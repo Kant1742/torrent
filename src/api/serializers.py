@@ -1,5 +1,11 @@
 from rest_framework import serializers
+
 from main.models import Movie, Genre, Torrents, Cast, CharacterName
+from main.services import (
+    get_all_cast_names,
+    get_all_char_names,
+    get_all_genre_titles,
+    get_all_movie_slugs)
 
 
 class TorrentsSerializer(serializers.ModelSerializer):
@@ -85,7 +91,7 @@ class MovieSerializer(serializers.ModelSerializer):
             new_cast = Cast.objects.create(name=i['name'],
                                            url_small_image=i['url_small_image'],
                                            imdb_code=i['imdb_code']
-            )
+                                           )
             movie.cast.add(new_cast)
         movie.save()
         # print(cast[0]['name'])
@@ -96,7 +102,6 @@ class MovieSerializer(serializers.ModelSerializer):
                  заебенить это добавление во вьюхе, там и получать через слаг"""
         # movie.cast.add(cast[0]['name'])
         return movie
-
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
