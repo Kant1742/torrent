@@ -62,6 +62,8 @@ class MovieSerializer(serializers.ModelSerializer):
 
     # РАБОЧАЯ ВЕРСИЯ
     # TODO Add validation from views.py
+    # FIXME "movie with this slug already exists."
+
     def create(self, validated_data):
         all_cast_names = get_all_cast_names()
         all_char_names = get_all_char_names()
