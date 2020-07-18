@@ -27,6 +27,7 @@ class MovieViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         # TODO optimisation, DRY, new functions
 
+        # Why would I want to have these lines?
         all_genre_titles = get_all_genre_titles()
         movie_slugs = get_all_movie_slugs()
         all_cast_names = get_all_cast_names()
@@ -54,9 +55,11 @@ class MovieViewSet(viewsets.ModelViewSet):
                     if i not in all_genre_titles:
                         Genre.objects.create(title=i)
                         all_genre_titles = get_all_genre_titles()
+            print('vi4ews')
 
             # -----------------------------------------------------------------
             iteration_num = 0
+            print(requested_data[num]['cast'])
             number_of_casts = len(requested_data[num]['cast'])
             # for c in range(number_of_casts+1): # This shit
             # if requested_data[num]['cast'][iteration_num]["name"] not in all_cast_names:
@@ -69,11 +72,6 @@ class MovieViewSet(viewsets.ModelViewSet):
                         imdb_code=requested_data[num]['cast'][iteration_num]['imdb_code'],
                         # movie=requested_data[num]['title']
                     )
-                    # print(a)
-                    getted = Cast.objects.get(name=a)
-                    # print(getted)
-                    a.movie = getted
-                    # print(a.movie)
                     a.character_name.create(
                         character_name=requested_data[num]['cast'][iteration_num]['character_name'],
                         cast=requested_data[num]['cast'][iteration_num]["name"]
