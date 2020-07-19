@@ -59,13 +59,13 @@ class MovieViewSet(viewsets.ModelViewSet):
 
             # -----------------------------------------------------------------
             iteration_num = 0
-            print(requested_data[num]['cast'])
+            # print(requested_data[num]['cast'])
             number_of_casts = len(requested_data[num]['cast'])
             # for c in range(number_of_casts+1): # This shit
             # if requested_data[num]['cast'][iteration_num]["name"] not in all_cast_names:
             # IndexError: list index out of range
-            for c in range(number_of_casts):
-                if requested_data[num]['cast'][iteration_num]["name"] not in all_cast_names:
+            if requested_data[num]['cast'][iteration_num]["name"] not in all_cast_names:
+                try:
                     try:
                         a = Cast.objects.create(
                             name=requested_data[num]['cast'][iteration_num]["name"],
@@ -73,35 +73,42 @@ class MovieViewSet(viewsets.ModelViewSet):
                             imdb_code=requested_data[num]['cast'][iteration_num]['imdb_code'],
                             # movie=requested_data[num]['title']
                         )
-                        a.character_name.create(
-                            character_name=requested_data[num]['cast'][iteration_num]['character_name'],
-                            cast=requested_data[num]['cast'][iteration_num]["name"]
-                        )
-                        a.save()
-                        all_cast_names = get_all_cast_names()
-                        all_char_names = get_all_char_names()
-                    except KeyError:
+                    except:
                         a = Cast.objects.create(
                             name=requested_data[num]['cast'][iteration_num]["name"],
+                            # url_small_image=requested_data[num]['cast'][iteration_num]['url_small_image'],
                             imdb_code=requested_data[num]['cast'][iteration_num]['imdb_code'],
                             # movie=requested_data[num]['title']
                         )
-                        a.character_name.create(
-                            character_name=requested_data[num]['cast'][iteration_num]['character_name'],
-                            cast=requested_data[num]['cast'][iteration_num]["name"]
-                        )
-                        a.save()
-                        all_cast_names = get_all_cast_names()
-                        all_char_names = get_all_char_names()
-                if requested_data[num]['cast'][iteration_num]['character_name'] not in all_char_names:
-                    b = Cast.objects.get(
-                        name=requested_data[num]['cast'][iteration_num]["name"])
-                    b.character_name.create(
+                    a.character_name.create(
                         character_name=requested_data[num]['cast'][iteration_num]['character_name'],
                         cast=requested_data[num]['cast'][iteration_num]["name"]
                     )
+                    a.save()
+                    all_cast_names = get_all_cast_names()
                     all_char_names = get_all_char_names()
-                iteration_num += 1
+                except KeyError:
+                    a = Cast.objects.create(
+                        name=requested_data[num]['cast'][iteration_num]["name"],
+                        imdb_code=requested_data[num]['cast'][iteration_num]['imdb_code'],
+                        # movie=requested_data[num]['title']
+                    )
+                    a.character_name.create(
+                        character_name=requested_data[num]['cast'][iteration_num]['character_name'],
+                        cast=requested_data[num]['cast'][iteration_num]["name"]
+                    )
+                    a.save()
+                    all_cast_names = get_all_cast_names()
+                    all_char_names = get_all_char_names()
+            if requested_data[num]['cast'][iteration_num]['character_name'] not in all_char_names:
+                b = Cast.objects.get(
+                    name=requested_data[num]['cast'][iteration_num]["name"])
+                b.character_name.create(
+                    character_name=requested_data[num]['cast'][iteration_num]['character_name'],
+                    cast=requested_data[num]['cast'][iteration_num]["name"]
+                )
+                all_char_names = get_all_char_names()
+            iteration_num += 1
             # -----------------------------------------------------------------
             num += 1
 
