@@ -174,7 +174,7 @@ class Reviews(models.Model):
     parent = models.ForeignKey(
         'self', on_delete=models.SET_NULL, blank=True, null=True
     )
-    # avatar = models.ImageField(default='default-user.jpg' , blank=True, null=True)
+    # avatar = models.ImageField(default='images/default-user.jpg' , blank=True, null=True)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
 
     def __str__(self):

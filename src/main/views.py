@@ -34,10 +34,10 @@ class MovieDetailView(GenreYear, DetailView):
     model = Movie
 
     # def get_context_data(self, *args, **kwargs):
-        # context = super().get_context_data(*args, **kwargs)
-        # context['all_cast'] = Cast.objects.all()
-        # movie = get_object_or_404(Movie)
-        # return context
+    # context = super().get_context_data(*args, **kwargs)
+    # context['all_cast'] = Cast.objects.all()
+    # movie = get_object_or_404(Movie)
+    # return context
 
 
 class AddReview(View):
