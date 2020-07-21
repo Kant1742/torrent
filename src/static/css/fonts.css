@@ -1,3 +1,11 @@
+/* example from admin css
+f@font-face {
+  font-family: 'Roboto';
+  src: url('../fonts/Roboto-Bold-webfont.woff');
+  font-weight: 700;
+  font-style: normal;
+} */
+
 @font-face {
   font-family: icomoon;
   src: url(icomoon.eot?fmg7s2);

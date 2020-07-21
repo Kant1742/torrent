@@ -3,8 +3,7 @@
 <html lang="ru">
 
 <head>
-    <title>
-        {% block title %}The Official Home of YIFY Movies Torrent Download - YTS {% endblock title %}</title>
+    <title>{% block title %}Download Torrent Movies{% endblock title %}</title>
     <meta charset="utf-8">
     <!--[if IE]> <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> <![endif]-->
     <meta name="viewport"
@@ -13,12 +12,13 @@
         content="The official YTS YIFY Movies Torrents website. Download free yify movies torrents in 720p, 1080p and 3D quality. Thefastest downloads at the smallest size.">
     <meta name="keywords" content="yts, yify, yify movies, yts movies, yts torrents, yify movies, yify torrents">
     <meta property="og:title" content="The Official Home of YIFY Movies Torrent Download - YTS">
-    <meta property="og:image" content="https://yts.mx/assets/images/website/og_yts_logo.png">
+    <meta property="og:image" content="{% static 'images/og_yts_logo.png' %}">
     <meta property="og:description"
         content="The official YTS YIFY Movies Torrents website. Download free yify movies torrents in 720p, 1080p and 3D quality. Thefastest downloads at the smallest size.">
     <meta property="og:url" content="https%3A%2F%2Fyts.mx%2F">
     <!--[if IE]> <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" /> <![endif]-->
-    <link rel="shortcut icon" href="/assets/images/website/favicon.ico">
+    
+    <link rel="shortcut icon" href="images/favicon.ico">
     <link rel="apple-touch-icon" sizes="57x57" href="/assets/images/website/apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="114x114" href="/assets/images/website/apple-touch-icon-114x114.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/assets/images/website/apple-touch-icon-72x72.png">
@@ -39,13 +39,17 @@
         title="YTS - The Official Home of YIFY Movie Torrent Downloads">
 
     <!--/ Style-CSS -->
+    <link rel="stylesheet" href="https://i.icomoon.io/public/temp/7b70e9929f/UntitledProject/style.css">
+
+
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Arimo:400,700,400italic,700italic&amp;subset=latin,latin-ext"
         rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all">
     <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
-    <link rel="stylesheet" href="{% static 'css/minified.css' %}">
+    <link rel="stylesheet" href="{% static 'css/non-minified.css' %}">
     <script data-cfasync="false" src="//superfastcdn.com/script/compatibility.js"></script>
     <script data-cfasync="false" src="//velocecdn.com/script/compatibility.js"></script>
     <script type="application/ld+json">
@@ -73,9 +77,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
+    {% block background-image %}
+    <div id="background-image"
+        style="background: url(https://img3.goodfon.ru/original/2560x1440/8/41/gory-gornaya-reka-les-nebo.jpg) no-repeat center center; background-size: cover; -webkit-background-size: cover;-moz-background-size: cover; -o-background-size: cover; filter: blur(20px);">
+    </div>
+    {% endblock background-image %}
 </head>
-
-
 
 <body class="non-touch">
     {% block header %}
@@ -119,12 +126,8 @@
         </div>
     </header>
     {% endblock header %}
-    {% block background-image %}
-    <div id="background-image"
-        style="background: url(https://img.yts.mx/assets/images/movies/the_old_guard_2020/background.jpg) no-repeat center center; background-size: cover; -webkit-background-size: cover;-moz-background-size: cover; -o-background-size: cover;">
-    </div>
-    {% endblock background-image %}
-    <div id="background-overlay"></div>
+
+    <!-- <div id="background-overlay"></div> -->
     <!-- <div class="modal modal-auth hidden-xs hidden-sm">
         <div class="modal-container">
             <div class="modal-switcher">
@@ -227,8 +230,8 @@
     {% endblock content %}
 
     <script type="text/javascript" src="{% static 'js/modded1.js?' %}"></script>
-    <!-- <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56896aba6888ef3e"
-        async="async"></script> -->
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56896aba6888ef3e"
+        async="async"></script>
     <script src="/js/ypt.js"></script>
 
     <!-- <div id="cboxOverlay" style="display: none;"></div> -->

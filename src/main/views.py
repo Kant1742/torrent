@@ -20,7 +20,7 @@ class GenreYear:
 
 class MovieListView(ListView):
     model = Movie
-    paginate_by = 18
+    paginate_by = 8
 
     # def get_context_data(self, *args, **kwargs):
     #     context = super().get_context_data(*args, **kwargs)
@@ -32,6 +32,7 @@ class MovieListView(ListView):
 
 class MovieDetailView(GenreYear, DetailView):
     model = Movie
+    template_name = 'main/movie_detail_yts.html'
 
     # def get_context_data(self, *args, **kwargs):
     # context = super().get_context_data(*args, **kwargs)

@@ -1,11 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}
-Movies
-{% endblock title %}
-
+{% block title %}Movies{% endblock title %}
 {% block content %}
+
 <div class="main-content">
     <div id="mobile-search-input" class="hidden-md hidden-lg">
         <form method="POST" action="https://yts.mx/search-movies" accept-charset="UTF-8">
@@ -193,16 +191,20 @@ Movies
             margin-left: auto;
             margin-right: auto;
         }
-        .nbox-bordered h1, .nbox-bordered p {
+
+        .nbox-bordered h1,
+        .nbox-bordered p {
             color: white;
             font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
             text-align: center;
         }
+
         .nbox-bordered p {
             line-height: 30px;
             width: auto;
             margin-bottom: 10px;
         }
+
         .nbox-bordered .title {
             margin-top: 5px;
             width: 80%;
@@ -211,33 +213,37 @@ Movies
             margin-right: auto;
             margin-bottom: 5px;
         }
+
         .nbox-bordered .title h1 {
             font-size: 40px;
             margin-top: 0px;
             margin-bottom: 0px;
         }
-        
+
         /*
         .nbox-bordered .title h1:before {
             content: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/898049/mail.png");
             padding-right: 20px;
         }
         */
-        
+
         .nbox-bordered .title img {
             position: relative;
             top: 65px;
             left: 175px;
         }
+
         .nbox-bordered .blue {
             margin-top: 10px;
             margin-bottom: 10px;
             font-weight: bold;
             color: #4c96d0;
         }
+
         .nbox-bordered a {
             text-decoration: none;
         }
+
         .nbox-bordered .button {
             background-color: #75c74e;
             width: 250px;
@@ -246,17 +252,19 @@ Movies
             margin-top: 15px;
             border-radius: 5px;
         }
+
         .nbox-bordered .button img {
             float: left;
             margin-top: 8px;
             margin-left: 22px;
         }
+
         .nbox-bordered .button p {
             padding: 3px 0;
             text-shadow: 2px 2px #4b9924;
             font-weight: bold;
         }
-        </style>
+    </style>
     <div class="container home-content">
         <div class="hidden-xs hidden-sm">
             <h1>Download torrent movies</h1>
@@ -275,17 +283,20 @@ Movies
                 <h2><span class="icon-star"></span>Popular Downloads <a href="https://yts.mx/rss-guide"><img title="RSS"
                             src="{% static 'images/rss-icon.webp' %}" alt="RSS" width="24" height="24"></a></h2>
             </div>
-            <!-- TODO Populate movies via Django templatetags or React 
-            IT HAS TO BE LIST PAGE NOT base.html-->
+
+
+            <!-- TODO Populate movies via Django templatetags or React.
+            Add pagination? -->
             <div class="row">
+                {% for movie in object_list %}
                 <div class="browse-movie-wrap col-xs-10 col-sm-5">
-                    <a href="https://yts.mx/movies/the-silencing-2020" class="browse-movie-link">
+                    <a href="{% url 'main:movie_detail' movie.slug %}" class="browse-movie-link">
                         <figure>
-                            <img class="img-responsive" src="/assets/images/movies/the_silencing_2020/medium-cover.jpg"
-                                alt="The Silencing (2020) download" width="210" height="315">
+                            <img class="img-responsive" src="{{ movie.medium_cover_image }}"
+                                alt="{{ movie.title }} download" width="210" height="315">
                             <figcaption class="hidden-xs hidden-sm">
                                 <span class="icon-star"></span>
-                                <h4 class="rating">6.2 / 10</h4>
+                                <h4 class="rating">{{ movie.rating }} / 10</h4>
                                 <h4>Action</h4>
                                 <h4>Crime</h4>
                                 <span class="button-green-download2-big">View Details</span>
@@ -293,72 +304,14 @@ Movies
                         </figure>
                     </a>
                     <div class="browse-movie-bottom">
-                        <a href="https://yts.mx/movies/the-silencing-2020" class="browse-movie-title">The
-                            Silencing</a>
-                        <div class="browse-movie-year">2020</div>
+                        <a href="{% url 'main:movie_detail' movie.slug %}"
+                            class="browse-movie-title">{{ movie.title }}</a>
+                        <div class="browse-movie-year">{{ movie.year }}</div>
                     </div>
                 </div>
-                <div class="browse-movie-wrap col-xs-10 col-sm-5">
-                    <a href="https://yts.mx/movies/a-nice-girl-like-you-2020" class="browse-movie-link">
-                        <figure>
-                            <img class="img-responsive"
-                                src="/assets/images/movies/a_nice_girl_like_you_2020/medium-cover.jpg"
-                                alt="A Nice Girl Like You (2020) download" width="210" height="315">
-                            <figcaption class="hidden-xs hidden-sm">
-                                <span class="icon-star"></span>
-                                <h4 class="rating">5.1 / 10</h4>
-                                <h4>Comedy</h4>
-                                <h4>Romance</h4>
-                                <span class="button-green-download2-big">View Details</span>
-                            </figcaption>
-                        </figure>
-                    </a>
-                    <div class="browse-movie-bottom">
-                        <a href="https://yts.mx/movies/a-nice-girl-like-you-2020" class="browse-movie-title">A
-                            Nice Girl Like You</a>
-                        <div class="browse-movie-year">2020</div>
-                    </div>
-                </div>
-                <div class="browse-movie-wrap col-xs-10 col-sm-5">
-                    <a href="https://yts.mx/movies/the-old-guard-2020" class="browse-movie-link">
-                        <figure>
-                            <img class="img-responsive" src="/assets/images/movies/the_old_guard_2020/medium-cover.jpg"
-                                alt="The Old Guard (2020) download" width="210" height="315">
-                            <figcaption class="hidden-xs hidden-sm">
-                                <span class="icon-star"></span>
-                                <h4 class="rating">6.7 / 10</h4>
-                                <h4>Action</h4>
-                                <h4>Adventure</h4>
-                                <span class="button-green-download2-big">View Details</span>
-                            </figcaption>
-                        </figure>
-                    </a>
-                    <div class="browse-movie-bottom">
-                        <a href="https://yts.mx/movies/the-old-guard-2020" class="browse-movie-title">The Old
-                            Guard</a>
-                        <div class="browse-movie-year">2020</div>
-                    </div>
-                </div>
-                <div class="browse-movie-wrap col-xs-10 col-sm-5">
-                    <a href="https://yts.mx/movies/greyhound-2020" class="browse-movie-link">
-                        <figure>
-                            <img class="img-responsive" src="/assets/images/movies/greyhound_2020/medium-cover.jpg"
-                                alt="Greyhound (2020) download" width="210" height="315">
-                            <figcaption class="hidden-xs hidden-sm">
-                                <span class="icon-star"></span>
-                                <h4 class="rating">7.1 / 10</h4>
-                                <h4>Action</h4>
-                                <h4>Drama</h4>
-                                <span class="button-green-download2-big">View Details</span>
-                            </figcaption>
-                        </figure>
-                    </a>
-                    <div class="browse-movie-bottom">
-                        <a href="https://yts.mx/movies/greyhound-2020" class="browse-movie-title">Greyhound</a>
-                        <div class="browse-movie-year">2020</div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
+
         </div>
         <div class="hidden-xs hidden-sm">
             <div class="nbox-bordered">
@@ -385,11 +338,14 @@ Movies
             </div>
         </div>
     </div>
+
+
+    <!-- TODO inclusion tag -->
     <div class="content-dark">
         <div class="container home-content">
             <div class="home-movies">
                 <div class="row">
-                    <h2>Latest YIFY Movies Torrents <a href="https://yts.mx/browse-movies">Browse All</a></h2>
+                    <h2>Random movies with rating 7+ <a href="https://yts.mx/browse-movies">Browse All</a></h2>
                 </div>
                 <div class="row">
                     <div class="browse-movie-wrap col-xs-10 col-sm-5">
@@ -579,6 +535,114 @@ Movies
             </div>
         </div>
     </div>
+    <hr>
+
+    <!-- TODO inclusion tag -->
+    <div class="content-dark">
+        <div class="container home-content">
+            <div class="home-movies">
+                <div class="row">
+                    <h2>Latest YIFY Movies Torrents <a href="https://yts.mx/browse-movies">Browse All</a></h2>
+                </div>
+
+                <div class="row">
+                    <div class="browse-movie-wrap col-xs-10 col-sm-5">
+                        <a href="https://yts.mx/movies/real-women-have-curves-2002" class="browse-movie-link">
+                            <figure>
+                                <img class="img-responsive"
+                                    src="/assets/images/movies/real_women_have_curves_2002/medium-cover.jpg"
+                                    alt="Real Women Have Curves (2002) download" width="210" height="315">
+                                <img class="quality-banner img-responsive" src="/assets/images/website/banner720p.png"
+                                    alt="Real Women Have Curves (2002) download 720p" width="118" height="91">
+                                <figcaption class="hidden-xs hidden-sm">
+                                    <span class="icon-star"></span>
+                                    <h4 class="rating">6.8 / 10</h4>
+                                    <h4>Comedy</h4>
+                                    <h4>Drama</h4>
+                                    <span class="button-green-download2-big">View Details</span>
+                                </figcaption>
+                            </figure>
+                        </a>
+                        <div class="browse-movie-bottom">
+                            <a href="https://yts.mx/movies/real-women-have-curves-2002" class="browse-movie-title">Real
+                                Women Have Curves</a>
+                            <div class="browse-movie-year">2002</div>
+                        </div>
+                    </div>
+                    <div class="browse-movie-wrap col-xs-10 col-sm-5">
+                        <a href="https://yts.mx/movies/bending-all-the-rules-2002" class="browse-movie-link">
+                            <figure>
+                                <img class="img-responsive"
+                                    src="/assets/images/movies/bending_all_the_rules_2002/medium-cover.jpg"
+                                    alt="Bending All the Rules (2002) download" width="210" height="315">
+                                <img class="quality-banner img-responsive" src="/assets/images/website/banner1080p.png"
+                                    alt="Bending All the Rules (2002) download 1080p" width="118" height="91">
+                                <figcaption class="hidden-xs hidden-sm">
+                                    <span class="icon-star"></span>
+                                    <h4 class="rating">2.3 / 10</h4>
+                                    <h4>Drama</h4>
+                                    <span class="button-green-download2-big">View Details</span>
+                                </figcaption>
+                            </figure>
+                        </a>
+                        <div class="browse-movie-bottom">
+                            <a href="https://yts.mx/movies/bending-all-the-rules-2002"
+                                class="browse-movie-title">Bending All the Rules</a>
+                            <div class="browse-movie-year">2002</div>
+                        </div>
+                    </div>
+                    <div class="browse-movie-wrap col-xs-10 col-sm-5">
+                        <a href="https://yts.mx/movies/the-24-hour-woman-1999" class="browse-movie-link">
+                            <figure>
+                                <img class="img-responsive"
+                                    src="/assets/images/movies/the_24_hour_woman_1999/medium-cover.jpg"
+                                    alt="The 24 Hour Woman (1999) download" width="210" height="315">
+                                <img class="quality-banner img-responsive" src="/assets/images/website/banner1080p.png"
+                                    alt="The 24 Hour Woman (1999) download 1080p" width="118" height="91">
+                                <figcaption class="hidden-xs hidden-sm">
+                                    <span class="icon-star"></span>
+                                    <h4 class="rating">5.4 / 10</h4>
+                                    <h4>Comedy</h4>
+                                    <span class="button-green-download2-big">View Details</span>
+                                </figcaption>
+                            </figure>
+                        </a>
+                        <div class="browse-movie-bottom">
+                            <a href="https://yts.mx/movies/the-24-hour-woman-1999" class="browse-movie-title">The 24
+                                Hour Woman</a>
+                            <div class="browse-movie-year">1999</div>
+                        </div>
+                    </div>
+                    <div class="browse-movie-wrap col-xs-10 col-sm-5">
+                        <a href="https://yts.mx/movies/jackie-chan-presents-amnesia-2015" class="browse-movie-link">
+                            <figure>
+                                <img class="img-responsive"
+                                    src="/assets/images/movies/jackie_chan_presents_amnesia_2015/medium-cover.jpg"
+                                    alt="Jackie Chan Presents: Amnesia (2015) download" width="210" height="315">
+                                <img class="quality-banner img-responsive" src="/assets/images/website/banner1080p.png"
+                                    alt="Jackie Chan Presents: Amnesia (2015) download 1080p" width="118" height="91">
+                                <figcaption class="hidden-xs hidden-sm">
+                                    <span class="icon-star"></span>
+                                    <h4 class="rating">4.7 / 10</h4>
+                                    <h4>Action</h4>
+                                    <h4>Adventure</h4>
+                                    <span class="button-green-download2-big">View Details</span>
+                                </figcaption>
+                            </figure>
+                        </a>
+                        <div class="browse-movie-bottom">
+                            <a href="https://yts.mx/movies/jackie-chan-presents-amnesia-2015"
+                                class="browse-movie-title"><span style="color: #ACD7DE; font-size: 75%;">[ZH]</span>
+                                Jackie Chan Presents:
+                                Amnesia</a>
+                            <div class="browse-movie-year">2015</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- <div class="container home-content">
         <div class="home-movies">
             <div class="row">
@@ -681,7 +745,7 @@ Movies
             </div>
         </div>
     </div> -->
-    <div class="container hidden-md hidden-lg">
+    <!-- <div class="container hidden-md hidden-lg">
         <div class="row">
             <div class="mobile-footer">
                 <div class="col-sm-20">
@@ -708,7 +772,7 @@ Movies
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <footer>
         <div class="container">
             <div class="row">
