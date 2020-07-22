@@ -38,7 +38,7 @@ video {
     vertical-align: baseline
 }
 
-audio:not ([controls]) {
+audio:not {
     display: none;
     height: 0
 }
@@ -3583,8 +3583,8 @@ fieldset[disabled] .btn {
     -webkit-box-shadow: none;
     box-shadow: none
 }
-z
-.btn-default {
+
+z .btn-default {
     color: #333;
     background-color: #fff;
     border-color: #ccc

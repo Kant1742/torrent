@@ -6,13 +6,13 @@
 {% block content %}
 {% block background-image %}
 <div id="background-image"
-    style="background: url({{movie.large_cover_image}}) no-repeat center; background-size: cover; -webkit-background-size: cover;-moz-background-size: cover; -o-background-size: cover; filter: blur(20px);">
+    style="background: url({{movie.large_cover_image}}) no-repeat center; background-size: cover; -webkit-background-size: cover;-moz-background-size: cover; -o-background-size: cover;">
 </div>
 {% endblock background-image %}
 
 <body class="non-touch" data-gr-c-s-loaded="true">
 
-    <!-- <div id="background-overlay"></div> -->
+    <div id="background-overlay"></div>
     <!-- <div class="modal modal-auth hidden-xs hidden-sm">
         <div class="modal-container">
             <div class="modal-switcher">
@@ -109,7 +109,7 @@
         </div>
     </div> -->
     <div class="main-content">
-        <div id="mobile-search-input" class="hidden-md hidden-lg">
+        <!-- <div id="mobile-search-input" class="hidden-md hidden-lg">
             <form method="POST" action="https://yts.mx/search-movies" accept-charset="UTF-8">
                 {% csrf_token %}
                 <div class="input-group container search-query">
@@ -281,10 +281,10 @@
                     </div>
                 </div>
             </form>
-        </div>
-        <div class="ac-results hidden-sm hidden-xs">
+        </div> -->
+        <!-- <div class="ac-results hidden-sm hidden-xs">
             <ul></ul>
-        </div>
+        </div> -->
         <!-- TODO get rid of this css -->
         <style type="text/css">
             .infobox-bordered {
@@ -324,12 +324,12 @@
                 margin-bottom: 0px;
             }
 
-            /*
-    .infobox-bordered .title h1:before {
-        content: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/898049/mail.png");
-        padding-right: 20px;
-    }
-    */
+
+            .infobox-bordered .title h1:before {
+                content: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/898049/mail.png");
+                padding-right: 20px;
+            }
+
 
             .infobox-bordered .title img {
                 position: relative;
@@ -369,6 +369,7 @@
                 font-weight: bold;
             }
         </style>
+
         <div class="container" id="movie-content" itemscope="" itemtype="http://schema.org/Movie">
             <div class="row">
                 <div id="mobile-movie-info" class="visible-xs col-xs-20">
@@ -377,13 +378,12 @@
                     <h2>Action / Comedy / Drama / Romance</h2>
                 </div>
                 <div id="movie-poster" class="col-xs-10 col-sm-6 col-lg-5">
-                    <img class="img-responsive" itemprop="image"
-                        src="{{ movie.medium_cover_image }}"
+                    <img class="img-responsive" itemprop="image" src="{{ movie.medium_cover_image }}"
                         alt="Me and Earl and the Dying Girl (2015) download">
                     <!-- <a class="torrent-modal-download button-green-download2-big hidden-xs hidden-sm"
                         href="javascript:void(0);"><span class="icon-in"></span>Download</a> -->
                     <div class="addthis_sharing_toolbox" style="margin-top: 15px;"></div>
-                <!-- <div class="addthis_tipjar_inline"></div> -->
+                    <!-- <div class="addthis_tipjar_inline"></div> -->
                 </div>
                 <!-- <div class="modal modal-download hidden-xs hidden-sm">
                     <div class="modal-container">
@@ -430,55 +430,59 @@
                         <h1>{{ movie.title }}</h1>
                         <h2>{{ movie.year }}</h2>
                         <h2>{% for gen in movie.genres.all %}
-                            {{ gen.title }}/
+                            {{ gen.title }} /
                             {% endfor %}
                         </h2>
                     </div>
+                    {% for s in movie.subtitles.all %}
+                    {{ s }}
+                    {% endfor %}
 
                     <p class="hidden-xs hidden-sm">
                         <em class="pull-left">Available in: &nbsp;</em>
                         {% for t in movie.torrents.all %}
                         <a href="{{ t.url }}" rel="nofollow"
-                            title="Download {{ movie.title }} {{ t.quality }} Torrent">{{ t.quality }}</a>
-                        <!-- <a href="/" target="_blank" class="button"
-                                title="Download subtitles for {{ movie.title }}"><span
-                                class="icon-in"></span>Download EN Subtitles</a> -->
+                            title="Download {{ movie.title }} {{ t.quality }} {{ t.type }} Torrent">{{ t.quality }}</a>
                         {% endfor %}
                     </p>
+                    <p class="hidden-xs hidden-sm">
+                        <em class="pull-left">Subtitles: &nbsp;</em>
+                        <a href="/" target="_blank" class="button"
+                            title="Download subtitles for {{ movie.title }}">EN</a></p>
                     <div class="bottom-info">
                         <!-- TODO rating -->
-                        <div class="rating-row">
-                            <span title="Likes" class="icon "><img class="svg-icon" src="{% static 'images/heart.svg' %}" alt="{{ movie.title }}"></span>
+                        <!-- <div class="rating-row">
+                            <span title="Likes" class="icon "><img class="svg-icon"
+                                    src="{% static 'images/heart.svg' %}" alt="{{ movie.title }}"></span>
                             <span id="movie-likes">107</span>
                         </div>
-                        <div class="rating-row ">
-                            <a class="icon" href="https://www.rottentomatoes.com/m/me_and_earl_and_the_dying_girl"
-                                title="Rotten Tomatoes Critics - Certified Fresh" target="_blank"> <img
-                                    src="{% static 'images/rt-rotten.png' %}"
-                                    alt="Rotten Tomatoes Critics - Certified Fresh"> </a>
-                            <span>81%</span><span class="hidden-xs"> - Critics</span>
+                        <div class="rating-row">
+                            <span title="Likes" class="icon "><img class="svg-icon"
+                                    src="{% static 'images/rt-rotten.webp' %}" alt="{{ movie.title }}"></span>
+                            <span id="movie-likes"><span>81%</span> - Critics</span>
                         </div>
-                        <div class="rating-row ">
-                            <a class="icon" href="https://www.rottentomatoes.com/m/me_and_earl_and_the_dying_girl"
-                                title="Rotten Tomatoes Audience - Upright" target="_blank"> <img
-                                    src="/assets/images/website/rt-upright.png"
-                                    alt="Rotten Tomatoes Audience - Upright"> </a>
-                            <span>86%</span><span class="hidden-xs"> - Audience</span>
-                        </div>
+                        <div class="rating-row">
+                            <span title="Likes" class="icon "><img class="svg-icon"
+                                    src="{% static 'images/rt-spilled.webp' %}" alt="{{ movie.title }}"></span>
+                            <span id="movie-likes"><span>86%</span> - Audience</span>
+                        </div> -->
+
                         <div class="rating-row" itemprop="aggregateRating" itemscope=""
                             itemtype="http://schema.org/AggregateRating">
                             <a class="icon" href="https://www.imdb.com/title/{{ movie.imdb_code }}/" title="IMDb Rating"
                                 target="_blank"> <img src="{% static 'images/logo-imdb.svg' %}" alt="IMDb Rating"> </a>
                             <span itemprop="ratingValue">{{ movie.rating }}</span>
                             <!-- <span itemprop="ratingCount" style="display: none;">119914</span> -->
-                            <span class="hidden-xs icon-star"></span>
+                            <!-- <span class="hidden-xs icon-star"></span> -->
                         </div>
+
+
                         <div class="rating-row" style="margin-top: 20px;">
                             <div class="infobox-bordered"
-                                style="width: 100%; height: margin: 0px; padding: 10px 12px; border:1px solid #75C74E;border-radius: 4px;position: relative;background: #000000;">
+                                style="width: 100%; margin: 0px; padding: 10px 12px; border:1px solid #75C74E;border-radius: 4px;position: relative;background: #000000">
                                 <div class="title"
                                     style="font-size: 10px;width: 100%;margin-bottom: -15px;border: 0px;">
-                                    <h1 style="font-size: 15px;line-height: initial;text-align: left;">Please enable
+                                    <h1 style="font-size: 15px;line-height: initial;text-align: left;">Enable
                                         your VPN when downloading torrents</h1>
                                 </div>
                                 <p class="blue"
@@ -486,27 +490,16 @@
                                     If you torrent without a VPN, your ISP can see that you're torrenting and may
                                     throttle your connection and get fined by legal action!
                                 </p>
-                                <!-- <a href="/yevp" rel="noindex, nofollow">
+                                <a href="/yevp" rel="noindex, nofollow">
                                     <div class="button" style="width: 50%;">
                                         <p style="margin-top: -10px;font-size: 15px;">Get Express VPN</p>
                                     </div>
-                                </a> -->
+                                </a>
                             </div>
                         </div>
-                        {% for t in movie.torrents.all %}
-                        <p class="hidden-md hidden-lg">
-                            <a href="{{ t.url }}" rel="nofollow"
-                                title="Download {{ movie.title }} {{ t.quality }} Torrent"><span
-                                    class="icon-in"></span>{{ t.quality }}</a>
-                            <a href="https://yts.mx/torrent/download/82F7035A630D22754216D7FEF59BF59318535446"
-                                rel="nofollow" title="Download {{ movie.title }} {{ t.quality }} Torrent"><span
-                                    class="icon-in"></span>{{ t.quality }}</a>
-                            <br><br><a href="https://yifysubtitles.org/movie-imdb/{{ movie.imdb_code }}" target="_blank"
-                                class="button" title="Download subtitles for {{ movie.title }} {{ t.quality }}"><span
-                                    class="icon-in"></span>Download EN Subtitles</a> </p>
-                        {% endfor %}
                     </div>
                 </div>
+                <!-- TODO include similar movies -->
                 <div id="movie-related" class="col-md-6 hidden-xs hidden-sm">
                     <p>Similar Movies</p>
                     <a href="https://yts.mx/movies/as-i-lay-dying-2013" title="As I Lay Dying (2013)"><img
@@ -581,7 +574,6 @@
                             </div>
                         </div>
                     </div> -->
-
                     <div class="actors">
                         <h3>Cast</h3>
                         {% for c in movie.cast.all %}
@@ -595,7 +587,7 @@
                                 <!-- TODO character_name -->
                                 <a class="name-cast" href="https://yts.mx/browse-movies/Chris%20Pratt"><span
                                         itemprop="actor" itemscope="" itemtype="http://schema.org/Person"><span
-                                            itemprop="name">{{ c.name }}</span></span></a> as {{ c.character_name }}
+                                            itemprop="name">{{ c.name }}</span></span></a> as {{ character_name.cast.imdb_code }}
                             </div>
                         </div>
                         {% endfor %}
@@ -603,7 +595,7 @@
                 </div>
             </div>
             <!-- TODO Tech specs. Add js -->
-            <div id="movie-tech-specs" class="row">
+            <!-- <div id="movie-tech-specs" class="row">
                 <h3 class="hidden-xs hidden-sm col-md-5">Tech specs</h3>
                 <span class="tech-quality col-md-2 selected"> 720p.BLU </span>
                 <span class="tech-quality col-md-2 "> 1080p.BLU </span>
@@ -624,8 +616,7 @@
                     </div>
                     <div class="row">
                         <div class="tech-spec-element col-xs-20 col-sm-10 col-md-5"> <span title="Subtitles"
-                                class="glyphicon glyphicon-subtitles"></span> <a
-                                href="https://yifysubtitles.org/movie-imdb/tt2582496" target="_blank">Subtitles</a>
+                                class="glyphicon glyphicon-subtitles"></span> <a href="" target="_blank">Subtitles</a>
                             <div class="hidden-md hidden-lg"></div>
                         </div>
                         <div class="tech-spec-element col-xs-20 col-sm-10 col-md-5"> <span title="Frame Rate"
@@ -669,7 +660,7 @@
                                 class="tech-peers-seeds">P/S</span> 1 / 21 </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- TODO Movie reviews -->
             <div id="movie-bottom" class="row">
                 <div id="movie-reviews" class="col-xs-20 col-md-10 col-md-offset-1 col-md-push-9">
@@ -762,6 +753,7 @@
                 </div>
             </div>
         </div>
+
         <div class="container hidden-md hidden-lg">
             <div class="row">
                 <div class="mobile-footer">

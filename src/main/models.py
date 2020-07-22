@@ -140,8 +140,11 @@ class Torrents(models.Model):
     """
 
     url = models.URLField(null=True, blank=True)
-    size = models.CharField(max_length=15, null=True, blank=True)
     quality = models.CharField(max_length=15, null=True, blank=True)
+    quality_type = models.CharField(max_length=15, null=True, blank=True)
+    seeds = models.CharField(max_length=15, null=True, blank=True)
+    peers = models.CharField(max_length=15, null=True, blank=True)
+    size = models.CharField(max_length=15, null=True, blank=True)
 
     movie = models.ForeignKey(
         Movie, on_delete=models.CASCADE, null=True, blank=True, related_name='torrents')
