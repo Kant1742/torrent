@@ -450,32 +450,31 @@
                         <a href="/" target="_blank" class="button"
                             title="Download subtitles for {{ movie.title }}">EN</a></p>
                     <div class="bottom-info">
+
+                        <div class="rating-row" itemprop="aggregateRating" itemscope=""
+                            itemtype="http://schema.org/AggregateRating">
+                            <img class="image-center" src="{% static 'images/icomoon/heart.svg' %}"
+                                alt="{{ movie.title }}" title="Likes">
+                            <span itemprop="ratingCount">{{ movie.like_count }}</span>
+                        </div>
                         <!-- TODO rating -->
                         <!-- <div class="rating-row">
                             <span title="Likes" class="icon "><img class="rating"
-                                    src="{% static 'images/icomoon/heart.svg' %}" alt="{{ movie.title }}"></span>
-                            <span id="movie-likes">107</span>
-                        </div>
-                        <div class="rating-row">
-                            <span title="Likes" class="icon "><img class="rating"
                                     src="{% static 'images/rt-rotten.webp' %}" alt="{{ movie.title }}"></span>
                             <span id="movie-likes"><span>81%</span> - Critics</span>
-                        </div>
-                        <div class="rating-row">
-                            <span title="Likes" class="icon "><img class="rating"
-                                    src="{% static 'images/rt-spilled.webp' %}" alt="{{ movie.title }}"></span>
-                            <span id="movie-likes"><span>86%</span> - Audience</span>
                         </div> -->
-
-                        <div class="rating-row" itemprop="aggregateRating" itemscope=""
+                        <div class="rating-row" itemprop="aggregateRating" itemscope
                             itemtype="http://schema.org/AggregateRating">
                             <a class="icon" href="https://www.imdb.com/title/{{ movie.imdb_code }}/" title="IMDb Rating"
                                 target="_blank"> <img src="{% static 'images/logo-imdb.svg' %}" alt="IMDb Rating"> </a>
                             <span itemprop="ratingValue">{{ movie.rating }}</span>
-                            <!-- <span itemprop="ratingCount" style="display: none;">119914</span> -->
-                            <!-- <span class="hidden-xs icon-star"></span> -->
                         </div>
-
+                        <div class="rating-row" itemprop="aggregateRating" itemscope=""
+                            itemtype="http://schema.org/AggregateRating">
+                            <img class="image-center" src="{% static 'images/icomoon/download-icon.svg' %}"
+                                alt="Downloads" title="Downloads">
+                            <span itemprop="ratingCount">{{ movie.download_count }}</span>
+                        </div>
 
                         <div class="rating-row" style="margin-top: 20px;">
                             <div class="infobox-bordered"
@@ -587,7 +586,8 @@
                                 <!-- TODO character_name -->
                                 <a class="name-cast" href="https://yts.mx/browse-movies/Chris%20Pratt"><span
                                         itemprop="actor" itemscope="" itemtype="http://schema.org/Person"><span
-                                            itemprop="name">{{ c.name }}</span></span></a> as {{ character_name.cast.imdb_code }}
+                                            itemprop="name">{{ c.name }}</span></span></a> as
+                                {{ character_name.cast.imdb_code }}
                             </div>
                         </div>
                         {% endfor %}
