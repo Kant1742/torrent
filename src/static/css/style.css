@@ -195,7 +195,7 @@ nav ul ul {
 
 /* Display Dropdowns on Hover */
 
-nav ul li:hover > ul {
+nav ul li:hover>ul {
     display: inherit;
 }
 
@@ -230,7 +230,7 @@ nav ul ul ul li {
 
 /* Change ' +' in order to change the Dropdown symbol */
 
-li > a:only-child:after {
+li>a:only-child:after {
     content: '';
 }
 
@@ -254,7 +254,7 @@ li > a:only-child:after {
 
     /* Hide the navigation menu by default */
     /* Also hide the  */
-    .toggle + a,
+    .toggle+a,
     .menu {
         display: none;
     }
@@ -290,7 +290,7 @@ li > a:only-child:after {
     }
 
     /* Display Dropdown when clicked on Parent Lable */
-    [id^=drop]:checked + ul {
+    [id^=drop]:checked+ul {
         display: block;
         background: rgba(16, 16, 16, 0.85);
         padding: 15px 0;
@@ -346,8 +346,8 @@ li > a:only-child:after {
     }
 
     /* Hide menus on hover */
-    nav ul ul li:hover > ul,
-    nav ul li:hover > ul {
+    nav ul ul li:hover>ul,
+    nav ul li:hover>ul {
         display: none;
     }
 
@@ -672,12 +672,12 @@ span.product-new-top {
     height: 30px;
 }
 
-.rating > input {
+.rating>input {
     opacity: 0;
     margin-right: -100%;
 }
 
-.rating > label {
+.rating>label {
     position: relative;
     display: block;
     float: right;
@@ -685,7 +685,7 @@ span.product-new-top {
     background-size: 30px 30px;
 }
 
-.rating > label:before {
+.rating>label:before {
     display: block;
     opacity: 0;
     content: '';
@@ -696,7 +696,9 @@ span.product-new-top {
     transition: opacity 0.2s linear;
 }
 
-.rating > label:hover:before, .rating > label:hover ~ label:before, .rating:not(:hover) > :checked ~ label:before {
+.rating>label:hover:before,
+.rating>label:hover~label:before,
+.rating:not(:hover)> :checked~label:before {
     opacity: 1;
 }
 
@@ -1091,6 +1093,7 @@ h3.sear-head {
 }
 
 @media only screen and (max-width: 1023px) {
+
     .pagination__item:nth-child(3),
     .pagination__item:nth-child(9) {
         display: none
@@ -1098,8 +1101,7 @@ h3.sear-head {
 }
 
 @media only screen and (min-width: 1025px) {
-    .pagination__item.active:hover
-    .pagination__link {
+    .pagination__item.active:hover .pagination__link {
         color: #fff;
         background: #6658af
     }
@@ -1390,19 +1392,20 @@ a.move-top span {
 }
 
 .quality {
-    background: rgba(25,25,29,.66);
+    background: rgba(25, 25, 29, .66);
     margin-bottom: 5px;
     color: white;
-    
+
 }
 
-#movie-info p a, .quality-tags {
-    background: rgba(27,27,35,.4);
+#movie-info p a,
+.quality-tags {
+    background: rgba(27, 27, 35, .4);
     padding: 5px 12px;
     border-radius: 3px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
-    border: 1px solid rgba(255,255,255,.16);
+    border: 1px solid rgba(255, 255, 255, .16);
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     font-size: .8em;
@@ -1727,13 +1730,10 @@ a.move-top span {
     }
 }
 
-@media (max-width: 384px) {
-}
+@media (max-width: 384px) {}
 
-@media (max-width: 375px) {
-}
+@media (max-width: 375px) {}
 
-@media (max-width: 320px) {
-}
+@media (max-width: 320px) {}
 
 /*--//responsive--*/

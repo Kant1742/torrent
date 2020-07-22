@@ -10,7 +10,7 @@ def get_json():
     all_torrents = []
     all_slugs = []
 
-    for current_id in range(350, 450):
+    for current_id in range(650, 750):
         # r = requests.get(
         #     f'https://yts.mx/api/v2/movie_details.json?movie_id={current_id}&with_images=true&with_cast=true')
         r = requests.get(
@@ -30,19 +30,15 @@ def get_json():
     return all_torrents
 
 
-
 # def new_torrent_file(number=1):
 #     with open(f"torrent_detail{number}.json", "w") as file:
 #         to_write = get_json()
 #         json.dump(to_write, file)
 #         print('Created a new file')
 
-# Прямо сейчас я могу менять number_of_file (прибавлять 1) и менять range с 
-# номера, на котором закончил и до числа + 150 
-# range(1, 150) переходит в range(150, 300) и number_of_file=2,
-# далее range(300, 450) и number_of_file=3 и так до конца по 150 фильмов грузить
+
 def writing():
-    number_of_file = 6
+    number_of_file = 9
 
     try:
         # with open('torrent_detail.json', 'a') as f:  # Добавить в файл
@@ -57,6 +53,7 @@ def writing():
             #     number_of_file += 1
     except:
         pass
+
 
 # get_json()
 writing()

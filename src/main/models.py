@@ -77,12 +77,16 @@ class Movie(models.Model):
     rating = models.FloatField(null=True, blank=True)
     runtime = models.IntegerField(null=True, blank=True)
     language = models.CharField(max_length=50, blank=True, null=True)
+    download_count = models.IntegerField(max_length=50, blank=True, null=True)
+    like_count = models.IntegerField(max_length=50, blank=True, null=True)
 
     genres = models.ManyToManyField(Genre)
     cast = models.ManyToManyField(Cast)
 
     description_full = models.TextField(null=True, blank=True)
     yt_trailer_code = models.CharField(max_length=25, null=True, blank=True)
+    mpa_rating = models.CharField(max_length=10, null=True, blank=True)
+    language = models.CharField(max_length=25, null=True, blank=True)
     background_image = models.URLField(null=True, blank=True)
     background_image_original = models.URLField(null=True, blank=True)
     small_cover_image = models.URLField(null=True, blank=True)
@@ -95,7 +99,7 @@ class Movie(models.Model):
     large_screenshot_image2 = models.URLField(null=True, blank=True)
     large_screenshot_image3 = models.URLField(null=True, blank=True)
 
-    # published = models.DateTimeField(default=timezone.now)
+    published = models.DateTimeField(default=timezone.now, blank=True, null=True)
 
     # directors = models.ManyToManyField(Director, related_name="film_director")
     # files = models.ForeignKey(Quality, on_delete=models.CASCADE, blank=True, null=True)

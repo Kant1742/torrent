@@ -280,7 +280,8 @@
         </div>
         <div id="popular-downloads">
             <div class="row">
-                <h2><span class="icon-star"></span>Popular Downloads <a href="https://yts.mx/rss-guide"><img title="RSS"
+                <h2>
+                    <img class="rating" src="{% static 'images/icomoon/star-full.svg' %}" alt="star">Popular Downloads<a href="https://yts.mx/rss-guide"><img title="RSS"
                             src="{% static 'images/rss-icon.webp' %}" alt="RSS" width="24" height="24"></a></h2>
             </div>
 
@@ -295,11 +296,13 @@
                             <img class="img-responsive" src="{{ movie.medium_cover_image }}"
                                 alt="{{ movie.title }} download" width="210" height="315">
                             <figcaption class="hidden-xs hidden-sm">
-                                <span class="icon-star"></span>
+                                <!-- <span class="icon-star"></span> -->
                                 <h4 class="rating">{{ movie.rating }} / 10</h4>
+                                <!-- TODO Genres -->
                                 <h4>Action</h4>
                                 <h4>Crime</h4>
                                 <span class="button-green-download2-big">View Details</span>
+                                <!-- <img class="rating" src="{% static 'images/icomoon/star-full.svg' %}" alt="star"> -->
                             </figcaption>
                         </figure>
                     </a>
@@ -345,7 +348,7 @@
         <div class="container home-content">
             <div class="home-movies">
                 <div class="row">
-                    <h2>Random movies with rating 7+ <a href="https://yts.mx/browse-movies">Browse All</a></h2>
+                    <h2>Random movies with rating 7+<img src="{% static 'images/icomoon/star-full.svg' %}" alt="star"> <a href="https://yts.mx/browse-movies">Browse All</a></h2>
                 </div>
                 <div class="row">
                     <div class="browse-movie-wrap col-xs-10 col-sm-5">

@@ -19,7 +19,9 @@ class GenreYear:
 
 
 class MovieListView(ListView):
-    model = Movie
+    # model = Movie
+    # TODO use Q for filtering using 2 fields
+    queryset = Movie.objects.order_by('-rating')
     paginate_by = 8
 
     # def get_context_data(self, *args, **kwargs):

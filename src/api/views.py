@@ -15,10 +15,6 @@ from .serializers import (
     TorrentsSerializer,
 )
 
-""" Commit info
-Do not create the last item and only if we added a char_name
-"""
-
 
 class MovieViewSet(viewsets.ModelViewSet):
     queryset = Movie.objects.all()
