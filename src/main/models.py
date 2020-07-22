@@ -77,8 +77,8 @@ class Movie(models.Model):
     rating = models.FloatField(null=True, blank=True)
     runtime = models.IntegerField(null=True, blank=True)
     language = models.CharField(max_length=50, blank=True, null=True)
-    download_count = models.IntegerField(max_length=50, blank=True, null=True)
-    like_count = models.IntegerField(max_length=50, blank=True, null=True)
+    download_count = models.IntegerField(blank=True, null=True)
+    like_count = models.IntegerField(blank=True, null=True)
 
     genres = models.ManyToManyField(Genre)
     cast = models.ManyToManyField(Cast)

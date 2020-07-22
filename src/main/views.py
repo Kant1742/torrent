@@ -2,10 +2,11 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import ListView, DetailView
 from django.views.generic.base import View
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
+from django.http import HttpResponse
 
 from .models import Movie, Genre, Torrents, Cast
 from .forms import ReviewForm
-from django.http import HttpResponse
 
 
 class GenreYear:
@@ -23,6 +24,10 @@ class MovieListView(ListView):
     # TODO use Q for filtering using 2 fields
     queryset = Movie.objects.order_by('-rating')
     paginate_by = 8
+
+    def get_queryset(self):
+        queryset = Movie.objects.filter(Q(download_count__gte=10000)).order_by('-rating')
+        return queryset
 
     # def get_context_data(self, *args, **kwargs):
     #     context = super().get_context_data(*args, **kwargs)

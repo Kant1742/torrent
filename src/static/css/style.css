@@ -672,6 +672,11 @@ span.product-new-top {
     height: 30px;
 }
 
+.image-center {
+    align-self: center;
+    margin-right: 2.65em;
+}
+
 .rating>input {
     opacity: 0;
     margin-right: -100%;
