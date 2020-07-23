@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block background-image %}
+{% endblock background-image %}
+
+{% block title %}Search{% endblock title %}
+
+{% block content %}
+<div id="popular-downloads">
+    <div class="row"><br>
+        <h2>Results</h2>
+    </div>
+    
+    <!-- TODO Populate movies via Django templatetags or React.
+    Add pagination? -->
+    <div class="content-dark">
+        <div class="container home-content">
+            <div class="home-movies">
+                <div class="row">
+                    {% for movie in object_list %}
+                    <div class="browse-movie-wrap col-xs-10 col-sm-5">
+                        <a href="{% url 'main:movie_detail' movie.slug %}" class="browse-movie-link">
+                            <figure>
+                                <img class="img-responsive" src="{{ movie.medium_cover_image }}"
+                                    alt="{{ movie.title }} download" width="210" height="315">
+                                <figcaption class="hidden-xs hidden-sm">
+                                    <!-- <span class="icon-star"></span> -->
+                                    <h4 class="rating">{{ movie.rating }} / 10</h4>
+                                    {% for gen in movie.genres.all %}
+                                    <h4>{{ gen.title }}</h4>
+                                    {% endfor %}
+                                    <span class="button-green-download2-big">View Details</span>
+                                    <!-- <img class="rating" src="{% static 'images/icomoon/star-full.svg' %}" alt="star"> -->
+                                </figcaption>
+                            </figure>
+                        </a>
+                        <div class="browse-movie-bottom">
+                            <a href="{% url 'main:movie_detail' movie.slug %}"
+                                class="browse-movie-title">{{ movie.title }}</a>
+                            <div class="browse-movie-year">{{ movie.year }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

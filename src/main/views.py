@@ -26,7 +26,8 @@ class MovieListView(ListView):
     paginate_by = 8
 
     def get_queryset(self):
-        queryset = Movie.objects.filter(Q(download_count__gte=10000)).order_by('-rating')
+        queryset = Movie.objects.filter(
+            Q(download_count__gte=10000)).order_by('-rating')
         return queryset
 
     # def get_context_data(self, *args, **kwargs):
@@ -37,15 +38,35 @@ class MovieListView(ListView):
     #     return context
 
 
+class SearchResultsView(ListView):
+    model = Movie
+    template_name = 'search_results.html'
+    paginate_by = 15
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        object_list = Movie.objects.filter(
+            (Q(title__icontains=query) | Q(year__icontains=query)
+             & Q(download_count__gte=100000))
+        ).order_by('-rating')
+        # if len(object_list) < self.paginate_by:
+        #     object_list = Movie.objects.filter(
+        #         (Q(title__icontains=query) | Q(year__icontains=query)
+        #          & Q(download_count__gte=50000)))
+        return object_list
+
+
 class MovieDetailView(GenreYear, DetailView):
     model = Movie
     template_name = 'main/movie_detail_yts.html'
 
-    # def get_context_data(self, *args, **kwargs):
-    # context = super().get_context_data(*args, **kwargs)
-    # context['all_cast'] = Cast.objects.all()
-    # movie = get_object_or_404(Movie)
-    # return context
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        movie = context['movie']
+        context['movie_cast'] = Cast.objects.filter(movie=movie)
+        cast = context['movie_cast']
+        print(f'\n\n{cast[0].character_name}\n\n')
+        return context
 
 
 class AddReview(View):

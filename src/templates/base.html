@@ -17,7 +17,7 @@
         content="The official YTS YIFY Movies Torrents website. Download free yify movies torrents in 720p, 1080p and 3D quality. Thefastest downloads at the smallest size.">
     <meta property="og:url" content="https%3A%2F%2Fyts.mx%2F">
     <!--[if IE]> <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" /> <![endif]-->
-    
+
     <link rel="shortcut icon" href="images/favicon.ico">
     <link rel="apple-touch-icon" sizes="57x57" href="/assets/images/website/apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="114x114" href="/assets/images/website/apple-touch-icon-114x114.png">
@@ -83,50 +83,10 @@
 </head>
 
 <body class="non-touch">
-    {% block header %}
-    <header class="nav-bar">
-        <div class="nav-logo pull-left">
-            <a href="/"><img src="{% static 'images/site-logo.svg' %}" alt="torrent-movies"></a>
-        </div>
-        <span class="header-slogan hidden-xs pull-left">HD movies at the smallest file size.</span>
-        <div class="main-nav-links hidden-sm hidden-xs">
-            <form method="GET" action="https://yts.mx/search-movies" accept-charset="UTF-8" id="quick-search"
-                name="quick-search">
-                <div id="quick-search-container">
-                    <input id="quick-search-input" name="query" autocomplete="off" type="search"
-                        placeholder="Quick search">
-                    <div class="ajax-spinner" style="background-position: -176px 0px;"></div>
-                </div>
-            </form>
-            <ul class="nav-links">
-                <li><a href="https://yts.mx/"> Home </a></li>
-                <li><a href="https://yts.mx/browse-movies/0/2160p/all/0/latest/0/all" style="color: #6AC045"> 4K
-                    </a></li>
-                <li><a href="https://yts.mx/trending-movies"> Trending </a></li>
-                <li><a href="https://yts.mx/browse-movies"> Browse Movies </a></li>
-            </ul>
-            <!-- TODO 'if' statement for checking wheter a user is logged in -->
-            <ul class="nav-links nav-link-guest">
-                <li><a class="login-nav-btn" href="javascript:void(0)"> Login </a> &nbsp;|&nbsp; <a
-                        class="register-nav-btn" href="javascript:void(0)"> Register </a></li>
-            </ul>
-        </div>
-        <div class="nav-mobile-buttons hidden-md hidden-lg">
-            <a class="touchable" id="mobile-search-btn" href="javascript:void(0)"> <span
-                    class="glyphicon glyphicon-search"></span> </a>
-            <a class="touchable" href="https://yts.mx/browse-movies/0/2160p/all/0/latest/0/all" style="color: #6AC045">
-                <b>4K</b> </a>
-            <a class="touchable" href="https://yts.mx/trending-movies"> <span class="glyphicon glyphicon-stats"></span>
-            </a>
-            <a class="touchable" href="https://yts.mx/browse-movies"> <span class="glyphicon glyphicon-list-alt"></span>
-            </a>
-            <a class="touchable" href="https://yts.mx/login"> <span class="glyphicon glyphicon-user"></span> </a>
-        </div>
-    </header>
-    {% endblock header %}
-
-    <!-- <div id="background-overlay"></div> -->
-    <!-- <div class="modal modal-auth hidden-xs hidden-sm">
+    <div class="main-content">
+        {% include 'include/header.html' %}
+        <!-- <div id="background-overlay"></div> -->
+        <!-- <div class="modal modal-auth hidden-xs hidden-sm">
         <div class="modal-container">
             <div class="modal-switcher">
                 <span id="modal-login"> Login </span>
@@ -222,18 +182,13 @@
             </div>
         </div>
     </div> -->
-    <!-- TODO Search -->
+        <!-- TODO Search -->
+        {% block content %}
+        {% endblock content %}
+        {% include 'include/footer.html' %}
 
-    {% block content %}
-    {% endblock content %}
-
-    <script type="text/javascript" src="{% static 'js/modded1.js?' %}"></script>
-    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56896aba6888ef3e"
-        async="async"></script>
-    <script src="/js/ypt.js"></script>
-
-    <!-- <div id="cboxOverlay" style="display: none;"></div> -->
-    <!-- <div id="colorbox" class="" role="dialog" tabindex="-1" style="display: none;">
+        <!-- <div id="cboxOverlay" style="display: none;"></div> -->
+        <!-- <div id="colorbox" class="" role="dialog" tabindex="-1" style="display: none;">
         <div id="cboxWrapper">
             <div>
                 <div id="cboxTopLeft" style="float: left;"></div>
@@ -260,9 +215,14 @@
         </div>
         <div style="position: absolute; width: 9999px; visibility: hidden; display: none; max-width: none;"></div>
     </div> -->
-
-    <script src="{% static 'js/scripts.js' %}"></script>
-    <script src="http://twitter.github.com/hogan.js/builds/3.0.1/hogan-3.0.1.js"></script>
+<!-- 
+        <script type="text/javascript" src="{% static 'js/modded1.js?' %}"></script>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-56896aba6888ef3e"
+            async="async"></script>
+        <script src="/js/ypt.js"></script>
+        <script src="{% static 'js/scripts.js' %}"></script>
+        <script src="http://twitter.github.com/hogan.js/builds/3.0.1/hogan-3.0.1.js"></script> -->
+    </div>
 </body>
 
 </html>

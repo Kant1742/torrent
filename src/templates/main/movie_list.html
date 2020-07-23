@@ -3,8 +3,6 @@
 
 {% block title %}Movies{% endblock title %}
 {% block content %}
-
-<div class="main-content">
     <div id="mobile-search-input" class="hidden-md hidden-lg">
         <form method="POST" action="https://yts.mx/search-movies" accept-charset="UTF-8">
             {% csrf_token %}
@@ -278,14 +276,14 @@
                         only new official domain for YIFY Movies</b></a>
             </p>
         </div>
+
         <div id="popular-downloads">
             <div class="row">
                 <h2>
-                    <img class="rating" src="{% static 'images/icomoon/star-full.svg' %}" alt="star">Popular Downloads<a href="https://yts.mx/rss-guide"><img title="RSS"
-                            src="{% static 'images/rss-icon.webp' %}" alt="RSS" width="24" height="24"></a></h2>
+                    <img class="rating" src="{% static 'images/icomoon/star-full.svg' %}" alt="star">Popular Downloads<a
+                        href="https://yts.mx/rss-guide"><img title="RSS" src="{% static 'images/rss-icon.webp' %}"
+                            alt="RSS" width="24" height="24"></a></h2>
             </div>
-
-
             <!-- TODO Populate movies via Django templatetags or React.
             Add pagination? -->
             <div class="row">
@@ -298,7 +296,6 @@
                             <figcaption class="hidden-xs hidden-sm">
                                 <!-- <span class="icon-star"></span> -->
                                 <h4 class="rating">{{ movie.rating }} / 10</h4>
-                                <!-- TODO Genres -->
                                 {% for gen in movie.genres.all %}
                                 <h4>{{ gen.title }}</h4>
                                 {% endfor %}
@@ -315,8 +312,8 @@
                 </div>
                 {% endfor %}
             </div>
-
         </div>
+        
         <div class="hidden-xs hidden-sm">
             <div class="nbox-bordered">
                 <div class="title">
@@ -349,7 +346,8 @@
         <div class="container home-content">
             <div class="home-movies">
                 <div class="row">
-                    <h2>Random movies with rating 7+<img src="{% static 'images/icomoon/star-full.svg' %}" alt="star"> <a href="https://yts.mx/browse-movies">Browse All</a></h2>
+                    <h2>Random movies with rating 7+<img src="{% static 'images/icomoon/star-full.svg' %}" alt="star">
+                        <a href="https://yts.mx/browse-movies">Browse All</a></h2>
                 </div>
                 <div class="row">
                     <div class="browse-movie-wrap col-xs-10 col-sm-5">
@@ -749,78 +747,4 @@
             </div>
         </div>
     </div> -->
-    <!-- <div class="container hidden-md hidden-lg">
-        <div class="row">
-            <div class="mobile-footer">
-                <div class="col-sm-20">
-                    <a href="https://yts.mx/"> <span class="glyphicon glyphicon-home"></span>
-                        <p>Home</p>
-                    </a>
-                    <a href="https://yts.mx/browse-movies"> <span class="glyphicon glyphicon-list-alt"></span>
-                        <p>Browse</p>
-                    </a>
-                    <a href="https://yts.mx/login"> <span class="glyphicon glyphicon-log-in"></span>
-                        <p>Login</p>
-                    </a>
-                </div>
-                <div class="col-sm-20">
-                    <a href="https://yts.mx/register"> <span class="glyphicon glyphicon-user"></span>
-                        <p>Register</p>
-                    </a>
-                    <a href="https://yts.mx/requests"> <span class="glyphicon glyphicon-asterisk"></span>
-                        <p>Requests</p>
-                    </a>
-                    <a href="https://yts.mx/suggestions"> <span class="glyphicon glyphicon-pushpin"></span>
-                        <p>Suggestions</p>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-20">
-                    <ul class="text-center">
-                        <li>YTS © 2011 - 2020</li>
-                        <li>-</li>
-                        <li><a href="https://yts.mx/blog">Blog</a></li>
-                        <li>-</li>
-                        <li><a href="https://yts.mx/dmca">DMCA</a></li>
-                        <li>-</li>
-                        <li><a href="https://yts.mx/api">API</a></li>
-                        <li>-</li>
-                        <li><a href="https://yts.mx/rss-guide">RSS</a></li>
-                        <li>-</li>
-                        <li><a href="https://yts.mx/contact">Contact</a></li>
-                        <li>-</li>
-                        <li><a href="https://yts.mx/browse-movies">Browse Movies</a></li>
-                        <li>-</li>
-                        <li><a href="https://yts.mx/requests">Requests</a></li>
-                        <li>-</li>
-                        <li><a href="https://yts.mx/login">Login</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-20">
-                    <ul class="text-center">
-                        <li><a href="https://eztv.io">EZTV</a></li>
-                        <li>-</li>
-                        <li><a href="https://vpn.ht/yts">YTS VPN</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-20">
-                    <ul class="text-center">
-                        <li style="font-size: .80em">By using this site you agree to and accept our <a
-                                href="/terms">User Agreement</a>, which can be read <a href="/terms">here</a>.
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
-</div>
 {% endblock content %}

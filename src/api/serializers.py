@@ -78,29 +78,17 @@ class MovieSerializer(serializers.ModelSerializer):
             Torrents.objects.create(movie=movie, **tor)
         movie.genres.add(*genres)
         movie.save()
-        # print(cast)
 
         iteration_num = 0
         number_of_casts = len(cast)
-        # print(cast[iteration_num])
         print('SERIALIZERs')
-        # print(cast[0])
-        # print(cast[1])
         for c in range(number_of_casts):
-            # print(c)
             for i in cast:
-                # print(i)
-                # print(i['name'])
                 if i['name'] not in all_cast_names:
                     new_cast = Cast.objects.create(name=i['name'],
                                                    url_small_image=i['url_small_image'],
                                                    imdb_code=i['imdb_code'])
                     print('NEW CAST \n\n')
-                    print(new_cast)
-                    # new_cast.character_name.create(
-                    #     character_name=i['character_name'],
-                    #     cast=requested_data[num]['cast'][iteration_num]["name"]
-                    # )
                     movie.cast.add(new_cast)
                     movie.save()
                     all_cast_names = get_all_cast_names()
@@ -108,9 +96,7 @@ class MovieSerializer(serializers.ModelSerializer):
                     existing_cast = Cast.objects.get(name=i['name'])
                     movie.cast.add(existing_cast)
                     all_cast_names = get_all_cast_names()
-                    # movie.cast.add(i)
                 iteration_num += 1
-        # movie.save() # Necessary ?
         return movie
 
 
