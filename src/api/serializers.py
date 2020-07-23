@@ -64,74 +64,55 @@ class MovieSerializer(serializers.ModelSerializer):
     # FIXME "cast: this field is required"
 
     def create(self, validated_data):
-        # TODO optimisation
-        # validated_data includes only one movie
         all_cast_names = get_all_cast_names()
         all_char_names = get_all_char_names()
         all_genre_titles = get_all_genre_titles()
         all_movie_slugs = get_all_movie_slugs()
-        print(validated_data)
 
         torrents = validated_data.pop('torrents')
         genres = validated_data.pop('genres')
-        iteration_num = 0
-        # cast_iteration = 0
-        try:
-            cast = validated_data.pop('cast')
-            number_of_casts = len(cast)
-            try:
-                for c in range(number_of_casts):
-                    for i in cast:
-                        # print(i['name'])
-                        if i['name'] not in all_cast_names:
-                            print(i)
-                            try:
-                                # if i['url_small_image']:
-                                # TODO Try get_or_create
-                                new_cast = Cast.objects.create(name=i['name'],
-                                                            url_small_image=i['url_small_image'],
-                                                            imdb_code=i['imdb_code'])
-                                print('NEW CAST \n\n')
-                                print(new_cast)
-                                new_cast.character_name.create(
-                                    character_name=i['character_name'],
-                                    cast=requested_data[num]['cast'][iteration_num]["name"]
-                                )
-                                movie.cast.add(new_cast)
-                                movie.save()
-                                all_cast_names = get_all_cast_names()
-                                # cast_iteration += 1
-                            # else:
-                            except:
-                                new_cast = Cast.objects.create(name=i['name'],
-                                                            imdb_code=i['imdb_code'])
-                                print(new_cast)
-                                new_cast.character_name.create(
-                                    character_name=i['character_name'],
-                                    cast=requested_data[num]['cast'][iteration_num]["name"]
-                                )
-                                movie.cast.add(new_cast)
-                                movie.save()
-                                all_cast_names = get_all_cast_names()
-                                # cast_iteration += 1
-                        else:
-                            existing_cast = Cast.objects.get(name=i['name'])
-                            movie.cast.add(existing_cast)
-                            all_cast_names = get_all_cast_names()
-                            # movie.cast.add(i)
-                            # cast_iteration += 1
-                        iteration_num += 1
-            except:
-                print('Exception')
-        except:
-            print('SERIALIZERS - There is no cast')
+        cast = validated_data.pop('cast')
+        print(cast)
         movie = Movie.objects.create(**validated_data)
         for tor in torrents:
             Torrents.objects.create(movie=movie, **tor)
         movie.genres.add(*genres)
         movie.save()
         # print(cast)
+
+        iteration_num = 0
+        number_of_casts = len(cast)
+        # print(cast[iteration_num])
+        print('SERIALIZERs')
+        # print(cast[0])
+        # print(cast[1])
+        for c in range(number_of_casts):
+            # print(c)
+            for i in cast:
+                # print(i)
+                # print(i['name'])
+                if i['name'] not in all_cast_names:
+                    new_cast = Cast.objects.create(name=i['name'],
+                                                   url_small_image=i['url_small_image'],
+                                                   imdb_code=i['imdb_code'])
+                    print('NEW CAST \n\n')
+                    print(new_cast)
+                    # new_cast.character_name.create(
+                    #     character_name=i['character_name'],
+                    #     cast=requested_data[num]['cast'][iteration_num]["name"]
+                    # )
+                    movie.cast.add(new_cast)
+                    movie.save()
+                    all_cast_names = get_all_cast_names()
+                else:
+                    existing_cast = Cast.objects.get(name=i['name'])
+                    movie.cast.add(existing_cast)
+                    all_cast_names = get_all_cast_names()
+                    # movie.cast.add(i)
+                iteration_num += 1
+        # movie.save() # Necessary ?
         return movie
+
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
