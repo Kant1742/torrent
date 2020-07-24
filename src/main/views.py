@@ -25,11 +25,34 @@ class GenreYear:
 
 class MovieListView(ListView):
     # model = Movie
-    # TODO use Q for filtering using 2 fields
     queryset = Movie.objects.filter(
-        Q(download_count__gte=10000)).order_by('-rating')
+        Q(download_count__gte=10000) & Q(rating__gte=7)).order_by('-rating')
     paginate_by = 8
     template_name = 'main/movie_list.html'
+
+    def random_popular_movies(self):
+        object_list = self.object_list
+        ids = []
+        obj_iteration = 0
+        for i in object_list:
+            obj = object_list[obj_iteration]
+            obj_id = obj.id
+            ids.append(obj_id)
+            obj_iteration += 1
+        
+        # total_movies = [ids.append(i) for i in object_list]
+        movies = []
+        iterations = 0
+        while iterations < self.paginate_by:
+            rand = random.choice(ids)
+            try:
+                m = Movie.objects.get(id=rand)
+                movies.append(m)
+                iterations += 1
+            except:
+                continue
+        print(movies)
+        return movies
 
     def random_movies(self):
         # TODO right now these are only random movies without 7+ validation
@@ -53,13 +76,14 @@ class MovieListView(ListView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['stored_movies'] = self.random_movies()
+        context['random_popular_movies'] = self.random_popular_movies()
         return context
 
 
 class LatestMoviesView(ListView):
     queryset = Movie.objects.all()
     template_name = 'main/latest_movies.html'
-    paginate_by = 4
+    paginate_by = 16
 
 
 # class GetOneRandomMovie():
@@ -75,7 +99,7 @@ class LatestMoviesView(ListView):
 class SearchResultsView(ListView):
     model = Movie
     template_name = 'search_results.html'
-    paginate_by = 15
+    paginate_by = 16
 
     def get_queryset(self):
         query = self.request.GET.get('q')

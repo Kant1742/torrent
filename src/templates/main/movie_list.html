@@ -3,7 +3,6 @@
 
 {% block title %}Movies{% endblock title %}
 {% block content %}
-
 <div id="mobile-search-input" class="hidden-md hidden-lg">
     <form method="POST" action="https://yts.mx/search-movies" accept-charset="UTF-8">
         {% csrf_token %}
@@ -277,25 +276,24 @@
                     only new official domain for YIFY Movies</b></a> -->
         </p>
     </div>
-
     <div id="popular-downloads">
         <div class="row">
             <h2>
-                <img class="rating" src="{% static 'images/icomoon/star-full.svg' %}" alt="star">Popular Downloads<a
-                    href="https://yts.mx/rss-guide"><img title="RSS" src="{% static 'images/rss-icon.webp' %}" alt="RSS"
-                        width="24" height="24"></a></h2>
+                <img class="rating" src="{% static 'images/icomoon/star-full.svg' %}" alt="star">Popular
+                Downloads<a href="https://yts.mx/rss-guide"><img title="RSS" src="{% static 'images/rss-icon.webp' %}"
+                        alt="RSS" width="24" height="24"></a></h2>
         </div>
         <!-- TODO Populate movies via Django templatetags or React.
             Add pagination? -->
+
         <div class="row">
-            {% for movie in object_list %}
+            {% for movie in random_popular_movies %}
             <div class="browse-movie-wrap col-xs-10 col-sm-5">
                 <a href="{% url 'main:movie_detail' movie.slug %}" class="browse-movie-link">
                     <figure>
                         <img class="img-responsive" src="{{ movie.medium_cover_image }}"
                             alt="{{ movie.title }} download" width="210" height="315">
                         <figcaption class="hidden-xs hidden-sm">
-                            <!-- <span class="icon-star"></span> -->
                             <h4 class="rating">{{ movie.rating }} / 10</h4>
                             {% for gen in movie.genres.all %}
                             <h4>{{ gen.title }}</h4>
@@ -312,7 +310,6 @@
                         <span style="color: #ACD7DE; font-size: 75%;"> {{ movie.language }}</span>
                         {% endif %}
                     </div>
-
                 </div>
             </div>
             {% endfor %}
@@ -345,13 +342,11 @@
     </div>
 </div>
 
-
-
 <div class="content-dark">
     <div class="container home-content">
         <div class="home-movies">
             <div class="row">
-                <h2>&emsp;&emsp;&emsp;&emsp;Random movies
+                <h2>&emsp;&emsp;&emsp;&emsp; Random movies
                     <a href="/browse-movies/">Browse All</a></h2>
             </div>
             <div class="row">
@@ -371,6 +366,7 @@
                                 <span class="button-green-download2-big">View Details</span>
                             </figcaption>
                         </figure>
+
                     </a>
                     <div class="browse-movie-bottom">
                         <a href="{% url 'main:movie_detail' sm.slug %}" class="browse-movie-title">{{ sm.title }}</a>
