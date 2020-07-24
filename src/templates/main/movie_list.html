@@ -265,11 +265,11 @@
   <div class="container home-content">
     <div class="home-movies">
       <div class="row">
-        <h2>&emsp;&emsp;&emsp;&emsp; Random movies
+        <h2>&emsp;&emsp;&emsp;&emsp; Random movies with rating 7+
           <a href="/browse-movies/">Browse All</a></h2>
       </div>
       <div class="row">
-        {% for sm in stored_movies %}
+        {% for sm in random_popular_movies %}
         <div class="browse-movie-wrap col-xs-10 col-sm-5">
 
           <a href="{% url 'main:movie_detail' sm.slug %}" class="browse-movie-link">
