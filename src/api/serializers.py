@@ -87,7 +87,6 @@ class MovieSerializer(serializers.ModelSerializer):
                     new_cast = Cast.objects.create(name=i['name'],
                                                    url_small_image=i['url_small_image'],
                                                    imdb_code=i['imdb_code'])
-                    print('NEW CAST \n\n')  # TODO this print never worked
                     movie.cast.add(new_cast)
                     movie.save()
                     all_cast_names = get_all_cast_names()

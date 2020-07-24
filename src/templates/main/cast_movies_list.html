@@ -1,0 +1,252 @@
+{% extends 'base.html' %}
+{% block title %}{{ object.name }}{% endblock %}
+
+{% block content %}
+
+
+<!-- <div id="mobile-search-input" class="hidden-md hidden-lg">
+    <form method="POST" action="https://yts.mx/search-movies" accept-charset="UTF-8">
+      {% csrf_token %}
+      <div class="input-group container search-query">
+        <input class="form-control" placeholder="Search for a movie…" autocorrect="off" autocomplete="off"
+          name="keyword" type="search">
+        <span class="input-group-btn"> <button class="btn btn-success" type="submit">Search</button> </span>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-10">
+            <div class="selects-container">
+              <p>Quality:</p>
+              <select name="quality">
+                <option value="all">All</option>
+                <option value="720p">720p</option>
+                <option value="1080p">1080p</option>
+                <option value="2160p">2160p</option>
+                <option value="3D">3D</option>
+              </select>
+            </div>
+            <div class="selects-container">
+              <p>Genre:</p>
+              <select name="genre">
+                <option value="all">All</option>
+                <option value="action">Action</option>
+              </select>
+            </div>
+            <div class="selects-container">
+              <p>Year:</p>
+              <select name="year">
+                <option value="0">All</option>
+                <option value="2020">2020</option>
+                <option value="2019">2019</option>
+                <option value="2015-2018">2015-2018</option>
+                <option value="2010-2014">2010-2014</option>
+                <option value="2000-2009">2000-2009</option>
+                <option value="1990-1999">1990-1999</option>
+                <option value="1980-1989">1980-1989</option>
+                <option value="1970-1979">1970-1979</option>
+                <option value="1900-1969">1900-1969</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-xs-10">
+            <div class="selects-container">
+              <p>Rating:</p>
+              <select name="rating">
+                <option value="0">All</option>
+                <option value="9">9+</option>
+                <option value="8">8+</option>
+                <option value="7">7+</option>
+                <option value="6">6+</option>
+                <option value="5">5+</option>
+                <option value="4">4+</option>
+                <option value="3">3+</option>
+                <option value="2">2+</option>
+                <option value="1">1+</option>
+              </select>
+            </div>
+            <div class="selects-container">
+              <p>Language:</p>
+              <select name="language">
+                <option value="en">English</option>
+                <option value="foreign">Foreign</option>
+                <option value="all" selected="selected">--------All--------</option>
+                <option value="ja">Japanese (585)</option>
+                <option value="fr">French (468)</option>
+              </select>
+            </div>
+            <div class="selects-container selects-container-last">
+              <p>Order By:</p>
+              <select name="order_by">
+                <option value="latest" selected="selected">Latest</option>
+                <option value="oldest">Oldest</option>
+                <option value="seeds">Seeds</option>
+                <option value="peers">Peers</option>
+                <option value="year">Year</option>
+                <option value="rating">Rating</option>
+                <option value="likes">Likes</option>
+                <option value="alphabetical">Alphabetical</option>
+                <option value="downloads">Downloads</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="ac-results hidden-sm hidden-xs">
+    <ul></ul>
+  </div> -->
+
+
+<!-- TODO full-text search -->
+<!-- <div id="main-search" class="content-dark hidden-sm hidden-xs">
+    <div class="container">
+      <form method="post" action="/search-movies/" accept-charset="UTF-8">
+        {% csrf_token %}
+        <div id="main-search-fields" style="width: 880px;">
+          <p class="pull-left term">Search Term:</p>
+          <input name="keyword" value="Tom Hanks" autocomplete="off" type="search">
+
+          <div class="selects-container">
+            <p>Quality:</p>
+            <select name="quality">
+              <option value="all">All</option>
+              <option value="720p">720p</option>
+              <option value="1080p">1080p</option>
+              <option value="2160p">2160p</option>
+              <option value="3D">3D</option>
+            </select>
+          </div>
+          <div class="selects-container">
+            <p>Genre:</p>
+            <select name="genre">
+              <option value="all">All</option>
+              <option value="action">Action</option>
+            </select>
+          </div>
+          <div class="selects-container">
+            <p>Rating:</p>
+            <select name="rating">
+              <option value="0">All</option>
+              <option value="9">9+</option>
+              <option value="8">8+</option>
+              <option value="7">7+</option>
+              <option value="6">6+</option>
+              <option value="5">5+</option>
+              <option value="4">4+</option>
+              <option value="3">3+</option>
+              <option value="2">2+</option>
+              <option value="1">1+</option>
+            </select>
+          </div>
+          <div class="selects-container">
+            <p>Year:</p>
+            <select name="year">
+              <option value="0">All</option>
+              <option value="2020">2020</option>
+              <option value="2019">2019</option>
+              <option value="2015-2018">2015-2018</option>
+              <option value="2010-2014">2010-2014</option>
+              <option value="2000-2009">2000-2009</option>
+              <option value="1990-1999">1990-1999</option>
+              <option value="1980-1989">1980-1989</option>
+              <option value="1970-1979">1970-1979</option>
+              <option value="1900-1969">1900-1969</option>
+            </select>
+          </div>
+
+          <div class="selects-container">
+            <p>Language:</p>
+            <select name="language">
+              <option value="en">English</option>
+              <option value="foreign">Foreign</option>
+              <option value="all" selected="selected">--------All--------</option>
+              <option value="ja">Japanese (585)</option>
+            </select>
+          </div>
+          <div class="selects-container selects-container-last">
+            <p>Order By:</p>
+            <select name="order_by">
+              <option value="latest">Latest</option>
+              <option value="oldest">Oldest</option>
+              <option value="featured">Featured</option>
+              <option value="seeds">Seeds</option>
+              <option value="peers">Peers</option>
+              <option value="year">Year</option>
+              <option value="rating">Rating</option>
+              <option value="likes">Likes</option>
+              <option value="alphabetical">Alphabetical</option>
+              <option value="downloads">Downloads</option>
+            </select>
+          </div>
+        </div>
+        <div id="main-search-btn">
+          <input class="button-green-download2-big" type="submit" value="Search">
+        </div>
+      </form>
+    </div>
+  </div> -->
+<div class="browse-content">
+  <div class="container">
+    <div class="home-movies">
+      <div class="row"><br>
+        <h2><b>{{ object.movies.all|length }}</b><span style="font-size: 90%;"> <span style="color: #00BBCC"></span>
+            Movies with {{ object.name }} found</span></h2><br>
+        <div class="hidden-md hidden-lg">
+          <ul class="tsc_pagination tsc_paginationA tsc_paginationA06">
+            <li class="pagination-bordered">1 of 3</li>
+            <li><a href="/browse-movies/Tom Hanks?page=2">Next »</a></li>
+          </ul>
+        </div>
+        <section>
+          <div class="row">
+            {% for movie in object.movies.all %}
+            <div class="browse-movie-wrap col-xs-10 col-sm-4 col-md-5 col-lg-4">
+              <a href="{% url 'main:movie_detail' movie.slug %}" class="browse-movie-link">
+                <figure>
+                  <img class="img-responsive" src="{{ movie.medium_cover_image }}"
+                    alt="{{ movie.title }} ({{ movie.year }}) download" width="170" height="255">
+                  <figcaption class="hidden-xs hidden-sm">
+                    <h4 class="rating">{{ movie.rating }} / 10</h4>
+                    {% for g in movie.genres.all|slice:"4" %}
+                    <h4>{{ g.title }}</h4>
+                    {% endfor %}
+                    <span class="button-green-download2-big">View Details</span>
+                  </figcaption>
+                </figure>
+              </a>
+              <div class="browse-movie-bottom">
+                <a href="{% url 'main:movie_detail' movie.slug %}" class="browse-movie-title">
+                  {% if movie.language != 'English' %}
+                  <span style="color: #ACD7DE; font-size: 65%;"> [{{ movie.language|upper|slice:"2" }}]</span>
+                  {% endif %}
+                  {{ movie.title }}
+                </a>
+                <div class="browse-movie-year">{{ movie.year }}</div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </section>
+        <!-- Pagination -->
+        <div class="hidden-sm hidden-xs">
+          <ul class="tsc_pagination tsc_paginationA tsc_paginationA06">
+            <li class="hidden"><a href="">«</a></li>
+            <li><a href="javascript:void(0)" class="current">1</a></li>
+            <li><a href="/browse-movies/Tom Hanks?page=2">2</a></li>
+            <li><a href="/browse-movies/Tom Hanks?page=3">3</a></li>
+            <li><a href="/browse-movies/Tom Hanks?page=2">Next »</a></li>
+            <li><a href="/browse-movies/Tom Hanks?page=3">Last »</a></li>
+          </ul>
+        </div>
+        <div class="hidden-md hidden-lg">
+          <ul class="tsc_pagination tsc_paginationA tsc_paginationA06">
+            <li class="pagination-bordered">1 of 3</li>
+            <li><a href="/browse-movies/Tom Hanks?page=2">Next »</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

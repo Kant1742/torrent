@@ -10,7 +10,7 @@ def get_json():
     all_torrents = []
     all_slugs = []
 
-    for current_id in range(1000, 1250):
+    for current_id in range(1250, 1500):
         # r = requests.get(
         #     f'https://yts.mx/api/v2/movie_details.json?movie_id={current_id}&with_images=true&with_cast=true')
         r = requests.get(
@@ -38,7 +38,7 @@ def get_json():
 
 
 def writing():
-    number_of_file = 11
+    number_of_file = 12
 
     try:
         # with open('torrent_detail.json', 'a') as f:  # Добавить в файл

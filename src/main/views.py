@@ -39,7 +39,7 @@ class MovieListView(ListView):
             obj_id = obj.id
             ids.append(obj_id)
             obj_iteration += 1
-        
+
         # total_movies = [ids.append(i) for i in object_list]
         movies = []
         iterations = 0
@@ -86,14 +86,10 @@ class LatestMoviesView(ListView):
     paginate_by = 16
 
 
-# class GetOneRandomMovie():
-#     def get_random3(self):
-#         max_id = Movie.objects.all().aggregate(max_id=Max("id"))['max_id']
-#         while True:
-#             pk = random.randint(1, max_id)
-#             movie = Movie.objects.filter(pk=pk).first()
-#             if movie:
-#                 return movie
+class CastMoviesList(DetailView):
+    # model = Cast
+    queryset = Cast.objects.all()
+    template_name = 'main/cast_movies_list.html'
 
 
 class SearchResultsView(ListView):
@@ -104,12 +100,7 @@ class SearchResultsView(ListView):
     def get_queryset(self):
         query = self.request.GET.get('q')
         object_list = Movie.objects.filter(
-            (Q(title__icontains=query) | Q(year__icontains=query)
-             & Q(download_count__gte=100000))).order_by('-rating')
-        # if len(object_list) < self.paginate_by:
-        #     object_list = Movie.objects.filter(
-        #         (Q(title__icontains=query) | Q(year__icontains=query)
-        #          & Q(download_count__gte=50000)))
+            (Q(title__icontains=query) | Q(year__icontains=query))).order_by('-rating')
         return object_list
 
 
