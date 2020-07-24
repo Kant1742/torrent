@@ -51,11 +51,11 @@ class MovieViewSet(viewsets.ModelViewSet):
                     if i not in all_genre_titles:
                         Genre.objects.create(title=i)
                         all_genre_titles = get_all_genre_titles()
-            print('vi4ews')
+            print(f'views --- {num}')
 
             # -----------------------------------------------------------------
             iteration_num = 0
-            print(requested_data[num]['cast'])
+            # print(requested_data[num]['cast'])
             number_of_casts = len(requested_data[num]['cast'])
             # for c in range(number_of_casts+1): # This shit
             # if requested_data[num]['cast'][iteration_num]["name"] not in all_cast_names:

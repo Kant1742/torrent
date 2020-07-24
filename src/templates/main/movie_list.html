@@ -3,16 +3,17 @@
 
 {% block title %}Movies{% endblock title %}
 {% block content %}
-    <div id="mobile-search-input" class="hidden-md hidden-lg">
-        <form method="POST" action="https://yts.mx/search-movies" accept-charset="UTF-8">
-            {% csrf_token %}
-            <div class="input-group container search-query">
-                <input class="form-control" placeholder="Search for a movie…" autocorrect="off" autocomplete="off"
-                    name="keyword" type="search">
-                <span class="input-group-btn"> <button class="btn btn-success" type="submit">Search</button>
-                </span>
-            </div>
-            <!-- <div class="container">
+
+<div id="mobile-search-input" class="hidden-md hidden-lg">
+    <form method="POST" action="https://yts.mx/search-movies" accept-charset="UTF-8">
+        {% csrf_token %}
+        <div class="input-group container search-query">
+            <input class="form-control" placeholder="Search for a movie…" autocorrect="off" autocomplete="off"
+                name="keyword" type="search">
+            <span class="input-group-btn"> <button class="btn btn-success" type="submit">Search</button>
+            </span>
+        </div>
+        <!-- <div class="container">
                 <div class="row">
                     <div class="col-xs-10">
                         <div class="selects-container">
@@ -175,158 +176,162 @@
                     </div>
                 </div>
             </div> -->
-        </form>
-    </div>
-    <div class="ac-results hidden-sm hidden-xs">
-        <ul></ul>
-    </div>
-    <style type="text/css">
-        .nbox-bordered {
-            background-color: black;
-            border: 5px solid #75c74e;
-            padding: 0 35px 5px 35px;
-            max-width: 1140px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+    </form>
+</div>
+<div class="ac-results hidden-sm hidden-xs">
+    <ul></ul>
+</div>
+<style type="text/css">
+    .nbox-bordered {
+        background-color: black;
+        border: 5px solid #75c74e;
+        padding: 0 35px 5px 35px;
+        max-width: 1140px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 
-        .nbox-bordered h1,
-        .nbox-bordered p {
-            color: white;
-            font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-            text-align: center;
-        }
+    .nbox-bordered h1,
+    .nbox-bordered p {
+        color: white;
+        font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+        text-align: center;
+    }
 
-        .nbox-bordered p {
-            line-height: 30px;
-            width: auto;
-            margin-bottom: 10px;
-        }
+    .nbox-bordered p {
+        line-height: 30px;
+        width: auto;
+        margin-bottom: 10px;
+    }
 
-        .nbox-bordered .title {
-            margin-top: 5px;
-            width: 80%;
-            border-bottom: 1px solid grey;
-            margin-left: auto;
-            margin-right: auto;
-            margin-bottom: 5px;
-        }
+    .nbox-bordered .title {
+        margin-top: 5px;
+        width: 80%;
+        border-bottom: 1px solid grey;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 5px;
+    }
 
-        .nbox-bordered .title h1 {
-            font-size: 40px;
-            margin-top: 0px;
-            margin-bottom: 0px;
-        }
+    .nbox-bordered .title h1 {
+        font-size: 40px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
 
-        /*
+    /*
         .nbox-bordered .title h1:before {
             content: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/898049/mail.png");
             padding-right: 20px;
         }
         */
 
-        .nbox-bordered .title img {
-            position: relative;
-            top: 65px;
-            left: 175px;
-        }
+    .nbox-bordered .title img {
+        position: relative;
+        top: 65px;
+        left: 175px;
+    }
 
-        .nbox-bordered .blue {
-            margin-top: 10px;
-            margin-bottom: 10px;
-            font-weight: bold;
-            color: #4c96d0;
-        }
+    .nbox-bordered .blue {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        font-weight: bold;
+        color: #4c96d0;
+    }
 
-        .nbox-bordered a {
-            text-decoration: none;
-        }
+    .nbox-bordered a {
+        text-decoration: none;
+    }
 
-        .nbox-bordered .button {
-            background-color: #75c74e;
-            width: 250px;
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 15px;
-            border-radius: 5px;
-        }
+    .nbox-bordered .button {
+        background-color: #75c74e;
+        width: 250px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 15px;
+        border-radius: 5px;
+    }
 
-        .nbox-bordered .button img {
-            float: left;
-            margin-top: 8px;
-            margin-left: 22px;
-        }
+    .nbox-bordered .button img {
+        float: left;
+        margin-top: 8px;
+        margin-left: 22px;
+    }
 
-        .nbox-bordered .button p {
-            padding: 3px 0;
-            text-shadow: 2px 2px #4b9924;
-            font-weight: bold;
-        }
-    </style>
-    <div class="container home-content">
-        <div class="hidden-xs hidden-sm">
-            <h1>Download torrent movies</h1>
-            <p>
-                Welcome to the official <b>YTS.MX</b> website. Here you can browse and download YIFY
-                movies in excellent 720p, 1080p, 2160p 4K and 3D quality, all at the smallest file size. YTS
-                Movies Torrents.
-                <br><br>
-                <a href="https://yts.mx/blog/yts-mx-is-the-only-new-official-domain-for-yify-movies"
-                    title="YTS.MX is the only new official domain for YIFY Movies"><b>IMPORTANT - YTS.MX is the
-                        only new official domain for YIFY Movies</b></a>
-            </p>
+    .nbox-bordered .button p {
+        padding: 3px 0;
+        text-shadow: 2px 2px #4b9924;
+        font-weight: bold;
+    }
+</style>
+<div class="container home-content">
+    <div class="hidden-xs hidden-sm">
+        <h1>Download torrent movies</h1>
+        <p>
+            Welcome to the official <b>YTS.MX</b> website. Here you can browse and download YIFY
+            movies in excellent 720p, 1080p, 2160p 4K and 3D quality, all at the smallest file size. YTS
+            Movies Torrents.
+            <!-- <br><br>
+            <a href="/"
+                title=" is the only new official domain for YIFY Movies"><b>IMPORTANT - YTS.MX is the
+                    only new official domain for YIFY Movies</b></a> -->
+        </p>
+    </div>
+
+    <div id="popular-downloads">
+        <div class="row">
+            <h2>
+                <img class="rating" src="{% static 'images/icomoon/star-full.svg' %}" alt="star">Popular Downloads<a
+                    href="https://yts.mx/rss-guide"><img title="RSS" src="{% static 'images/rss-icon.webp' %}" alt="RSS"
+                        width="24" height="24"></a></h2>
         </div>
-
-        <div id="popular-downloads">
-            <div class="row">
-                <h2>
-                    <img class="rating" src="{% static 'images/icomoon/star-full.svg' %}" alt="star">Popular Downloads<a
-                        href="https://yts.mx/rss-guide"><img title="RSS" src="{% static 'images/rss-icon.webp' %}"
-                            alt="RSS" width="24" height="24"></a></h2>
-            </div>
-            <!-- TODO Populate movies via Django templatetags or React.
+        <!-- TODO Populate movies via Django templatetags or React.
             Add pagination? -->
-            <div class="row">
-                {% for movie in object_list %}
-                <div class="browse-movie-wrap col-xs-10 col-sm-5">
-                    <a href="{% url 'main:movie_detail' movie.slug %}" class="browse-movie-link">
-                        <figure>
-                            <img class="img-responsive" src="{{ movie.medium_cover_image }}"
-                                alt="{{ movie.title }} download" width="210" height="315">
-                            <figcaption class="hidden-xs hidden-sm">
-                                <!-- <span class="icon-star"></span> -->
-                                <h4 class="rating">{{ movie.rating }} / 10</h4>
-                                {% for gen in movie.genres.all %}
-                                <h4>{{ gen.title }}</h4>
-                                {% endfor %}
-                                <span class="button-green-download2-big">View Details</span>
-                                <!-- <img class="rating" src="{% static 'images/icomoon/star-full.svg' %}" alt="star"> -->
-                            </figcaption>
-                        </figure>
-                    </a>
-                    <div class="browse-movie-bottom">
-                        <a href="{% url 'main:movie_detail' movie.slug %}"
-                            class="browse-movie-title">{{ movie.title }}</a>
-                        <div class="browse-movie-year">{{ movie.year }}</div>
+        <div class="row">
+            {% for movie in object_list %}
+            <div class="browse-movie-wrap col-xs-10 col-sm-5">
+                <a href="{% url 'main:movie_detail' movie.slug %}" class="browse-movie-link">
+                    <figure>
+                        <img class="img-responsive" src="{{ movie.medium_cover_image }}"
+                            alt="{{ movie.title }} download" width="210" height="315">
+                        <figcaption class="hidden-xs hidden-sm">
+                            <!-- <span class="icon-star"></span> -->
+                            <h4 class="rating">{{ movie.rating }} / 10</h4>
+                            {% for gen in movie.genres.all %}
+                            <h4>{{ gen.title }}</h4>
+                            {% endfor %}
+                            <span class="button-green-download2-big">View Details</span>
+                            <!-- <img class="rating" src="{% static 'images/icomoon/star-full.svg' %}" alt="star"> -->
+                        </figcaption>
+                    </figure>
+                </a>
+                <div class="browse-movie-bottom">
+                    <a href="{% url 'main:movie_detail' movie.slug %}" class="browse-movie-title">{{ movie.title }}</a>
+                    <div class="browse-movie-year">{{ movie.year }}
+                        {% if movie.language != 'English' %}
+                        <span style="color: #ACD7DE; font-size: 75%;"> {{ movie.language }}</span>
+                        {% endif %}
                     </div>
+
                 </div>
-                {% endfor %}
             </div>
+            {% endfor %}
         </div>
-        
-        <div class="hidden-xs hidden-sm">
-            <div class="nbox-bordered">
-                <div class="title">
-                    <h1>Warning! Download only with VPN...</h1>
-                </div>
-                <p>
-                    Downloading torrents is risky for you: your IP and leaked private data being actively
-                    tracked by your <b>ISP</b> and <b>Government Agencies</b>.
-                    Protect yourself from expensive lawsuits and fines NOW!
-                    You must use a VPN like <b>Express</b>. It is the only way to download torrents fully
-                    anonymous by encrypting all traffic with zero logs.
-                </p>
-                <!-- <p class="blue">
+    </div>
+
+    <div class="hidden-xs hidden-sm">
+        <div class="nbox-bordered">
+            <div class="title">
+                <h1>Warning! Download only with VPN...</h1>
+            </div>
+            <p>
+                Downloading torrents is risky for you: your IP and leaked private data being actively
+                tracked by your <b>ISP</b> and <b>Government Agencies</b>.
+                Protect yourself from expensive lawsuits and fines NOW!
+                You must use a VPN like <b>Express</b>. It is the only way to download torrents fully
+                anonymous by encrypting all traffic with zero logs.
+            </p>
+            <!-- <p class="blue">
                     <span style="font-size: 120%">″Do not risk it! Protect yourself right now by downloading
                         Express VPN″</span> - William
                 </p>
@@ -336,316 +341,49 @@
                         <p>Download Express VPN</p>
                     </div>
                 </a> -->
+        </div>
+    </div>
+</div>
+
+
+
+<div class="content-dark">
+    <div class="container home-content">
+        <div class="home-movies">
+            <div class="row">
+                <h2>&emsp;&emsp;&emsp;&emsp;Random movies
+                    <a href="/browse-movies/">Browse All</a></h2>
+            </div>
+            <div class="row">
+                {% for sm in stored_movies %}
+                <div class="browse-movie-wrap col-xs-10 col-sm-5">
+
+                    <a href="{% url 'main:movie_detail' sm.slug %}" class="browse-movie-link">
+                        <figure>
+                            <img class="img-responsive" src="{{ sm.medium_cover_image }}"
+                                alt="{{ sm.title }} ({{ sm.year }}) download" width="210" height="315">
+                            <h4 class="rating">{{ sm.rating }} / 10</h4>
+                            <figcaption class="hidden-xs hidden-sm">
+                                <h4 class="rating">{{ sm.rating }} / 10</h4>
+                                {% for g in sm.genres.all %}
+                                <h4>{{ g.title }}</h4>
+                                {% endfor %}
+                                <span class="button-green-download2-big">View Details</span>
+                            </figcaption>
+                        </figure>
+                    </a>
+                    <div class="browse-movie-bottom">
+                        <a href="{% url 'main:movie_detail' sm.slug %}" class="browse-movie-title">{{ sm.title }}</a>
+                        <div class="browse-movie-year">{{ sm.year }}</div>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
+</div>
 
-
-    <!-- TODO inclusion tag -->
-    <div class="content-dark">
-        <div class="container home-content">
-            <div class="home-movies">
-                <div class="row">
-                    <h2>Random movies with rating 7+<img src="{% static 'images/icomoon/star-full.svg' %}" alt="star">
-                        <a href="https://yts.mx/browse-movies">Browse All</a></h2>
-                </div>
-                <div class="row">
-                    <div class="browse-movie-wrap col-xs-10 col-sm-5">
-                        <a href="https://yts.mx/movies/adventures-of-serial-buddies-2011" class="browse-movie-link">
-                            <figure>
-                                <img class="img-responsive"
-                                    src="/assets/images/movies/adventures_of_serial_buddies_2011/medium-cover.jpg"
-                                    alt="Adventures of Serial Buddies (2011) download" width="210" height="315">
-                                <img class="quality-banner img-responsive" src="/assets/images/website/banner720p.png"
-                                    alt="Adventures of Serial Buddies (2011) download 720p" width="118" height="91">
-                                <figcaption class="hidden-xs hidden-sm">
-                                    <span class="icon-star"></span>
-                                    <h4 class="rating">6.4 / 10</h4>
-                                    <h4>Comedy</h4>
-                                    <span class="button-green-download2-big">View Details</span>
-                                </figcaption>
-                            </figure>
-                        </a>
-                        <div class="browse-movie-bottom">
-                            <a href="https://yts.mx/movies/adventures-of-serial-buddies-2011"
-                                class="browse-movie-title">Adventures of Serial Buddies</a>
-                            <div class="browse-movie-year">2011</div>
-                        </div>
-                    </div>
-                    <div class="browse-movie-wrap col-xs-10 col-sm-5">
-                        <a href="https://yts.mx/movies/along-the-roadside-2013" class="browse-movie-link">
-                            <figure>
-                                <img class="img-responsive"
-                                    src="/assets/images/movies/along_the_roadside_2013/medium-cover.jpg"
-                                    alt="Along the Roadside (2013) download" width="210" height="315">
-                                <img class="quality-banner img-responsive" src="/assets/images/website/banner720p.png"
-                                    alt="Along the Roadside (2013) download 720p" width="118" height="91">
-                                <figcaption class="hidden-xs hidden-sm">
-                                    <span class="icon-star"></span>
-                                    <h4 class="rating">6.8 / 10</h4>
-                                    <h4>Comedy</h4>
-                                    <h4>Music</h4>
-                                    <span class="button-green-download2-big">View Details</span>
-                                </figcaption>
-                            </figure>
-                        </a>
-                        <div class="browse-movie-bottom">
-                            <a href="https://yts.mx/movies/along-the-roadside-2013" class="browse-movie-title">Along
-                                the Roadside</a>
-                            <div class="browse-movie-year">2013</div>
-                        </div>
-                    </div>
-                    <div class="browse-movie-wrap col-xs-10 col-sm-5">
-                        <a href="https://yts.mx/movies/debunkers-inc-2019" class="browse-movie-link">
-                            <figure>
-                                <img class="img-responsive"
-                                    src="/assets/images/movies/debunkers_inc_2019/medium-cover.jpg"
-                                    alt="Debunkers, Inc. (2019) download" width="210" height="315">
-                                <img class="quality-banner img-responsive" src="/assets/images/website/banner1080p.png"
-                                    alt="Debunkers, Inc. (2019) download 1080p" width="118" height="91">
-                                <figcaption class="hidden-xs hidden-sm">
-                                    <span class="icon-star"></span>
-                                    <h4 class="rating">5.6 / 10</h4>
-                                    <h4>Family</h4>
-                                    <span class="button-green-download2-big">View Details</span>
-                                </figcaption>
-                            </figure>
-                        </a>
-                        <div class="browse-movie-bottom">
-                            <a href="https://yts.mx/movies/debunkers-inc-2019" class="browse-movie-title">Debunkers,
-                                Inc.</a>
-                            <div class="browse-movie-year">2019</div>
-                        </div>
-                    </div>
-                    <div class="browse-movie-wrap col-xs-10 col-sm-5">
-                        <a href="https://yts.mx/movies/schizopolis-1996" class="browse-movie-link">
-                            <figure>
-                                <img class="img-responsive"
-                                    src="/assets/images/movies/schizopolis_1996/medium-cover.jpg"
-                                    alt="Schizopolis (1996) download" width="210" height="315">
-                                <img class="quality-banner img-responsive" src="/assets/images/website/banner720p.png"
-                                    alt="Schizopolis (1996) download 720p" width="118" height="91">
-                                <figcaption class="hidden-xs hidden-sm">
-                                    <span class="icon-star"></span>
-                                    <h4 class="rating">6.9 / 10</h4>
-                                    <h4>Comedy</h4>
-                                    <h4>Fantasy</h4>
-                                    <span class="button-green-download2-big">View Details</span>
-                                </figcaption>
-                            </figure>
-                        </a>
-                        <div class="browse-movie-bottom">
-                            <a href="https://yts.mx/movies/schizopolis-1996" class="browse-movie-title">Schizopolis</a>
-                            <div class="browse-movie-year">1996</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="browse-movie-wrap col-xs-10 col-sm-5">
-                        <a href="https://yts.mx/movies/real-women-have-curves-2002" class="browse-movie-link">
-                            <figure>
-                                <img class="img-responsive"
-                                    src="/assets/images/movies/real_women_have_curves_2002/medium-cover.jpg"
-                                    alt="Real Women Have Curves (2002) download" width="210" height="315">
-                                <img class="quality-banner img-responsive" src="/assets/images/website/banner720p.png"
-                                    alt="Real Women Have Curves (2002) download 720p" width="118" height="91">
-                                <figcaption class="hidden-xs hidden-sm">
-                                    <span class="icon-star"></span>
-                                    <h4 class="rating">6.8 / 10</h4>
-                                    <h4>Comedy</h4>
-                                    <h4>Drama</h4>
-                                    <span class="button-green-download2-big">View Details</span>
-                                </figcaption>
-                            </figure>
-                        </a>
-                        <div class="browse-movie-bottom">
-                            <a href="https://yts.mx/movies/real-women-have-curves-2002" class="browse-movie-title">Real
-                                Women Have Curves</a>
-                            <div class="browse-movie-year">2002</div>
-                        </div>
-                    </div>
-                    <div class="browse-movie-wrap col-xs-10 col-sm-5">
-                        <a href="https://yts.mx/movies/bending-all-the-rules-2002" class="browse-movie-link">
-                            <figure>
-                                <img class="img-responsive"
-                                    src="/assets/images/movies/bending_all_the_rules_2002/medium-cover.jpg"
-                                    alt="Bending All the Rules (2002) download" width="210" height="315">
-                                <img class="quality-banner img-responsive" src="/assets/images/website/banner1080p.png"
-                                    alt="Bending All the Rules (2002) download 1080p" width="118" height="91">
-                                <figcaption class="hidden-xs hidden-sm">
-                                    <span class="icon-star"></span>
-                                    <h4 class="rating">2.3 / 10</h4>
-                                    <h4>Drama</h4>
-                                    <span class="button-green-download2-big">View Details</span>
-                                </figcaption>
-                            </figure>
-                        </a>
-                        <div class="browse-movie-bottom">
-                            <a href="https://yts.mx/movies/bending-all-the-rules-2002"
-                                class="browse-movie-title">Bending All the Rules</a>
-                            <div class="browse-movie-year">2002</div>
-                        </div>
-                    </div>
-                    <div class="browse-movie-wrap col-xs-10 col-sm-5">
-                        <a href="https://yts.mx/movies/the-24-hour-woman-1999" class="browse-movie-link">
-                            <figure>
-                                <img class="img-responsive"
-                                    src="/assets/images/movies/the_24_hour_woman_1999/medium-cover.jpg"
-                                    alt="The 24 Hour Woman (1999) download" width="210" height="315">
-                                <img class="quality-banner img-responsive" src="/assets/images/website/banner1080p.png"
-                                    alt="The 24 Hour Woman (1999) download 1080p" width="118" height="91">
-                                <figcaption class="hidden-xs hidden-sm">
-                                    <span class="icon-star"></span>
-                                    <h4 class="rating">5.4 / 10</h4>
-                                    <h4>Comedy</h4>
-                                    <span class="button-green-download2-big">View Details</span>
-                                </figcaption>
-                            </figure>
-                        </a>
-                        <div class="browse-movie-bottom">
-                            <a href="https://yts.mx/movies/the-24-hour-woman-1999" class="browse-movie-title">The 24
-                                Hour Woman</a>
-                            <div class="browse-movie-year">1999</div>
-                        </div>
-                    </div>
-                    <div class="browse-movie-wrap col-xs-10 col-sm-5">
-                        <a href="https://yts.mx/movies/jackie-chan-presents-amnesia-2015" class="browse-movie-link">
-                            <figure>
-                                <img class="img-responsive"
-                                    src="/assets/images/movies/jackie_chan_presents_amnesia_2015/medium-cover.jpg"
-                                    alt="Jackie Chan Presents: Amnesia (2015) download" width="210" height="315">
-                                <img class="quality-banner img-responsive" src="/assets/images/website/banner1080p.png"
-                                    alt="Jackie Chan Presents: Amnesia (2015) download 1080p" width="118" height="91">
-                                <figcaption class="hidden-xs hidden-sm">
-                                    <span class="icon-star"></span>
-                                    <h4 class="rating">4.7 / 10</h4>
-                                    <h4>Action</h4>
-                                    <h4>Adventure</h4>
-                                    <span class="button-green-download2-big">View Details</span>
-                                </figcaption>
-                            </figure>
-                        </a>
-                        <div class="browse-movie-bottom">
-                            <a href="https://yts.mx/movies/jackie-chan-presents-amnesia-2015"
-                                class="browse-movie-title"><span style="color: #ACD7DE; font-size: 75%;">[ZH]</span>
-                                Jackie Chan Presents:
-                                Amnesia</a>
-                            <div class="browse-movie-year">2015</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <hr>
-
-    <!-- TODO inclusion tag -->
-    <div class="content-dark">
-        <div class="container home-content">
-            <div class="home-movies">
-                <div class="row">
-                    <h2>Latest YIFY Movies Torrents <a href="https://yts.mx/browse-movies">Browse All</a></h2>
-                </div>
-
-                <div class="row">
-                    <div class="browse-movie-wrap col-xs-10 col-sm-5">
-                        <a href="https://yts.mx/movies/real-women-have-curves-2002" class="browse-movie-link">
-                            <figure>
-                                <img class="img-responsive"
-                                    src="/assets/images/movies/real_women_have_curves_2002/medium-cover.jpg"
-                                    alt="Real Women Have Curves (2002) download" width="210" height="315">
-                                <img class="quality-banner img-responsive" src="/assets/images/website/banner720p.png"
-                                    alt="Real Women Have Curves (2002) download 720p" width="118" height="91">
-                                <figcaption class="hidden-xs hidden-sm">
-                                    <span class="icon-star"></span>
-                                    <h4 class="rating">6.8 / 10</h4>
-                                    <h4>Comedy</h4>
-                                    <h4>Drama</h4>
-                                    <span class="button-green-download2-big">View Details</span>
-                                </figcaption>
-                            </figure>
-                        </a>
-                        <div class="browse-movie-bottom">
-                            <a href="https://yts.mx/movies/real-women-have-curves-2002" class="browse-movie-title">Real
-                                Women Have Curves</a>
-                            <div class="browse-movie-year">2002</div>
-                        </div>
-                    </div>
-                    <div class="browse-movie-wrap col-xs-10 col-sm-5">
-                        <a href="https://yts.mx/movies/bending-all-the-rules-2002" class="browse-movie-link">
-                            <figure>
-                                <img class="img-responsive"
-                                    src="/assets/images/movies/bending_all_the_rules_2002/medium-cover.jpg"
-                                    alt="Bending All the Rules (2002) download" width="210" height="315">
-                                <img class="quality-banner img-responsive" src="/assets/images/website/banner1080p.png"
-                                    alt="Bending All the Rules (2002) download 1080p" width="118" height="91">
-                                <figcaption class="hidden-xs hidden-sm">
-                                    <span class="icon-star"></span>
-                                    <h4 class="rating">2.3 / 10</h4>
-                                    <h4>Drama</h4>
-                                    <span class="button-green-download2-big">View Details</span>
-                                </figcaption>
-                            </figure>
-                        </a>
-                        <div class="browse-movie-bottom">
-                            <a href="https://yts.mx/movies/bending-all-the-rules-2002"
-                                class="browse-movie-title">Bending All the Rules</a>
-                            <div class="browse-movie-year">2002</div>
-                        </div>
-                    </div>
-                    <div class="browse-movie-wrap col-xs-10 col-sm-5">
-                        <a href="https://yts.mx/movies/the-24-hour-woman-1999" class="browse-movie-link">
-                            <figure>
-                                <img class="img-responsive"
-                                    src="/assets/images/movies/the_24_hour_woman_1999/medium-cover.jpg"
-                                    alt="The 24 Hour Woman (1999) download" width="210" height="315">
-                                <img class="quality-banner img-responsive" src="/assets/images/website/banner1080p.png"
-                                    alt="The 24 Hour Woman (1999) download 1080p" width="118" height="91">
-                                <figcaption class="hidden-xs hidden-sm">
-                                    <span class="icon-star"></span>
-                                    <h4 class="rating">5.4 / 10</h4>
-                                    <h4>Comedy</h4>
-                                    <span class="button-green-download2-big">View Details</span>
-                                </figcaption>
-                            </figure>
-                        </a>
-                        <div class="browse-movie-bottom">
-                            <a href="https://yts.mx/movies/the-24-hour-woman-1999" class="browse-movie-title">The 24
-                                Hour Woman</a>
-                            <div class="browse-movie-year">1999</div>
-                        </div>
-                    </div>
-                    <div class="browse-movie-wrap col-xs-10 col-sm-5">
-                        <a href="https://yts.mx/movies/jackie-chan-presents-amnesia-2015" class="browse-movie-link">
-                            <figure>
-                                <img class="img-responsive"
-                                    src="/assets/images/movies/jackie_chan_presents_amnesia_2015/medium-cover.jpg"
-                                    alt="Jackie Chan Presents: Amnesia (2015) download" width="210" height="315">
-                                <img class="quality-banner img-responsive" src="/assets/images/website/banner1080p.png"
-                                    alt="Jackie Chan Presents: Amnesia (2015) download 1080p" width="118" height="91">
-                                <figcaption class="hidden-xs hidden-sm">
-                                    <span class="icon-star"></span>
-                                    <h4 class="rating">4.7 / 10</h4>
-                                    <h4>Action</h4>
-                                    <h4>Adventure</h4>
-                                    <span class="button-green-download2-big">View Details</span>
-                                </figcaption>
-                            </figure>
-                        </a>
-                        <div class="browse-movie-bottom">
-                            <a href="https://yts.mx/movies/jackie-chan-presents-amnesia-2015"
-                                class="browse-movie-title"><span style="color: #ACD7DE; font-size: 75%;">[ZH]</span>
-                                Jackie Chan Presents:
-                                Amnesia</a>
-                            <div class="browse-movie-year">2015</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- <div class="container home-content">
+<!-- <div class="container home-content">
         <div class="home-movies">
             <div class="row">
                 <h2>Upcoming YIFY Movies <a href="https://yts.mx/requests">Request a Movie</a></h2>

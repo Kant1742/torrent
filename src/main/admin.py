@@ -73,7 +73,7 @@ class MovieAdmin(admin.ModelAdmin):
     list_display_links = ('title',)
     list_filter = ('year',)
     # list_filter = ('year', "genres__title")
-    search_fields = ('title',)
+    search_fields = ('title', 'id')
     # search_fields = ('title', "genres__title")
     prepopulated_fields = {'slug': ('title',)}
     # readonly_fields = ('get_image', )

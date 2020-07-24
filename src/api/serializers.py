@@ -72,7 +72,7 @@ class MovieSerializer(serializers.ModelSerializer):
         torrents = validated_data.pop('torrents')
         genres = validated_data.pop('genres')
         cast = validated_data.pop('cast')
-        print(cast)
+        # print(cast)
         movie = Movie.objects.create(**validated_data)
         for tor in torrents:
             Torrents.objects.create(movie=movie, **tor)
@@ -81,14 +81,13 @@ class MovieSerializer(serializers.ModelSerializer):
 
         iteration_num = 0
         number_of_casts = len(cast)
-        print('SERIALIZERs')
         for c in range(number_of_casts):
             for i in cast:
                 if i['name'] not in all_cast_names:
                     new_cast = Cast.objects.create(name=i['name'],
                                                    url_small_image=i['url_small_image'],
                                                    imdb_code=i['imdb_code'])
-                    print('NEW CAST \n\n')
+                    print('NEW CAST \n\n')  # TODO this print never worked
                     movie.cast.add(new_cast)
                     movie.save()
                     all_cast_names = get_all_cast_names()
@@ -96,9 +95,9 @@ class MovieSerializer(serializers.ModelSerializer):
                     existing_cast = Cast.objects.get(name=i['name'])
                     movie.cast.add(existing_cast)
                     all_cast_names = get_all_cast_names()
+                print(f'serializers --- {iteration_num}')
                 iteration_num += 1
         return movie
-
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)

@@ -86,7 +86,6 @@ class Movie(models.Model):
     description_full = models.TextField(null=True, blank=True)
     yt_trailer_code = models.CharField(max_length=25, null=True, blank=True)
     mpa_rating = models.CharField(max_length=10, null=True, blank=True)
-    language = models.CharField(max_length=25, null=True, blank=True)
     background_image = models.URLField(null=True, blank=True)
     background_image_original = models.URLField(null=True, blank=True)
     small_cover_image = models.URLField(null=True, blank=True)
@@ -104,8 +103,8 @@ class Movie(models.Model):
     # directors = models.ManyToManyField(Director, related_name="film_director")
     # files = models.ForeignKey(Quality, on_delete=models.CASCADE, blank=True, null=True)
 
-    # class Meta:
-    #     ordering = ('-published',)
+    class Meta:
+        ordering = ('-published',)
 
     def __str__(self):
         return self.title

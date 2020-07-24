@@ -420,7 +420,9 @@
             <div id="movie-info" class="col-xs-10 col-sm-14 col-md-7 col-lg-8 col-lg-offset-1" data-movie-id="4504">
                 <div class="hidden-xs">
                     <h1>{{ movie.title }}</h1>
-                    <h2>{{ movie.year }}</h2>
+                    <h2>{{ movie.year }}
+                        <span style="color: #ACD7DE; font-size: 75%;">[{{ movie.language }}]</span>
+                    </h2>
                     <h2>{% for gen in movie.genres.all %}
                         {{ gen.title }} /
                         {% endfor %}
@@ -480,11 +482,11 @@
                                 If you torrent without a VPN, your ISP can see that you're torrenting and may
                                 throttle your connection and get fined by legal action!
                             </p>
-                            <a href="/yevp" rel="noindex, nofollow">
+                            <!-- <a href="/yevp" rel="noindex, nofollow">
                                 <div class="button" style="width: 50%;">
                                     <p style="margin-top: -10px;font-size: 15px;">Get Express VPN</p>
                                 </div>
-                            </a>
+                            </a> -->
                         </div>
                     </div>
                 </div>
