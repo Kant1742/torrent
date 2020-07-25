@@ -665,11 +665,11 @@
           {% else %}
           <a class="register-nav-btn hidden-xs hidden-sm" href="javascript:void(0);">Register to leave a
             comment</a>
-          <a class="register-nav-btn hidden-md hidden-lg" href="https://yts.mx/register">Register to leave a
+          <a class="register-nav-btn hidden-md hidden-lg" href="{% url 'account_signup' %}">Register to leave a
             comment</a>
           <a class="login-nav-btn hidden-xs hidden-sm" href="javascript:void(0);">Login to leave a
             comment</a>
-          <a class="login-nav-btn hidden-md hidden-lg" href="https://yts.mx/login">Login to leave a
+          <a class="login-nav-btn hidden-md hidden-lg" href="{% url 'account_login' %}">Login to leave a
             comment</a>
           {% endif %}
         </div>

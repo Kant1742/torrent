@@ -26,11 +26,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     
     # third party
     'psycopg2',
     'debug_toolbar',
     'rest_framework',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 
     # local
     'main',
@@ -105,7 +109,10 @@ DATABASES = {
     }
 }
 
-
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 # pg_ctl start -D "C:/Program Files/PostgreSQL/12/data"
 # DATABASES = {
 #     'default': {
@@ -176,3 +183,17 @@ LANGUAGES = [
 ]
 
 DJANGO_SETTINGS_MODULE = 'torrent.settings'
+
+SITE_ID = 1
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_USERNAME_MIN_LENGTH = 4
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+GMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
