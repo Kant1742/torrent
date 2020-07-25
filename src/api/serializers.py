@@ -48,6 +48,7 @@ class MovieSerializer(serializers.ModelSerializer):
     genres = serializers.SlugRelatedField(
         queryset=Genre.objects.all(), many=True, slug_field='title')
     cast = CastSerializer(many=True)
+    iteration_num = 0
 
     # def update(self, instance, validated_data, *args, **kwargs):
     #     instance.torrents = validated_data.get('torrents', instance.torrents.set())
@@ -79,7 +80,6 @@ class MovieSerializer(serializers.ModelSerializer):
         movie.genres.add(*genres)
         movie.save()
 
-        iteration_num = 0
         number_of_casts = len(cast)
         for c in range(number_of_casts):
             for i in cast:
@@ -94,8 +94,8 @@ class MovieSerializer(serializers.ModelSerializer):
                     existing_cast = Cast.objects.get(name=i['name'])
                     movie.cast.add(existing_cast)
                     all_cast_names = get_all_cast_names()
-                print(f'serializers --- {iteration_num}')
-                iteration_num += 1
+        print(f'serializers --- {self.iteration_num}')
+        self.iteration_num += 1
         return movie
 
     def to_representation(self, instance):
