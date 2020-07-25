@@ -3,101 +3,6 @@
 
 {% block title %}Movies{% endblock title %}
 {% block content %}
-<div id="mobile-search-input" class="hidden-md hidden-lg">
-  <form method="POST" action="https://yts.mx/search-movies" accept-charset="UTF-8">
-    {% csrf_token %}
-    <div class="input-group container search-query">
-      <input class="form-control" placeholder="Search for a movie…" autocorrect="off" autocomplete="off" name="keyword"
-        type="search">
-      <span class="input-group-btn"> <button class="btn btn-success" type="submit">Search</button>
-      </span>
-    </div>
-    <!-- <div class="container">
-                <div class="row">
-                    <div class="col-xs-10">
-                        <div class="selects-container">
-                            <p>Quality:</p>
-                            <select name="quality">
-                                <option value="all">All</option>
-                                <option value="720p">720p</option>
-                                <option value="1080p">1080p</option>
-                                <option value="2160p">2160p</option>
-                                <option value="3D">3D</option>
-                            </select>
-                        </div>
-                        <div class="selects-container">
-                            <p>Genre:</p>
-                            <select name="genre">
-                                <option value="all">All</option>
-                                <option value="action">Action</option>
-                                <option value="adventure">Adventure</option>
-
-                            </select>
-                        </div>
-                        <div class="selects-container">
-                            <p>Year:</p>
-                            <select name="year">
-                                <option value="0">All</option>
-                                <option value="2020">2020</option>
-                                <option value="2019">2019</option>
-                                <option value="2015-2018">2015-2018</option>
-                                <option value="2010-2014">2010-2014</option>
-                                <option value="2000-2009">2000-2009</option>
-                                <option value="1990-1999">1990-1999</option>
-                                <option value="1980-1989">1980-1989</option>
-                                <option value="1970-1979">1970-1979</option>
-                                <option value="1900-1969">1900-1969</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xs-10">
-                        <div class="selects-container">
-                            <p>Rating:</p>
-                            <select name="rating">
-                                <option value="0">All</option>
-                                <option value="9">9+</option>
-                                <option value="8">8+</option>
-                                <option value="7">7+</option>
-                                <option value="6">6+</option>
-                                <option value="5">5+</option>
-                                <option value="4">4+</option>
-                                <option value="3">3+</option>
-                                <option value="2">2+</option>
-                                <option value="1">1+</option>
-                            </select>
-                        </div>
-                        <div class="selects-container">
-                            <p>Language:</p>
-                            <select name="language">
-                                <option value="en">English</option>
-                                <option value="foreign">Foreign</option>
-                                <option value="all" selected="selected">--------All--------</option>
-                                <option value="ja">Japanese (584)</option>
-                                <option value="fr">French (468)</option>
-                            </select>
-                        </div>
-                        <div class="selects-container selects-container-last">
-                            <p>Order By:</p>
-                            <select name="order_by">
-                                <option value="latest" selected="selected">Latest</option>
-                                <option value="oldest">Oldest</option>
-                                <option value="seeds">Seeds</option>
-                                <option value="peers">Peers</option>
-                                <option value="year">Year</option>
-                                <option value="rating">Rating</option>
-                                <option value="likes">Likes</option>
-                                <option value="alphabetical">Alphabetical</option>
-                                <option value="downloads">Downloads</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-  </form>
-</div>
-<div class="ac-results hidden-sm hidden-xs">
-  <ul></ul>
-</div>
 <style type="text/css">
   .nbox-bordered {
     background-color: black;
@@ -267,7 +172,7 @@
           <a href="/browse-movies/">Browse All</a></h2>
       </div>
       <div class="row">
-        {% for sm in random_popular_movies %}
+        {% for sm in stored_movies %}
         <div class="browse-movie-wrap col-xs-10 col-sm-5">
 
           <a href="{{ sm.get_absolute_url }}" class="browse-movie-link">
