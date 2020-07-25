@@ -26,7 +26,7 @@ class GenreYear:
 class MovieListView(ListView):
     model = Movie
     queryset = Movie.objects.filter(
-        Q(download_count__gte=10000) & Q(rating__gte=7)).order_by('-rating')
+        Q(download_count__gte=10000) & Q(rating__gte=7) & Q(year__gte=1995)).order_by('-rating')
     paginate_by = 8
     template_name = 'main/movie_list.html'
 
@@ -115,7 +115,6 @@ class MovieDetailView(GenreYear, DetailView):
         movie = context['movie']
         context['movie_cast'] = Cast.objects.filter(movie=movie)
         cast = context['movie_cast']
-        print(f'\n\n{cast[0].character_name}\n\n')
         return context
 
 
@@ -130,5 +129,6 @@ class AddReview(View):
             if request.POST.get("parent", None):
                 form.parent_id = int(request.POST.get("parent"))
             form.movie = movie
+            form.name = request.user.username
             form.save()
         return redirect(movie.get_absolute_url())

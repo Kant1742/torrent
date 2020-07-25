@@ -194,9 +194,6 @@
                 </div>
             </form>
         </div> -->
-  <div class="ac-results hidden-sm hidden-xs">
-    <ul></ul>
-  </div>
   <style type="text/css">
     .infobox-bordered {
       background-color: black;
@@ -281,16 +278,18 @@
     }
   </style>
   <br><br>
-  <div class="container id=" movie-content" itemscope itemtype="http://schema.org/Movie">
+  <div class="container" movie-content itemscope itemtype="http://schema.org/Movie">
     <div class="row">
       <div id="mobile-movie-info" class="visible-xs col-xs-20">
         <h1 itemprop="name">{{ movie.title }}</h1>
         <h2>{{ movie.year }}</h2>
-        <h2>Action / Comedy / Drama / Romance</h2>
+        {% for g in movie.genres.all %}
+        {{ g.title }}
+        {% endfor %}
       </div>
       <div id="movie-poster" class="col-xs-10 col-sm-6 col-lg-5">
         <img class="img-responsive" itemprop="image" src="{{ movie.medium_cover_image }}"
-          alt="Me and Earl and the Dying Girl (2015) download">
+          alt="{{ movie.title }} ({{ movie.year}}) download">
         <!-- <a class="torrent-modal-download button-green-download2-big hidden-xs hidden-sm"
                         href="javascript:void(0);"><span class="icon-in"></span>Download</a> -->
         <div class="addthis_sharing_toolbox" style="margin-top: 15px;"></div>
@@ -339,11 +338,11 @@
       <div id="movie-info" class="col-xs-10 col-sm-14 col-md-7 col-lg-8 col-lg-offset-1" data-movie-id="4504">
         <div class="hidden-xs">
           <h1>{{ movie.title }}</h1>
-          {% if movie.language == 'English' %}
+          {% if movie.language != 'English' %}
           <span style="color: #ACD7DE; font-size: 75%;"> [{{ movie.language }}]</span>
           {% endif %}
           <h2>{% for gen in movie.genres.all %}
-            {{ gen.title }} /
+            {{ gen.title }}
             {% endfor %}
           </h2>
         </div>
@@ -570,15 +569,25 @@
                     </div>
                 </div>
             </div> -->
+
     <!-- TODO Movie reviews -->
     <div id="movie-bottom" class="row">
       <div id="movie-reviews" class="col-xs-20 col-md-10 col-md-offset-1 col-md-push-9">
-        <h3><span class="icon-star"></span>Movie Reviews</h3>
+        <h3>
+          Movie Reviews
+          <sup>
+            <img src="{% static 'images/icomoon/bubble.svg' %}" alt="">
+          </sup>
+        </h3>
+        <!-- TODO Reviews -->
         <div class="review">
           <div class="review-properties">
             Reviewed by <span class="review-author">thisanant</span>
-            <span class="icon-star"></span>
-            <span class="review-rating">10 / 10</span>
+            <span class="review-rating">
+              <!-- TODO Validation - if 9/10 or 10/10 then 'fire'  and so on-->
+              10 / 10
+              <sup><img src="{% static 'images/icomoon/fire.svg' %}" alt=""></sup>
+            </span>
           </div>
           <h4>and 10 stars</h4>
           <article>
@@ -588,57 +597,31 @@
           </article>
         </div>
         <div class="line"></div>
-        <div class="review">
-          <div class="review-properties">
-            Reviewed by <span class="review-author">tabipha</span>
-            <span class="icon-star"></span>
-            <span class="review-rating">1 / 10</span>
-          </div>
-          <h4>Avoid</h4>
-          <article>
-            <p>With how many big names there are in this movie, I had much higher hopes for it!! I was
-              SO bored that I turned it off in the first half hour. Why all these stars would even
-              want to be in this movie is beyond me, and I wish they would stop casting Jenna in
-              Channing movies! But it won't let me post it without adding more lines so do NOT waste
-              your time on this movie!! Avoid at all costs. Don't get sucked in by all the stars like
-              I did!</p>
-          </article>
-        </div>
-        <div class="line"></div>
-        <div class="review">
-          <div class="review-properties">
-            Reviewed by <span class="review-author">Anna Laerke Byrne</span>
-            <span class="icon-star"></span>
-            <span class="review-rating">10 / 10</span>
-          </div>
-          <h4>Great casting</h4>
-          <article>
-            <p>I loved it. It was seeing people react at the ten-year reunion exactly how they do in the
-              wild. It felt real and not overly smooshy. It was touching and cringe but not in a
-              brashy teen movie way in a people portrayed as human way. I went to my school reunion in
-              2009 and I was mistaken for one of the popular girls by someone which was upsetting as
-              she was heavily pregnant at the time. If you smash this right into Romy and Michelle's
-              High School Reunion that was my experience, but enough about me this movie had heart and
-              alcohol - watch it.</p>
-          </article>
-        </div>
-        <div class="line"></div>
-        <a class="more-reviews" href="https://www.imdb.com/title/tt1715873/reviews" target="_blank">Read
+        <a class="more-reviews" href="https://www.imdb.com/title/{{ movie.imdb_code }}/reviews" target="_blank">Read
           more IMDb reviews</a>
       </div>
-      <div id="movie-comments" class="col-xs-20 col-md-9 col-md-pull-11">
-        <h3><span class="icon-comment"></span><span id="comment-count">1</span> Comments</h3>
-        <div id="comments" class="comments-scroll ps-container">
 
-          <div class="comment" data-comment-id="35331878"> <a title="View profile" href="https://yts.mx/user/3million"
-              class="avatar-thumb"><img alt="3million profile"
-                src="https://img.yts.mx/assets/images/users/thumb/default_avatar.jpg"></a>
+
+
+      <!-- TODO Comments -->
+      <div id="movie-comments" class="col-xs-20 col-md-9 col-md-pull-11">
+        <h3>
+          <sup><img src="{% static 'images/icomoon/comment.svg' %}" alt="Comments"></sup>
+          <span id="comment-count">{{ movie.reviews_set.count }}</span> Comments
+        </h3>
+        {% for rev in movie.get_review %}
+        <div id="comments" class="comments-scroll ps-container">
+          <div class="comment" data-comment-id="35331878">
+            <a title="View profile" href="https://yts.mx/user/{{ rev.name }}" class="avatar-thumb">
+              <img alt="3million profile" src="{% static 'images/default-user.jpg' %}"></a>
             <div class="comment-text">
-              <div class="pull-right comment-likes"> <span class="comment-like-count">0</span> <span title="Likes"
-                  class="icon icon-heart2"></span> </div> <span><a href="https://yts.mx/user/3million">3million</a>
-                August 12, 2019 at 11:54
-                pm</span>
-              <p> i Love it, and am big fan of cChanning Tatum... </p>
+              <div class="pull-right comment-likes">
+                <img src="{% static 'images/icomoon/plus.svg' %}" alt="+">
+                <span class="comment-like-count">{{ rev.likes }}</span>
+                <img src="{% static 'images/icomoon/minus.svg' %}" alt="-">
+              </div>
+              <span><a href="/">{{ request.user.username }}</a>{{ rev.published }}</span>
+              <p> {{ rev.text }} </p>
             </div>
           </div>
           <div id="load-comments" style="display: none;">
@@ -653,74 +636,112 @@
             <div class="ps-scrollbar-y" style="top: 0px; height: 0px;"></div>
           </div>
         </div>
+        {% endfor %}
         <div id="comments-box">
+          {% if user.is_authenticated %}
+          <div class="contact-single">
+            <form action="{% url 'main:add_review' movie.pk %}" method="post" class="mt-4" id="formReview">
+              {% csrf_token %}
+              <input type="hidden" name="parent" id="contactparent" value="">
+              <div class="form-group editContent">
+                <label for="contactcomment" class="editContent">
+                  Your comment
+                </label>
+                <textarea class="form-control border" rows="5" name="text" id="contactcomment" required=""></textarea>
+              </div>
+              <div class="d-sm-flex">
+                <div class="col-sm-12 form-group ml-sm-3 editContent">
+                  <label for="contactemail" class="editContent">
+                    Email
+                  </label>
+                  <input type="email" class="form-control border" name="email" id="contactemail" required="">
+                </div>
+              </div>
+              <button type="submit" class="mt-3 btn btn-success btn-block py-3">
+                Send
+              </button>
+            </form>
+          </div>
+          {% else %}
+          <a class="register-nav-btn hidden-xs hidden-sm" href="javascript:void(0);">Register to leave a
+            comment</a>
+          <a class="register-nav-btn hidden-md hidden-lg" href="https://yts.mx/register">Register to leave a
+            comment</a>
           <a class="login-nav-btn hidden-xs hidden-sm" href="javascript:void(0);">Login to leave a
             comment</a>
           <a class="login-nav-btn hidden-md hidden-lg" href="https://yts.mx/login">Login to leave a
             comment</a>
+          {% endif %}
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="container hidden-md hidden-lg">
-    <div class="row">
-      <div class="mobile-footer">
-        <div class="col-sm-20">
-          <a href="https://yts.mx/"> <span class="glyphicon glyphicon-home"></span>
-            <p>Home</p>
-          </a>
-          <a href="https://yts.mx/browse-movies"> <span class="glyphicon glyphicon-list-alt"></span>
-            <p>Browse</p>
-          </a>
-          <a href="https://yts.mx/login"> <span class="glyphicon glyphicon-log-in"></span>
-            <p>Login</p>
-          </a>
-        </div>
-        <div class="col-sm-20">
-          <a href="https://yts.mx/register"> <span class="glyphicon glyphicon-user"></span>
-            <p>Register</p>
-          </a>
-          <a href="https://yts.mx/requests"> <span class="glyphicon glyphicon-asterisk"></span>
+    <div class="container hidden-md hidden-lg">
+      <div class="row">
+        <div class="mobile-footer">
+          <div class="col-sm-60">
+            <a href="/"> <span class="glyphicon glyphicon-home"></span>
+              <p>Home</p>
+            </a>
+            <a href="/browse-movies/"> <span class="glyphicon glyphicon-list-alt"></span>
+              <p>Browse</p>
+            </a>
+          </div>
+          <div class="col-sm-60">
+            <a href="https://yts.mx/login"> <span class="glyphicon glyphicon-log-in"></span>
+              <p>Login</p>
+            </a>
+            <a href="https://yts.mx/register"> <span class="glyphicon glyphicon-user"></span>
+              <p>Register</p>
+            </a>
+            <!-- <a href="https://yts.mx/requests"> <span class="glyphicon glyphicon-asterisk"></span>
             <p>Requests</p>
           </a>
           <a href="https://yts.mx/suggestions"> <span class="glyphicon glyphicon-pushpin"></span>
             <p>Suggestions</p>
-          </a>
+          </a> -->
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div id="cboxOverlay" style="display: none;"></div>
-  <div id="colorbox" class="" role="dialog" tabindex="-1" style="display: none;">
-    <div id="cboxWrapper">
-      <div>
-        <div id="cboxTopLeft" style="float: left;"></div>
-        <div id="cboxTopCenter" style="float: left;"></div>
-        <div id="cboxTopRight" style="float: left;"></div>
-      </div>
-      <div style="clear: left;">
-        <div id="cboxMiddleLeft" style="float: left;"></div>
-        <div id="cboxContent" style="float: left;">
-          <div id="cboxTitle" style="float: left;"></div>
-          <div id="cboxCurrent" style="float: left;"></div><button type="button" id="cboxPrevious"></button><button
-            type="button" id="cboxNext"></button><button id="cboxSlideshow"></button>
-          <div id="cboxLoadingOverlay" style="float: left;"></div>
-          <div id="cboxLoadingGraphic" style="float: left;"></div>
+    <div id="cboxOverlay" style="display: none;"></div>
+    <div id="colorbox" class="" role="dialog" tabindex="-1" style="display: none;">
+      <div id="cboxWrapper">
+        <div>
+          <div id="cboxTopLeft" style="float: left;"></div>
+          <div id="cboxTopCenter" style="float: left;"></div>
+          <div id="cboxTopRight" style="float: left;"></div>
         </div>
-        <div id="cboxMiddleRight" style="float: left;"></div>
+        <div style="clear: left;">
+          <div id="cboxMiddleLeft" style="float: left;"></div>
+          <div id="cboxContent" style="float: left;">
+            <div id="cboxTitle" style="float: left;"></div>
+            <div id="cboxCurrent" style="float: left;"></div><button type="button" id="cboxPrevious"></button><button
+              type="button" id="cboxNext"></button><button id="cboxSlideshow"></button>
+            <div id="cboxLoadingOverlay" style="float: left;"></div>
+            <div id="cboxLoadingGraphic" style="float: left;"></div>
+          </div>
+          <div id="cboxMiddleRight" style="float: left;"></div>
+        </div>
+        <div style="clear: left;">
+          <div id="cboxBottomLeft" style="float: left;"></div>
+          <div id="cboxBottomCenter" style="float: left;"></div>
+          <div id="cboxBottomRight" style="float: left;"></div>
+        </div>
       </div>
-      <div style="clear: left;">
-        <div id="cboxBottomLeft" style="float: left;"></div>
-        <div id="cboxBottomCenter" style="float: left;"></div>
-        <div id="cboxBottomRight" style="float: left;"></div>
-      </div>
+      <div style="position: absolute; width: 9999px; visibility: hidden; display: none; max-width: none;"></div>
     </div>
-    <div style="position: absolute; width: 9999px; visibility: hidden; display: none; max-width: none;"></div>
-  </div>
-  <script type="text/javascript" src="js/moddded1?yify=2"></script>
-  <script src="/ypt.js"></script>
-  <script defer="" src="https://static.cloudflareinsights.com/beacon.min.js"
-    data-cf-beacon="{&quot;rayId&quot;:&quot;5b5dba51e8ea4d8c&quot;,&quot;version&quot;:&quot;2020.6.0&quot;,&quot;si&quot;:10}"></script>
+
+
+    <script>
+      function addReview(name, id) {
+        document.getElementById("contactparent").value = id;
+        document.getElementById("contactcomment").innerText = `${name}, `
+      }
+    </script>
+    <script type="text/javascript" src="js/moddded1?yify=2"></script>
+    <script src="/ypt.js"></script>
+    <script defer="" src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon="{&quot;rayId&quot;:&quot;5b5dba51e8ea4d8c&quot;,&quot;version&quot;:&quot;2020.6.0&quot;,&quot;si&quot;:10}"></script>
 </body>
 {% endblock content %}

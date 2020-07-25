@@ -185,9 +185,7 @@
   <div class="hidden-xs hidden-sm">
     <h1>Download torrent movies</h1>
     <p>
-      Welcome to the official <b>YTS.MX</b> website. Here you can browse and download YIFY
-      movies in excellent 720p, 1080p, 2160p 4K and 3D quality, all at the smallest file size. YTS
-      Movies Torrents.
+      Welcome to the official <b>Subov.net</b> website.
       <!-- <br><br>
             <a href="/"
                 title=" is the only new official domain for YIFY Movies"><b>IMPORTANT - YTS.MX is the
@@ -207,7 +205,7 @@
     <div class="row">
       {% for movie in random_popular_movies %}
       <div class="browse-movie-wrap col-xs-10 col-sm-5">
-        <a href="{% url 'main:movie_detail' movie.slug %}" class="browse-movie-link">
+        <a href="{{ movie.get_absolute_url }}" class="browse-movie-link">
           <figure>
             <img class="img-responsive" src="{{ movie.medium_cover_image }}" alt="{{ movie.title }} download"
               width="210" height="315">
@@ -222,7 +220,7 @@
           </figure>
         </a>
         <div class="browse-movie-bottom">
-          <a href="{% url 'main:movie_detail' movie.slug %}" class="browse-movie-title">
+          <a href="{{ movie.get_absolute_url }}" class="browse-movie-title">
             {% if movie.language != 'English' %}
             <span style="color: #ACD7DE; font-size: 65%;"> [{{ movie.language|upper|slice:"2" }}]</span>
             {% endif %}
@@ -272,7 +270,7 @@
         {% for sm in random_popular_movies %}
         <div class="browse-movie-wrap col-xs-10 col-sm-5">
 
-          <a href="{% url 'main:movie_detail' sm.slug %}" class="browse-movie-link">
+          <a href="{{ sm.get_absolute_url }}" class="browse-movie-link">
             <figure>
               <img class="img-responsive" src="{{ sm.medium_cover_image }}"
                 alt="{{ sm.title }} ({{ sm.year }}) download" width="210" height="315">
@@ -288,7 +286,7 @@
 
           </a>
           <div class="browse-movie-bottom">
-            <a href="{% url 'main:movie_detail' sm.slug %}" class="browse-movie-title">
+            <a href="{{ sm.get_absolute_url }}" class="browse-movie-title">
               {% if sm.language != 'English' %}
               <span style="color: #ACD7DE; font-size: 65%;"> [{{ sm.language|upper|slice:"2" }}]</span>
               {% endif %}

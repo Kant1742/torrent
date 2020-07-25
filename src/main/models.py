@@ -98,7 +98,8 @@ class Movie(models.Model):
     large_screenshot_image2 = models.URLField(null=True, blank=True)
     large_screenshot_image3 = models.URLField(null=True, blank=True)
 
-    published = models.DateTimeField(default=timezone.now, blank=True, null=True)
+    published = models.DateTimeField(
+        default=timezone.now, blank=True, null=True)
 
     # directors = models.ManyToManyField(Director, related_name="film_director")
     # files = models.ForeignKey(Quality, on_delete=models.CASCADE, blank=True, null=True)
@@ -119,7 +120,6 @@ class Movie(models.Model):
     @property
     def torrents(self):
         return self.torrents_set.all()
-
 
     # @property
     # def genres(self):
@@ -174,12 +174,15 @@ class Subtitles(models.Model):
 
 
 class Reviews(models.Model):
-    email = models.EmailField()
-    name = models.CharField(max_length=100)
+    email = models.EmailField(blank=True, null=True)
+    name = models.CharField(max_length=100, blank=True, null=True)
     text = models.TextField(max_length=5000)
     parent = models.ForeignKey(
         'self', on_delete=models.SET_NULL, blank=True, null=True
     )
+    likes = models.IntegerField(default=0, null=True, blank=True)
+    published = models.DateTimeField(
+        default=timezone.now, blank=True, null=True)
     # avatar = models.ImageField(default='images/default-user.jpg' , blank=True, null=True)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
 

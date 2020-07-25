@@ -18,18 +18,21 @@ class ReviewInline(admin.TabularInline):
     model = Reviews
     readonly_fields = ("name", "email", 'text')
     show_change_link = True
-    fieldsets = (
-        (None, {
-            # "classes": ("collapse",),
-            "fields": (("name", "email", 'text', 'parent'),)
-        }),
-    )
+    extra = 0
+
+    # fieldsets = (
+    #     (None, {
+    #         # "classes": ("collapse",),
+    #         "fields": (("name", "email", 'text', 'parent'),)
+    #     }),
+    # )
 
 
-# class TorrentsInline(admin.TabularInline):
-#     model = Torrents
-#     # readonly_fields = ("Torrents", "file")
-#     show_change_link = True
+class TorrentsInline(admin.TabularInline):
+    model = Torrents
+    # readonly_fields = ("Torrents", "file")
+    show_change_link = True
+    extra = 0
 
 
 # class RatingInline(admin.TabularInline):
@@ -54,7 +57,7 @@ class CharacterNameInline(admin.TabularInline):
     show_change_link = True
 
 
-@admin.register(Cast)
+@ admin.register(Cast)
 class CastAdmin(admin.ModelAdmin):
     """Acotrs and directors"""
     list_display = ("name", "url_small_image", "imdb_code")
@@ -67,7 +70,7 @@ class CastAdmin(admin.ModelAdmin):
     get_image.short_description = "Image"
 
 
-@admin.register(Movie)
+@ admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
     list_display = ('title', 'description_full', 'year')
     list_display_links = ('title',)
@@ -77,7 +80,7 @@ class MovieAdmin(admin.ModelAdmin):
     # search_fields = ('title', "genres__title")
     prepopulated_fields = {'slug': ('title',)}
     # readonly_fields = ('get_image', )
-    inlines = [SubtitlesInline]
+    inlines = [SubtitlesInline, TorrentsInline, ReviewInline]
     save_on_top = True
 
     # def get_image(self, obj):
@@ -85,40 +88,39 @@ class MovieAdmin(admin.ModelAdmin):
 
     # get_image.short_description = "Movie Image"
 
-    # fieldsets = (
-    #     ('Main', {
-    #         "fields": (("title", 'year', 'slug'), 'description_full',
-    #                    'yt_trailer_code',
-    #                    'qualities',
-    #                    'genres',
-    #                    'background_image',
-    #                    'background_image_original',
-    #                    'small_cover_image',
-    #                    'medium_cover_image',
-    #                    'large_cover_image',
-    #                    'medium_screenshot_image1',
-    #                    'medium_screenshot_image2',
-    #                    'medium_screenshot_image3',
-    #                    'large_screenshot_image1',
-    #                    'large_screenshot_image2',
-    #                    'large_screenshot_image3')
-    #     }),
-    #     # ('Image', {
-    #     #     "fields": ("image", "get_image")
-    #     # }),
-    #     # ("Crew", {
-    #     #     "fields": (("cast",),)
-    #     # }),
-    # )
+    fieldsets = (
+        ('Main', {
+            "fields": (("title", 'year', 'slug'), 'description_full',
+                       'yt_trailer_code',
+                       ('genres', 'cast',),)
+        }),
+        ('Images', {
+            "classes": ("collapse",),
+            "fields": (('background_image',
+                        'background_image_original'),
+                       ('small_cover_image',
+                        'medium_cover_image',
+                        'large_cover_image'),
+                       ('medium_screenshot_image1',
+                        'medium_screenshot_image2',
+                        'medium_screenshot_image3'),
+                       ('large_screenshot_image1',
+                        'large_screenshot_image2',
+                        'large_screenshot_image3'))
+        }),
+        # ("Crew", {
+        #     "fields": (("torrents",),)
+        # }),
+    )
 
 
-@admin.register(Genre)
+@ admin.register(Genre)
 class GenreAdmin(admin.ModelAdmin):
     """Genres"""
     list_display = ("title",)
 
 
-@admin.register(Reviews)
+@ admin.register(Reviews)
 class ReviewAdmin(admin.ModelAdmin):
     """Reviews to a movie"""
     list_display = ("name", "email", "parent", "movie", "id")
