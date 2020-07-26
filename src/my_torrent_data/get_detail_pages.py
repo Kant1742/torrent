@@ -10,23 +10,26 @@ def get_json():
     all_torrents = []
     all_slugs = []
 
-    for current_id in range(2500, 3000):
+    for current_id in range(4500, 5000):
         # r = requests.get(
         #     f'https://yts.mx/api/v2/movie_details.json?movie_id={current_id}&with_images=true&with_cast=true')
-        r = requests.get(
-            f'https://yts.mx/api/v2/movie_details.json?movie_id={current_id}&with_images=true&with_cast=true')
-        my_data = r.json()['data']['movie']
+        try:
+            r = requests.get(
+                f'https://yts.mx/api/v2/movie_details.json?movie_id={current_id}&with_images=true&with_cast=true')
+            my_data = r.json()['data']['movie']
 
-        my_data_slug = r.json()['data']['movie']['slug']
-        if my_data_slug in all_slugs:
-            # Delete this movie from the request
-            popped = my_data.pop['movie']
-        else:
-            all_slugs.append(my_data_slug)
+            my_data_slug = r.json()['data']['movie']['slug']
+            if my_data_slug in all_slugs:
+                # Delete this movie from the request
+                popped = my_data.pop['movie']
+            else:
+                all_slugs.append(my_data_slug)
 
-        all_torrents.append(my_data)
-        current_id += 1
-        print(current_id, '---------- current_id')
+            all_torrents.append(my_data)
+            current_id += 1
+            print(current_id, '---------- current_id')
+        except:
+            current_id += 1
     return all_torrents
 
 
@@ -38,7 +41,7 @@ def get_json():
 
 
 def writing():
-    number_of_file = 15
+    number_of_file = 19
 
     try:
         # with open('torrent_detail.json', 'a') as f:  # Добавить в файл

@@ -5,7 +5,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http import HttpResponse
 from .services import get_all_movie_slugs
-
 from django.db.models import Max, Min
 import random
 
@@ -92,7 +91,7 @@ class CastMoviesList(DetailView):
 
 class SearchResultsView(ListView):
     # model = Movie
-    template_name = 'search_results.html'
+    template_name = 'main/search_results.html'
     paginate_by = 16
 
     def get_queryset(self):
@@ -126,5 +125,6 @@ class AddReview(View):
                 form.parent_id = int(request.POST.get("parent"))
             form.movie = movie
             form.name = request.user.username
+            form.email = request.user.email
             form.save()
         return redirect(movie.get_absolute_url())
