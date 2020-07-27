@@ -14,7 +14,8 @@ SECRET_KEY = "zw1fb1*xss2m+gvz#1+(xnn0%v3ss)ax12@y_t#+_@*=aa@%+_"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'subov-net.herokuapp.com', 'subov.net']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'subov-net.herokuapp.com',
+                'www.subov.net', 'subov.net']
 
 
 # Application definition
