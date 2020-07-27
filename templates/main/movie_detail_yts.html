@@ -336,7 +336,7 @@
                 </div> -->
       <div id="movie-info" class="col-xs-10 col-sm-14 col-md-7 col-lg-8 col-lg-offset-1" data-movie-id="4504">
         <div class="hidden-xs">
-          <h1>{{ movie.title }}</h1>
+          <h1>{{ movie.title }} - {{ movie.year }}</h1>
           {% if movie.language != 'English' %}
           <span style="color: #ACD7DE; font-size: 75%;"> [{{ movie.language }}]</span>
           {% endif %}
@@ -405,19 +405,19 @@
       </div>
       <!-- TODO include similar movies -->
       <div id="movie-related" class="col-md-6 hidden-xs hidden-sm">
-        <p>Similar Movies</p>
-        <a href="https://yts.mx/movies/as-i-lay-dying-2013" title="As I Lay Dying (2013)"><img
-            src="https://img.yts.mx/assets/images/movies/As_I_Lay_Dying_2013/medium-cover.jpg"
-            alt="As I Lay Dying (2013) download"></a>
-        <a href="https://yts.mx/movies/dying-of-the-light-2014" title="Dying of the Light (2014)"><img
-            src="https://img.yts.mx/assets/images/movies/dying_of_the_light_2014/medium-cover.jpg"
-            alt="Dying of the Light (2014) download"></a>
-        <a href="https://yts.mx/movies/girl-most-likely-2012" title="Girl Most Likely (2012)"><img
-            src="https://img.yts.mx/assets/images/movies/Girl_Most_Likely_2012/medium-cover.jpg"
-            alt="Girl Most Likely (2012) download"></a>
-        <a href="https://yts.mx/movies/get-the-girl-2017" title="Get the Girl (2017)"><img
-            src="https://img.yts.mx/assets/images/movies/get_the_girl_2017/medium-cover.jpg"
-            alt="Get the Girl (2017) download"></a>
+        <p>Top Movies</p>
+        <a href="http://www.subov.net/the-green-mile-1999/" title="The Green Mile (1999)"><img
+            src="https://img.yts.mx/assets/images/movies/The_Green_Mile_1999/medium-cover.jpg"
+            alt="The Green Mile (1999) download"></a>
+        <a href="http://www.subov.net/the-shawshank-redemption-1994/" title="The Shawshank Redemption (1994)"><img
+            src="https://img.yts.mx/assets/images/movies/The_Shawshank_Redemption_1994/medium-cover.jpg"
+            alt="The Shawshank Redemption (1994) download"></a>
+        <a href="http://www.subov.net/the-godfather-1972/" title="The Godfather (1972)"><img
+            src="https://img.yts.mx/assets/images/movies/The_Godfather_1972/medium-cover.jpg"
+            alt="The Godfather (1972) download"></a>
+        <a href="http://www.subov.net/the-lord-of-the-rings-the-return-of-the-king-2003/" title="The Lord of the Rings: The Return of the King (2003)"><img
+            src="https://img.yts.mx/assets/images/movies/The_Lord_of_the_Rings_The_Return_of_the_King_EXTENDED_2003/medium-cover.jpg"
+            alt="The Lord of the Rings: The Return of the King (2003) download"></a>
       </div>
     </div><br>
     {% if movie.yt_trailer_code %}
