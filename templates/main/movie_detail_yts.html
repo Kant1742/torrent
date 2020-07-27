@@ -345,9 +345,7 @@
             {% endfor %}
           </h2>
         </div>
-        {% for s in movie.subtitles.all %}
-        {{ s }}
-        {% endfor %}
+
 
         <p class="hidden-xs hidden-sm">
           <em class="pull-left">Available in: &nbsp;</em>
@@ -356,10 +354,10 @@
             title="Download {{ movie.title }} {{ t.quality }} Torrent">{{ t.quality }}</a>
           {% endfor %}
         </p>
-        <p class="hidden-xs hidden-sm">
+        <!-- <p class="hidden-xs hidden-sm">
           <em class="pull-left">Subtitles: &nbsp;</em>
           <a href="/" target="_blank" class="button" title="Download subtitles for {{ movie.title }}">EN</a>
-        </p>
+        </p> -->
         <div class="bottom-info">
 
           <div class="rating-row" itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">
