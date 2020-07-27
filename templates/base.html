@@ -17,8 +17,8 @@
     content="The official YTS YIFY Movies Torrents website. Download free yify movies torrents in 720p, 1080p and 3D quality. Thefastest downloads at the smallest size.">
   <meta property="og:url" content="https%3A%2F%2Fyts.mx%2F">
   <!--[if IE]> <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" /> <![endif]-->
-  <link rel="shortcut icon" href="/" />
-  <link rel="apple-touch-icon" sizes="57x57" href="/assets/images/website/apple-touch-icon-57x57.png">
+  <link rel="shortcut icon" href="{% static 'images/1080p-quality.svg' %}" />
+  <!-- <link rel="apple-touch-icon" sizes="57x57" href="/assets/images/website/apple-touch-icon-57x57.png">
   <link rel="apple-touch-icon" sizes="114x114" href="/assets/images/website/apple-touch-icon-114x114.png">
   <link rel="apple-touch-icon" sizes="72x72" href="/assets/images/website/apple-touch-icon-72x72.png">
   <link rel="apple-touch-icon" sizes="144x144" href="/assets/images/website/apple-touch-icon-144x144.png">
@@ -30,7 +30,7 @@
   <link rel="icon" type="image/png" href="/assets/images/website/favicon-160x160.png" sizes="160x160">
   <link rel="icon" type="image/png" href="/assets/images/website/favicon-96x96.png" sizes="96x96">
   <link rel="icon" type="image/png" href="/assets/images/website/favicon-16x16.png" sizes="16x16">
-  <link rel="icon" type="image/png" href="/assets/images/website/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/assets/images/website/favicon-32x32.png" sizes="32x32"> -->
   <meta name="msapplication-TileColor" content="#00a300">
   <meta name="msapplication-TileImage" content="/assets/images/website/mstile-144x144.png">
   <meta name="msapplication-config" content="/assets/images/website/browserconfig.xml">
@@ -48,6 +48,34 @@
   <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
   <link rel="stylesheet" href="{% static 'css/non-minified.css' %}">
   <link rel="stylesheet" href="{% static 'css/lightbox.css'%}">
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5ZL34C77M9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-5ZL34C77M9');
+  </script>
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function (m, e, t, r, i, k, a) {
+      m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
+      m[i].l = 1 * new Date(); k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+    })
+      (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(65940004, "init", {
+      clickmap: true,
+      trackLinks: true,
+      accurateTrackBounce: true
+    });
+  </script>
+  <noscript>
+    <div><img src="https://mc.yandex.ru/watch/65940004" style="position:absolute; left:-9999px;" alt="" /></div>
+  </noscript>
+  <!-- /Yandex.Metrika counter -->
   <script data-cfasync="false" src="//superfastcdn.com/script/compatibility.js"></script>
   <script data-cfasync="false" src="//velocecdn.com/script/compatibility.js"></script>
   <script type="application/ld+json">
@@ -66,16 +94,16 @@
     <link rel="preconnect" href="//velocecdn.com">
     <link rel="dns-prefetch" href="//superfastcdn.com">
     <link rel="preconnect" href="//superfastcdn.com"> -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
     crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
     integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
     crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
     integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
     crossorigin="anonymous"></script>
-    <script src="{% static 'js/lightbox.js' %}"></script>
+  <script src="{% static 'js/lightbox.js' %}"></script>
   {% block background-image %}
   <div id="background-image"
     style="background: url(https://wallbox.ru/wallpapers/main2/201713/149094835358de110198ddf5.39970293.jpg) no-repeat center center; background-size: cover; -webkit-background-size: cover;-moz-background-size: cover; -o-background-size: cover; filter: blur(20px);">

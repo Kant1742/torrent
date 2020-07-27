@@ -249,4 +249,4 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-src/my_torrent_data/jsons_from_torrent_list_api**
+my_torrent_data/jsons_from_torrent_list_api**
