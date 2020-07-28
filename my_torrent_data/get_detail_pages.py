@@ -41,7 +41,7 @@ def get_json():
 
 
 def writing():
-    number_of_file = 25
+    number_of_file = 24
 
     try:
         # with open('torrent_detail.json', 'a') as f:  # Добавить в файл
