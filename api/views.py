@@ -17,7 +17,7 @@ from .serializers import (
 
 
 class MovieViewSet(viewsets.ModelViewSet):
-    queryset = Movie.objects.all()
+    queryset = Movie.objects.prefetch_related('genres', 'cast')
     serializer_class = MovieSerializer
 
     def create(self, request, *args, **kwargs):

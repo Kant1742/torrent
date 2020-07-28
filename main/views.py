@@ -78,7 +78,7 @@ class MovieListView(ListView):
 
 
 class LatestMoviesView(ListView):
-    queryset = Movie.objects.all()
+    queryset = Movie.objects.prefetch_related('genres')
     template_name = 'main/latest_movies.html'
     paginate_by = 12
 
@@ -96,7 +96,7 @@ class SearchResultsView(ListView):
 
     def get_queryset(self):
         query = self.request.GET.get('q')
-        object_list = Movie.objects.filter(
+        object_list = Movie.objects.prefetch_related('genres', 'cast').filter(
             (Q(title__icontains=query) | Q(year__icontains=query))).order_by('-rating')
         return object_list
 
