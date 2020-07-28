@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from reusable.models import Collection, Merch
 
 from PIL import Image
 from django.urls import reverse
@@ -82,6 +83,8 @@ class Movie(models.Model):
 
     genres = models.ManyToManyField(Genre)
     cast = models.ManyToManyField(Cast)
+    collection = models.ManyToManyField(Collection)
+    merch = models.ManyToManyField(Merch)
 
     description_full = models.TextField(null=True, blank=True)
     yt_trailer_code = models.CharField(max_length=25, null=True, blank=True)

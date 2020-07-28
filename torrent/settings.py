@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     # local
     'main',
-
+    'reusable',
 ]
 
 SITE_ID = 1
