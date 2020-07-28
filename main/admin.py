@@ -92,7 +92,8 @@ class MovieAdmin(admin.ModelAdmin):
         ('Main', {
             "fields": (("title", 'year', 'slug'), 'description_full',
                        'yt_trailer_code',
-                       ('genres', 'cast',),)
+                       ('genres', 'cast',),
+                       ('collection', 'merch'),)
         }),
         ('Images', {
             "classes": ("collapse",),
