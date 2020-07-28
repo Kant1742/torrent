@@ -1,1 +1,1 @@
-web: newrelic-admin run-program gunicorn torrent.wsgi --log-file -
+web: gunicorn torrent.wsgi --log-file -
