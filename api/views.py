@@ -17,7 +17,7 @@ from .serializers import (
 
 
 class MovieViewSet(viewsets.ModelViewSet):
-    queryset = Movie.objects.prefetch_related('genres', 'cast')
+    queryset = Movie.objects.all().prefetch_related('genres', 'cast')
     serializer_class = MovieSerializer
 
     def create(self, request, *args, **kwargs):
@@ -110,9 +110,7 @@ class MovieViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(
             data=requested_data, many=isinstance(requested_data, list))
-        # The place where our creations is being broken
         serializer.is_valid(raise_exception=True)
-        print('test')
         # serializer.is_valid()
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)

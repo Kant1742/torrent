@@ -294,54 +294,15 @@
         <div class="addthis_sharing_toolbox" style="margin-top: 15px;"></div>
         <!-- <div class="addthis_tipjar_inline"></div> -->
       </div>
-      <!-- <div class="modal modal-download hidden-xs hidden-sm">
-                    <div class="modal-container">
-                        <div class="modal-title"> Select movie quality </div>
-                        <span class="modal-close glyphicon glyphicon-remove"></span>
-                        <div class="modal-content">
-                            <div class="modal-torrent">
-                                <div class="modal-quality" id="modal-quality-720p"><span>720p</span></div>
-                                <p class="quality-size">BluRay</p>
-                                <br>
-                                <p>File size</p>
-                                <p class="quality-size">807.65 MB</p>
-                                <a download="" class="download-torrent button-green-download2-big"
-                                    href="https://yts.mx/torrent/download/5095CBD6466A14E667B70EC8B81308806906F10D"
-                                    rel="nofollow" title="Download Me and Earl and the Dying Girl 720p Torrent"><span
-                                        class="icon-in"></span>Download</a>
-                                <a data-torrent-id="8041"
-                                    href="magnet:?xt=urn:btih:5095CBD6466A14E667B70EC8B81308806906F10D&amp;dn=Me+and+Earl+and+the+Dying+Girl+%282015%29+%5B720p%5D+%5BYTS.MX%5D&amp;tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&amp;tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&amp;tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&amp;tr=udp%3A%2F%2Fp4p.arenabg.ch%3A1337&amp;tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337"
-                                    class="magnet-download download-torrent magnet"
-                                    title="Download Me and Earl and the Dying Girl 720p Magnet"
-                                    rel="nofollow"><span>Magnet</span></a>
-                            </div>
-                            <div class="modal-torrent">
-                                <div class="modal-quality" id="modal-quality-1080p"><span>1080p</span></div>
-                                <p class="quality-size">BluRay</p>
-                                <br>
-                                <p>File size</p>
-                                <p class="quality-size">1.64 GB</p>
-                                <a download="" class="download-torrent button-green-download2-big"
-                                    href="https://yts.mx/torrent/download/82F7035A630D22754216D7FEF59BF59318535446"
-                                    rel="nofollow" title="Download Me and Earl and the Dying Girl 1080p Torrent"><span
-                                        class="icon-in"></span>Download</a>
-                                <a data-torrent-id="8042"
-                                    href="magnet:?xt=urn:btih:82F7035A630D22754216D7FEF59BF59318535446&amp;dn=Me+and+Earl+and+the+Dying+Girl+%282015%29+%5B1080p%5D+%5BYTS.MX%5D&amp;tr=udp%3A%2F%2Fglotorrents.pw%3A6969%2Fannounce&amp;tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A80&amp;tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969&amp;tr=udp%3A%2F%2Fp4p.arenabg.ch%3A1337&amp;tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337"
-                                    class="magnet-download download-torrent magnet"
-                                    title="Download Me and Earl and the Dying Girl 1080p Magnet"
-                                    rel="nofollow"><span>Magnet</span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
       <div id="movie-info" class="col-xs-10 col-sm-14 col-md-7 col-lg-8 col-lg-offset-1" data-movie-id="4504">
         <div class="hidden-xs">
-          <h1>{{ movie.title }} - {{ movie.year }}</h1>
+          <h1>{{ movie.title }} ({{ movie.year }})</h1>
           {% if movie.language != 'English' %}
           <span style="color: #ACD7DE; font-size: 75%;"> [{{ movie.language }}]</span>
           {% endif %}
-          <h2>{% for gen in movie.genres.all %}
-            {{ gen.title }}
+          <h2>
+            {% for gen in movie.genres.all %}
+            {{ gen.title }} /
             {% endfor %}
           </h2>
         </div>
@@ -351,15 +312,24 @@
           <em class="pull-left">Available in: &nbsp;</em>
           {% for t in movie.torrents.all %}
           <a href="{{ t.url }}" rel="nofollow"
-            title="Download {{ movie.title }} {{ t.quality }} Torrent">{{ t.quality }}</a>
+            title="Download {{ movie.title }} {{ t.quality }} Torrent">{{ t.quality }}{% if t.quality_type %}.{{ t.quality_type|title }}{% endif %}</a>
           {% endfor %}
         </p>
+        {% for t in movie.torrents.all %}
+          {% if t.tor_hash != None %}
+          <p class="hidden-xs hidden-sm">
+            <em class="pull-left">Magnet: &nbsp;</em>
+          </p>
+          <a href="magnet:?xt=urn:btih:{{ t.tor_hash }}&dn=Url+Encoded+Movie+Name&tr=http://track.one:1234/announce&tr=udp://track.two:80"
+            rel="nofollow" title="Download using Magnet"><img src="{% static 'images/icomoon/magnet.svg' %}"
+              alt="">{{ t.quality }}{% if t.quality_type %}.{{ t.quality_type|title }}{% endif %}</a>
+          {% endif %}
+        {% endfor %}
         <!-- <p class="hidden-xs hidden-sm">
           <em class="pull-left">Subtitles: &nbsp;</em>
           <a href="/" target="_blank" class="button" title="Download subtitles for {{ movie.title }}">EN</a>
         </p> -->
         <div class="bottom-info">
-
           <div class="rating-row" itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">
             <img class="image-center" src="{% static 'images/icomoon/heart.svg' %}" alt="{{ movie.title }}"
               title="Likes">
@@ -440,7 +410,8 @@
             src="{{ movie.medium_screenshot_image3 }}" alt="{{ movie.title }} ({{ movie.year }}) download"></a>
       </div>
     </div>
-    <div class="modal modal-parental-guide hidden-xs hidden-sm">
+
+    <!-- <div class="modal modal-parental-guide hidden-xs hidden-sm">
       <div class="modal-container">
         <div class="modal-title"> Parental Guide </div>
         <span class="modal-close glyphicon glyphicon-remove"></span>
@@ -451,7 +422,8 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
+
     <div id="movie-sub-info" class="row">
       <div id="synopsis" class="col-sm-10 col-md-13 col-lg-12">
         <h3>Synopsis</h3>
@@ -476,22 +448,25 @@
                         </div>
                     </div> -->
         <div class="actors">
-          <h3>Cast</h3>
           <!-- {{ movie_cast }} -->
+          <h3>Cast</h3>
           {% for c in movie.cast.all %}
+          {% if c %}
           <!-- {{ c.character_name.all }} -->
           <div class="list-cast">
+            {% if c.url_small_image %}
             <div class="tableCell">
               <a class="avatar-thumb" href="{% url 'main:cast_movies_list' c.pk %}" title="IMDb Profile">
                 <img src="{{ c.url_small_image }}" alt="{{ c.name }} Picture">
               </a>
             </div>
+            {% endif %}
             <div class="list-cast-info tableCell">
-              <!-- TODO character_name -->
               <a class="name-cast" href="{% url 'main:cast_movies_list' c.pk %}"><span itemprop="actor" itemscope
                   itemtype="http://schema.org/Person"><span itemprop="name">{{ c.name }}</span></span></a>
             </div>
           </div>
+          {% endif %}
           {% endfor %}
         </div>
       </div>

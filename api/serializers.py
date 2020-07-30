@@ -44,10 +44,9 @@ class GenreSerializer(serializers.ModelSerializer):
 
 
 class MovieSerializer(serializers.ModelSerializer):
-    torrents = TorrentsSerializer(many=True, required=False)
+    torrents = TorrentsSerializer(many=True)
     genres = serializers.SlugRelatedField(
         queryset=Genre.objects.all(), many=True, slug_field='title')
-    # cast = CastSerializer(many=True)
     cast = CastSerializer(many=True, required=False)
     iteration_num = 0
 
@@ -63,7 +62,6 @@ class MovieSerializer(serializers.ModelSerializer):
         depth = 2
 
     def create(self, validated_data):
-        print(validated_data)
         all_cast_names = get_all_cast_names()
         all_char_names = get_all_char_names()
         all_genre_titles = get_all_genre_titles()
@@ -75,8 +73,7 @@ class MovieSerializer(serializers.ModelSerializer):
         try:
             cast = validated_data.pop('cast')
         except:
-            cast = {'title': 'dummy_title'}
-            print('Serializers no cast first')
+            print('Serializers no cast')
         movie = Movie.objects.create(**validated_data)
         for tor in torrents:
             Torrents.objects.create(movie=movie, **tor)
@@ -98,7 +95,7 @@ class MovieSerializer(serializers.ModelSerializer):
                         movie.cast.add(existing_cast)
                         all_cast_names = get_all_cast_names()
         except:
-            print('There is no cast second')
+            pass
         print(f'serializers --- {self.iteration_num}')
         self.iteration_num += 1
         return movie

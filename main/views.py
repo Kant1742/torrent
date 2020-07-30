@@ -12,16 +12,6 @@ from .models import Movie, Genre, Torrents, Cast
 from .forms import ReviewForm
 
 
-class GenreYear:
-    """Genres and years"""
-
-    def get_genres(self):
-        return Genre.objects.all()
-
-    def get_years(self):
-        return Movie.objects.values("year")
-
-
 class MovieListView(ListView):
     model = Movie
     queryset = Movie.objects.filter(
@@ -78,7 +68,7 @@ class MovieListView(ListView):
 
 
 class LatestMoviesView(ListView):
-    queryset = Movie.objects.prefetch_related('genres')
+    queryset = Movie.objects.all().prefetch_related('genres')
     template_name = 'main/latest_movies.html'
     paginate_by = 12
 
@@ -96,12 +86,12 @@ class SearchResultsView(ListView):
 
     def get_queryset(self):
         query = self.request.GET.get('q')
-        object_list = Movie.objects.prefetch_related('genres', 'cast').filter(
+        object_list = Movie.objects.all().prefetch_related('genres', 'cast').filter(
             (Q(title__icontains=query) | Q(year__icontains=query))).order_by('-rating')
         return object_list
 
 
-class MovieDetailView(GenreYear, DetailView):
+class MovieDetailView(DetailView):
     model = Movie
     template_name = 'main/movie_detail_yts.html'
 

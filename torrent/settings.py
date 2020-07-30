@@ -81,13 +81,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-    }
-}
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+#     }
+# }
 
-CACHE_MIDDLEWARE_SECONDS = 1800
+# CACHE_MIDDLEWARE_SECONDS = 1800
 
 
 ROOT_URLCONF = 'torrent.urls'
