@@ -44,11 +44,11 @@ class GenreSerializer(serializers.ModelSerializer):
 
 
 class MovieSerializer(serializers.ModelSerializer):
-    torrents = TorrentsSerializer(many=True)
+    torrents = TorrentsSerializer(many=True, required=False)
     genres = serializers.SlugRelatedField(
         queryset=Genre.objects.all(), many=True, slug_field='title')
-    cast = CastSerializer(many=True)
-    # cast = CastSerializer(many=True, required=False)
+    # cast = CastSerializer(many=True)
+    cast = CastSerializer(many=True, required=False)
     iteration_num = 0
 
     # def update(self, instance, validated_data, *args, **kwargs):
