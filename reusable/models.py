@@ -1,56 +1,86 @@
 from django.db import models
+from django.utils import timezone
+
+# TODO Resizing the image for URLField?
+# def save(self, *args, **kwargs):
+#     try:
+#         super().save(*args, **kwargs)
+
+#         img = Image.open(self.image.path)
+
+#         if img.height > 225 and img.width > 150:
+#             output_size = (225, 150)
+#             img.thumbnail(output_size)
+#             img.save(self.image.path)
+#     except:
+#         print('We recommend you add an image')
 
 
-class Merch(models.Model):
+class ReusableFields(models.Model):
     """
-    Merch related to movies, series.
+    Most common fields.
     """
     title = models.CharField(max_length=100, null=True, blank=True)
     slug = models.SlugField(max_length=100, unique=True, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    merch_url = models.URLField(null=True, blank=True)
     image = models.URLField(null=True, blank=True)
 
     def __str__(self):
         return self.title
 
-    # # Resizing the image
-    def save(self, *args, **kwargs):
-        try:
-            super().save(*args, **kwargs)
-
-            img = Image.open(self.image.path)
-
-            if img.height > 225 and img.width > 150:
-                output_size = (225, 150)
-                img.thumbnail(output_size)
-                img.save(self.image.path)
-        except:
-            print('We recommend you add an image')
+    class Meta:
+        abstract = True
 
 
-class Collection(models.Model):
+COLLECTION_VIDEO_TYPE_CHOICES = (
+    ('movie', 'Movie'),
+    ('anime', 'Anime'),
+    ('series', 'Series'),
+)
+
+
+class Collection(ReusableFields):
     """
     Collections of similar movies, from one company, one series, depends on 
     the mood and so on.
     """
-    title = models.CharField(max_length=100, null=True, blank=True)
-    slug = models.SlugField(max_length=100, unique=True, null=True, blank=True)
-    description = models.TextField(null=True, blank=True)
-    image = models.URLField(null=True, blank=True)
+    published = models.DateTimeField(
+        default=timezone.now, blank=True, null=True)
+    collection_type = models.CharField(
+        max_length=55, choices=COLLECTION_VIDEO_TYPE_CHOICES, default='movie')
+
+
+class Company(ReusableFields):
+    """
+    Creator movies
+    """
+    collections = models.ForeignKey(
+        Collection, on_delete=models.DO_NOTHING, null=True, blank=True)
+
+    class Meta:
+        verbose_name_plural = 'Companies'
+
+
+COLLECTION_MERCH_TYPE_CHOICES = (
+    ('poster', 'Poster'),
+    ('clothes', 'Clothes'),
+    ('mug', 'Mug'),
+)
+
+
+class Merch(ReusableFields):
+    """
+    Merch related to movies, series.
+    """
+    merch_url = models.URLField(null=True, blank=True)
+    published = models.DateTimeField(
+        default=timezone.now, blank=True, null=True)
+    collection_type = models.CharField(
+        choices=COLLECTION_MERCH_TYPE_CHOICES,
+        max_length=20, null=True, blank=True)
+
+    class Meta:
+        verbose_name_plural = 'Merch'
 
     def __str__(self):
         return self.title
-
-    def save(self, *args, **kwargs):
-        try:
-            super().save(*args, **kwargs)
-
-            img = Image.open(self.image.path)
-
-            if img.height > 225 and img.width > 150:
-                output_size = (225, 150)
-                img.thumbnail(output_size)
-                img.save(self.image.path)
-        except:
-            print('We recommend you add an image')
