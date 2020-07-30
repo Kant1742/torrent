@@ -148,6 +148,7 @@ class Torrents(models.Model):
     url = models.URLField(null=True, blank=True)
     quality = models.CharField(max_length=15, null=True, blank=True)
     quality_type = models.CharField(max_length=15, null=True, blank=True)
+    tor_hash = models.CharField(max_length=55, null=True, blank=True)
     seeds = models.CharField(max_length=15, null=True, blank=True)
     peers = models.CharField(max_length=15, null=True, blank=True)
     size = models.CharField(max_length=15, null=True, blank=True)

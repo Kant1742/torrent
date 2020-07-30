@@ -48,6 +48,7 @@ class MovieSerializer(serializers.ModelSerializer):
     genres = serializers.SlugRelatedField(
         queryset=Genre.objects.all(), many=True, slug_field='title')
     cast = CastSerializer(many=True)
+    # cast = CastSerializer(many=True, required=False)
     iteration_num = 0
 
     # def update(self, instance, validated_data, *args, **kwargs):
@@ -61,10 +62,8 @@ class MovieSerializer(serializers.ModelSerializer):
         # fields = ('genres', 'title')
         depth = 2
 
-    # РАБОЧАЯ ВЕРСИЯ
-    # FIXME "cast: this field is required"
-
     def create(self, validated_data):
+        print(validated_data)
         all_cast_names = get_all_cast_names()
         all_char_names = get_all_char_names()
         all_genre_titles = get_all_genre_titles()
@@ -72,40 +71,40 @@ class MovieSerializer(serializers.ModelSerializer):
 
         torrents = validated_data.pop('torrents')
         genres = validated_data.pop('genres')
-        cast = validated_data.pop('cast')
-        # print(cast)
+        # FIXME 'cast' this field is required
+        try:
+            cast = validated_data.pop('cast')
+        except:
+            cast = {'title': 'dummy_title'}
+            print('Serializers no cast first')
         movie = Movie.objects.create(**validated_data)
         for tor in torrents:
             Torrents.objects.create(movie=movie, **tor)
         movie.genres.add(*genres)
         movie.save()
-
-        number_of_casts = len(cast)
-        for c in range(number_of_casts):
-            for i in cast:
-                if i['name'] not in all_cast_names:
-                    new_cast = Cast.objects.create(name=i['name'],
-                                                   url_small_image=i['url_small_image'],
-                                                   imdb_code=i['imdb_code'])
-                    movie.cast.add(new_cast)
-                    movie.save()
-                    all_cast_names = get_all_cast_names()
-                else:
-                    existing_cast = Cast.objects.get(name=i['name'])
-                    movie.cast.add(existing_cast)
-                    all_cast_names = get_all_cast_names()
+        try:
+            number_of_casts = len(cast)
+            for c in range(number_of_casts):
+                for i in cast:
+                    if i['name'] not in all_cast_names:
+                        new_cast = Cast.objects.create(name=i['name'],
+                                                    url_small_image=i['url_small_image'],
+                                                    imdb_code=i['imdb_code'])
+                        movie.cast.add(new_cast)
+                        movie.save()
+                        all_cast_names = get_all_cast_names()
+                    else:
+                        existing_cast = Cast.objects.get(name=i['name'])
+                        movie.cast.add(existing_cast)
+                        all_cast_names = get_all_cast_names()
+        except:
+            print('There is no cast second')
         print(f'serializers --- {self.iteration_num}')
         self.iteration_num += 1
         return movie
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)
-        # representation['torrents'] = TorrentsSerializer(
-        # instance.torrents.all(), many=True).data
-        # representation['genres'] = MovieSerializer(
-        #     instance.genres.all(), many=True).data  # Doesn't needed
-        # representation['genres'] = GenreSerializer(
-        #     instance.genres.all(), many=True).data
         return representation
 
 
@@ -113,17 +112,3 @@ class GenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
         fields = '__all__'
-
-
-# class MovieDetailSerializer(serializers.HyperlinkedModelSerializer):
-#     # category = serializers.SlugRelatedField(slug_field="name", read_only=True)
-#     # cast = CastListSerializer(read_only=True, many=True)
-#     qualities = serializers.SlugRelatedField(
-#         slug_field="name", read_only=True, many=True)
-#     genres = serializers.SlugRelatedField(
-#         slug_field="name", read_only=True, many=True)
-#     # reviews = ReviewSerializer(many=True)
-
-#     class Meta:
-#         model = Movie
-#         exclude = ("draft",)

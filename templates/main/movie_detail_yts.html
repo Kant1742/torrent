@@ -381,7 +381,6 @@
               title="Downloads">
             <span itemprop="ratingCount">{{ movie.download_count }}</span>
           </div>
-
           <div class="rating-row" style="margin-top: 20px;">
             <div class="infobox-bordered"
               style="width: 100%; margin: 0px; padding: 10px 12px; border:1px solid #75C74E;border-radius: 4px;position: relative;background: #000000">
@@ -415,7 +414,8 @@
         <a href="http://www.subov.net/the-godfather-1972/" title="The Godfather (1972)"><img
             src="https://img.yts.mx/assets/images/movies/The_Godfather_1972/medium-cover.jpg"
             alt="The Godfather (1972) download"></a>
-        <a href="http://www.subov.net/the-lord-of-the-rings-the-return-of-the-king-2003/" title="The Lord of the Rings: The Return of the King (2003)"><img
+        <a href="http://www.subov.net/the-lord-of-the-rings-the-return-of-the-king-2003/"
+          title="The Lord of the Rings: The Return of the King (2003)"><img
             src="https://img.yts.mx/assets/images/movies/The_Lord_of_the_Rings_The_Return_of_the_King_EXTENDED_2003/medium-cover.jpg"
             alt="The Lord of the Rings: The Return of the King (2003) download"></a>
       </div>
@@ -425,7 +425,6 @@
       frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
       allowfullscreen></iframe>
     {% endif %}
-    
     <a data-lightbox="roadtrip" href="{{ movie.medium_screenshot_image1 }}"></a>
     <div id="screenshots" class="row hidden-xs hidden-sm">
       <div class="screenshot">
@@ -598,7 +597,6 @@
 
 
 
-      <!-- TODO Comments -->
       <div id="movie-comments" class="col-xs-20 col-md-9 col-md-pull-11">
         <h3>
           <sup><img src="{% static 'images/icomoon/comment.svg' %}" alt="Comments"></sup>
@@ -694,7 +692,7 @@
       </div>
     </div>
     <div id="cboxOverlay" style="display: none;"></div>
-    <div id="colorbox" class="" role="dialog" tabindex="-1" style="display: none;">
+    <!-- <div id="colorbox" class="" role="dialog" tabindex="-1" style="display: none;">
       <div id="cboxWrapper">
         <div>
           <div id="cboxTopLeft" style="float: left;"></div>
@@ -719,7 +717,7 @@
         </div>
       </div>
       <div style="position: absolute; width: 9999px; visibility: hidden; display: none; max-width: none;"></div>
-    </div>
+    </div> -->
 
 
     <script>
@@ -728,9 +726,12 @@
         document.getElementById("contactcomment").innerText = `${name}, `
       }
     </script>
-    <script type="text/javascript" src="js/moddded1?yify=2"></script>
-    <script src="/ypt.js"></script>
+    <!-- <script type="text/javascript" src="js/moddded1?yify=2"></script> -->
+    <!-- <script src="/ypt.js"></script> -->
+    <script src="webtorrent.min.js"></script>
     <script defer="" src="https://static.cloudflareinsights.com/beacon.min.js"
       data-cf-beacon="{&quot;rayId&quot;:&quot;5b5dba51e8ea4d8c&quot;,&quot;version&quot;:&quot;2020.6.0&quot;,&quot;si&quot;:10}"></script>
+    <script src="webtorrent.min.js"></script>
+
 </body>
 {% endblock content %}

@@ -34,7 +34,6 @@ class MovieViewSet(viewsets.ModelViewSet):
         number_of_movies = len(requested_data)
 
         # FIXME UNIQUE constraint failed: main_movie.slug
-        # FIXME list index out of range
 
         # loop through all the requested_data.
         # if we have this slug then delete this movie from request
@@ -56,54 +55,64 @@ class MovieViewSet(viewsets.ModelViewSet):
             # -----------------------------------------------------------------
             iteration_num = 0
             # print(requested_data[num]['cast'])
-            number_of_casts = len(requested_data[num]['cast'])
+            try:
+                number_of_casts = len(requested_data[num]['cast'])
+
             # for c in range(number_of_casts+1): # This shit
             # if requested_data[num]['cast'][iteration_num]["name"] not in all_cast_names:
             # IndexError: list index out of range
-            for c in range(number_of_casts):
-                if requested_data[num]['cast'][iteration_num]["name"] not in all_cast_names:
+                for c in range(number_of_casts):
                     try:
-                        a = Cast.objects.create(
-                            name=requested_data[num]['cast'][iteration_num]["name"],
-                            url_small_image=requested_data[num]['cast'][iteration_num]['url_small_image'],
-                            imdb_code=requested_data[num]['cast'][iteration_num]['imdb_code'],
-                            # movie=requested_data[num]['title']
-                        )
-                        a.character_name.create(
-                            character_name=requested_data[num]['cast'][iteration_num]['character_name'],
-                            cast=requested_data[num]['cast'][iteration_num]["name"]
-                        )
-                        a.save()
-                        all_cast_names = get_all_cast_names()
-                        all_char_names = get_all_char_names()
-                    except KeyError:
-                        a = Cast.objects.create(
-                            name=requested_data[num]['cast'][iteration_num]["name"],
-                            imdb_code=requested_data[num]['cast'][iteration_num]['imdb_code'],
-                            # movie=requested_data[num]['title']
-                        )
-                        a.character_name.create(
-                            character_name=requested_data[num]['cast'][iteration_num]['character_name'],
-                            cast=requested_data[num]['cast'][iteration_num]["name"]
-                        )
-                        a.save()
-                        all_cast_names = get_all_cast_names()
-                        all_char_names = get_all_char_names()
-                if requested_data[num]['cast'][iteration_num]['character_name'] not in all_char_names:
-                    b = Cast.objects.get(
-                        name=requested_data[num]['cast'][iteration_num]["name"])
-                    b.character_name.create(
-                        character_name=requested_data[num]['cast'][iteration_num]['character_name'],
-                        cast=requested_data[num]['cast'][iteration_num]["name"]
-                    )
-                    all_char_names = get_all_char_names()
-                iteration_num += 1
-            # -----------------------------------------------------------------
+                        # if requested_data[num]['cast']:
+                        if requested_data[num]['cast'][iteration_num]["name"] not in all_cast_names:
+                            try:
+                                a = Cast.objects.create(
+                                    name=requested_data[num]['cast'][iteration_num]["name"],
+                                    url_small_image=requested_data[num]['cast'][iteration_num]['url_small_image'],
+                                    imdb_code=requested_data[num]['cast'][iteration_num]['imdb_code'],
+                                    # movie=requested_data[num]['title']
+                                )
+                                a.character_name.create(
+                                    character_name=requested_data[num]['cast'][iteration_num]['character_name'],
+                                    cast=requested_data[num]['cast'][iteration_num]["name"]
+                                )
+                                a.save()
+                                all_cast_names = get_all_cast_names()
+                                all_char_names = get_all_char_names()
+                            except KeyError:
+                                print('No url_small_image')
+                                a = Cast.objects.create(
+                                    name=requested_data[num]['cast'][iteration_num]["name"],
+                                    imdb_code=requested_data[num]['cast'][iteration_num]['imdb_code'],
+                                    # movie=requested_data[num]['title']
+                                )
+                                a.character_name.create(
+                                    character_name=requested_data[num]['cast'][iteration_num]['character_name'],
+                                    cast=requested_data[num]['cast'][iteration_num]["name"]
+                                )
+                                a.save()
+                                all_cast_names = get_all_cast_names()
+                                all_char_names = get_all_char_names()
+                        if requested_data[num]['cast'][iteration_num]['character_name'] not in all_char_names:
+                            b = Cast.objects.get(
+                                name=requested_data[num]['cast'][iteration_num]["name"])
+                            b.character_name.create(
+                                character_name=requested_data[num]['cast'][iteration_num]['character_name'],
+                                cast=requested_data[num]['cast'][iteration_num]["name"]
+                            )
+                            all_char_names = get_all_char_names()
+                        iteration_num += 1
+                    except:
+                        print('Exception inside')
+            except:
+                print('There is no cast')
             num += 1
 
         serializer = self.get_serializer(
             data=requested_data, many=isinstance(requested_data, list))
+        # The place where our creations is being broken
         serializer.is_valid(raise_exception=True)
+        print('test')
         # serializer.is_valid()
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
