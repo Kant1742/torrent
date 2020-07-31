@@ -62,6 +62,7 @@ class CastAdmin(admin.ModelAdmin):
     """Acotrs and directors"""
     list_display = ("name", "url_small_image", "imdb_code")
     readonly_fields = ("get_image",)
+    search_fields = ('name',)
     inlines = [CharacterNameInline]
 
     def get_image(self, obj):
@@ -75,6 +76,7 @@ class MovieAdmin(admin.ModelAdmin):
     list_display = ('title', 'description_full', 'year')
     list_display_links = ('title',)
     list_filter = ('year',)
+    autocomplete_fields = ('cast',)
     # list_filter = ('year', "genres__title")
     search_fields = ('title', 'id')
     # search_fields = ('title', "genres__title")

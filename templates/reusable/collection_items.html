@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block background-image %}
+<div id="background-image"
+style="background: url({{ object.image }}) no-repeat center center; background-size: cover; -webkit-background-size: cover;-moz-background-size: cover; -o-background-size: cover; filter: blur(15px);">
+</div>
+{% endblock background-image %}
+
+{% block title %}Collection Detail{% endblock title %}
+
+{% block content %}
+<!-- TODO Populate movies via Django templatetags or React.
+    Add pagination? -->
+<div class="container home-content">
+  <div class="home-movies">
+    <div class="row">
+      {% for item in object.movie_set.all %}
+      <div class="browse-movie-wrap col-xs-10 col-sm-5">
+        <a href="{% url 'main:movie_detail' item.slug %}" class="browse-movie-link">
+          <figure>
+            <img class="img-responsive" src="{{ item.medium_cover_image }}" alt="{{ item.title }} download"
+              width="200" height="300">
+            <figcaption class="hidden-xs hidden-sm">
+              <!-- <span class="icon-star"></span> -->
+              <span class="button-green-download2-big">View Details</span>
+              <!-- <img class="rating" src="{% static 'images/icomoon/star-full.svg' %}" alt="star"> -->
+            </figcaption>
+          </figure>
+        </a>
+        <div class="browse-movie-bottom">
+          <a href="{% url 'reusable:collection_items' item.slug %}" class="browse-movie-title">
+            {{ item.title }}
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock content %}

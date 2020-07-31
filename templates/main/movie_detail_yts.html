@@ -2,7 +2,11 @@
 {% load static %}
 
 {% block title %}{{ movie.title }}{% endblock title %}
-
+{% block background-image %}
+<div id="background-image"
+  style="background: url({{ movie.background_image }}); no-repeat center center; background-size: cover; -webkit-background-size: cover;-moz-background-size: cover; -o-background-size: 100%; filter: blur(15px);">
+</div>
+{% endblock background-image %}
 {% block content %}
 
 <body class="non-touch" data-gr-c-s-loaded="true">
@@ -316,14 +320,14 @@
           {% endfor %}
         </p>
         {% for t in movie.torrents.all %}
-          {% if t.tor_hash != None %}
-          <p class="hidden-xs hidden-sm">
-            <em class="pull-left">Magnet: &nbsp;</em>
-          </p>
-          <a href="magnet:?xt=urn:btih:{{ t.tor_hash }}&dn=Url+Encoded+Movie+Name&tr=http://track.one:1234/announce&tr=udp://track.two:80"
-            rel="nofollow" title="Download using Magnet"><img src="{% static 'images/icomoon/magnet.svg' %}"
-              alt="">{{ t.quality }}{% if t.quality_type %}.{{ t.quality_type|title }}{% endif %}</a>
-          {% endif %}
+        {% if t.tor_hash != None %}
+        <p class="hidden-xs hidden-sm">
+          <em class="pull-left">Magnet: &nbsp;</em>
+        </p>
+        <a href="magnet:?xt=urn:btih:{{ t.tor_hash }}&dn=Url+Encoded+Movie+Name&tr=http://track.one:1234/announce&tr=udp://track.two:80"
+          rel="nofollow" title="Download using Magnet"><img src="{% static 'images/icomoon/magnet.svg' %}"
+            alt="">{{ t.quality }}{% if t.quality_type %}.{{ t.quality_type|title }}{% endif %}</a>
+        {% endif %}
         {% endfor %}
         <!-- <p class="hidden-xs hidden-sm">
           <em class="pull-left">Subtitles: &nbsp;</em>

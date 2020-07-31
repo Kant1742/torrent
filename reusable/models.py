@@ -32,13 +32,6 @@ class ReusableFields(models.Model):
         abstract = True
 
 
-COLLECTION_VIDEO_TYPE_CHOICES = (
-    ('movie', 'Movie'),
-    ('anime', 'Anime'),
-    ('series', 'Series'),
-)
-
-
 class Collection(ReusableFields):
     """
     Collections of similar movies, from one company, one series, depends on 
@@ -46,8 +39,9 @@ class Collection(ReusableFields):
     """
     published = models.DateTimeField(
         default=timezone.now, blank=True, null=True)
-    collection_type = models.CharField(
-        max_length=55, choices=COLLECTION_VIDEO_TYPE_CHOICES, default='movie')
+
+    class Meta:
+        ordering = ('-published',)
 
 
 class Company(ReusableFields):
@@ -61,13 +55,6 @@ class Company(ReusableFields):
         verbose_name_plural = 'Companies'
 
 
-COLLECTION_MERCH_TYPE_CHOICES = (
-    ('poster', 'Poster'),
-    ('clothes', 'Clothes'),
-    ('mug', 'Mug'),
-)
-
-
 class Merch(ReusableFields):
     """
     Merch related to movies, series.
@@ -75,9 +62,6 @@ class Merch(ReusableFields):
     merch_url = models.URLField(null=True, blank=True)
     published = models.DateTimeField(
         default=timezone.now, blank=True, null=True)
-    collection_type = models.CharField(
-        choices=COLLECTION_MERCH_TYPE_CHOICES,
-        max_length=20, null=True, blank=True)
 
     class Meta:
         verbose_name_plural = 'Merch'

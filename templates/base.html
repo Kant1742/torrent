@@ -46,9 +46,13 @@
     rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all">
   <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
-  <link rel="stylesheet" href="{% static 'css/minified.css' %}">
+  <link rel="stylesheet" href="{% static 'css/non-minified.css' %}">
   <link rel="stylesheet" href="{% static 'css/lightbox.css'%}">
-
+  {% block background-image %}
+  <div id="background-image"
+    style="background: url(https://wallbox.ru/wallpapers/main2/201713/149094835358de110198ddf5.39970293.jpg) no-repeat center center; background-size: cover; -webkit-background-size: cover;-moz-background-size: cover; -o-background-size: cover; filter: blur(20px);">
+  </div>
+  {% endblock background-image %}
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-5ZL34C77M9"></script>
   <script>
@@ -84,11 +88,6 @@
     integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
     crossorigin="anonymous"></script>
   <script src="{% static 'js/lightbox.js' %}"></script>
-  {% block background-image %}
-  <div id="background-image"
-    style="background: url(https://wallbox.ru/wallpapers/main2/201713/149094835358de110198ddf5.39970293.jpg) no-repeat center center; background-size: cover; -webkit-background-size: cover;-moz-background-size: cover; -o-background-size: cover; filter: blur(20px);">
-  </div>
-  {% endblock background-image %}
 </head>
 
 <body class="non-touch">

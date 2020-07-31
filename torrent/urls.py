@@ -9,6 +9,7 @@ urlpatterns = [
     path('djadmin/', admin.site.urls),
     path('api/v1/', include('api.urls')),
     path('api-auth/', include('rest_framework.urls')),
+    path('collections/', include('reusable.urls')),
     path('', include('main.urls')),
 ]
 

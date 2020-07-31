@@ -23,9 +23,9 @@
             </div>
         </form>
         <ul class="nav-links">
-            <li><a href="/"> Home </a></li>
-            <li><a href="/latest_movies/" style="color: #6AC045"> Latest Movies
-                </a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="{% url 'reusable:collection_list' %}" style="color: #6AC045">Collections</a></li>
+            <li><a href="/latest_movies/">Latest Movies</a></li>
             <!-- <li><a href="https://yts.mx/trending-movies"> Trending </a></li>
             <li><a href="https://yts.mx/browse-movies"> Browse Movies </a></li> -->
         </ul>
