@@ -94,6 +94,7 @@ class MovieSerializer(serializers.ModelSerializer):
                         existing_cast = Cast.objects.get(name=i['name'])
                         movie.cast.add(existing_cast)
                         all_cast_names = get_all_cast_names()
+                    print('In for cast')
         except:
             pass
         print(f'serializers --- {self.iteration_num}')
