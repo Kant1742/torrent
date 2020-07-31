@@ -18,3 +18,9 @@ class CollectionItemsView(DetailView):
         context = super().get_context_data(*args, **kwargs)
         print(context)
         return context
+
+
+class CollectionRandomView(ListView):
+    model = Collection
+    paginate_by = 4
+    template_name = 'reusable/collection_random.html'

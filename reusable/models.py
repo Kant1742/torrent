@@ -1,19 +1,12 @@
 from django.db import models
 from django.utils import timezone
 
-# TODO Resizing the image for URLField?
-# def save(self, *args, **kwargs):
-#     try:
-#         super().save(*args, **kwargs)
+from PIL import Image
 
-#         img = Image.open(self.image.path)
 
-#         if img.height > 225 and img.width > 150:
-#             output_size = (225, 150)
-#             img.thumbnail(output_size)
-#             img.save(self.image.path)
-#     except:
-#         print('We recommend you add an image')
+def image_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/<collection_name>/<filename>
+    return f'{instance}/{filename}'
 
 
 class ReusableFields(models.Model):
@@ -23,13 +16,26 @@ class ReusableFields(models.Model):
     title = models.CharField(max_length=100, null=True, blank=True)
     slug = models.SlugField(max_length=100, unique=True, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    image = models.URLField(null=True, blank=True)
+    image = models.FileField(upload_to=image_path, null=True, blank=True)
 
     def __str__(self):
         return self.title
 
     class Meta:
         abstract = True
+
+    def save(self, *args, **kwargs):
+        try:
+            super().save(*args, **kwargs)
+
+            img = Image.open(self.image.path)
+
+            if img.height > 315 and img.width > 210:
+                output_size = (315, 210)
+                img.thumbnail(output_size)
+                img.save(self.image.path)
+        except:
+            print('Something went wrong or you did not add a file')
 
 
 class Collection(ReusableFields):
