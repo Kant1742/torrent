@@ -20,6 +20,7 @@ jsonpickle==1.4.1
 lazy-object-proxy==1.4.3
 MarkupSafe==1.1.1
 mccabe==0.6.1
+newrelic==5.14.1.144
 oauthlib==3.1.0
 Pillow==7.1.2
 psycopg2==2.8.5
@@ -38,4 +39,3 @@ urllib3==1.25.9
 whitenoise==5.1.0
 wrapt==1.12.1
 zipp==3.1.0
-newrelic

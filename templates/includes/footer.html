@@ -1,39 +1,28 @@
 <footer>
     <!-- Mobile-responsive footer. Not necessary -->
-    <!-- <div class="container hidden-md hidden-lg">
+    <div class="container hidden-md hidden-lg">
         <div class="row">
             <div class="mobile-footer">
                 <div class="col-sm-20">
-                    <a href="https://yts.mx/"> <span class="glyphicon glyphicon-home"></span>
-                        <p>Home</p>
+                    <a href="{% url 'reusable:collection_list' %}"> <span class="glyphicon glyphicon-list-alt"></span>
+                        <p>Collections</p>
                     </a>
-                    <a href="https://yts.mx/browse-movies"> <span class="glyphicon glyphicon-list-alt"></span>
-                        <p>Browse</p>
-                    </a>
-                    <a href="https://yts.mx/login"> <span class="glyphicon glyphicon-log-in"></span>
+                    <a href="{% url 'account_login' %}"> <span class="glyphicon glyphicon-log-in"></span>
                         <p>Login</p>
                     </a>
-                </div>
-                <div class="col-sm-20">
-                    <a href="https://yts.mx/register"> <span class="glyphicon glyphicon-user"></span>
+                    <a href="{% url 'account_signup' %}"> <span class="glyphicon glyphicon-user"></span>
                         <p>Register</p>
-                    </a>
-                    <a href="https://yts.mx/requests"> <span class="glyphicon glyphicon-asterisk"></span>
-                        <p>Requests</p>
-                    </a>
-                    <a href="https://yts.mx/suggestions"> <span class="glyphicon glyphicon-pushpin"></span>
-                        <p>Suggestions</p>
                     </a>
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-xs-20">
                 <ul class="text-center">
-                    <li>YTS © 2011 - 2020</li>
-                    <li>-</li>
+                    <li>Subov.net © 2020</li>
+                    <!-- <li>-</li>
                     <li><a href="https://yts.mx/blog">Blog</a></li>
                     <li>-</li>
                     <li><a href="https://yts.mx/dmca">DMCA</a></li>
@@ -48,11 +37,11 @@
                     <li>-</li>
                     <li><a href="https://yts.mx/requests">Requests</a></li>
                     <li>-</li>
-                    <li><a href="https://yts.mx/login">Login</a></li>
+                    <li><a href="https://yts.mx/login">Login</a></li> -->
                 </ul>
             </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-xs-20">
                 <ul class="text-center">
                     <li style="font-size: .80em">By using this site you agree to and accept our <a href="/terms">User
@@ -60,6 +49,6 @@
                     </li>
                 </ul>
             </div>
-        </div>
+        </div> -->
     </div>
 </footer>

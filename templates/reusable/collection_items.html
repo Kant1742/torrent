@@ -22,9 +22,11 @@ style="background: url({{ object.image }}) no-repeat center center; background-s
             <img class="img-responsive" src="{{ item.medium_cover_image }}" alt="{{ item.title }} download"
               width="200" height="300">
             <figcaption class="hidden-xs hidden-sm">
-              <!-- <span class="icon-star"></span> -->
+              <h4 class="rating">{{ item.rating }} / 10</h4>
+              {% for gen in item.genres.all|slice:"4" %}
+              <h4>{{ gen.title }}</h4>
+              {% endfor %}
               <span class="button-green-download2-big">View Details</span>
-              <!-- <img class="rating" src="{% static 'images/icomoon/star-full.svg' %}" alt="star"> -->
             </figcaption>
           </figure>
         </a>
