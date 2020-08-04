@@ -376,6 +376,15 @@
           </div>
         </div>
       </div>
+
+      <div id="movie-related" class="col-md-6 hidden-xs hidden-sm">
+        <p><h3 style="color:#6ac045;"><b>Collections</b></h3></p>
+        {% for col in movie.collection.all %}
+        <a href="{{ col.get_absolute_url }}" title="{{ col.title }}"><img src="{{ col.image.url }}"
+            alt="{{ col.title }}"></a>
+        {% endfor %}
+      </div>
+
       <!-- TODO include similar movies -->
       <div id="movie-related" class="col-md-6 hidden-xs hidden-sm">
         <p>Top Movies</p>
@@ -475,73 +484,6 @@
         </div>
       </div>
     </div>
-    <!-- TODO Tech specs. Add js -->
-    <!-- <div id="movie-tech-specs" class="row">
-                <h3 class="hidden-xs hidden-sm col-md-5">Tech specs</h3>
-                <span class="tech-quality col-md-2 selected"> 720p.BLU </span>
-                <span class="tech-quality col-md-2 "> 1080p.BLU </span>
-                <div class="tech-spec-info col-xs-20 ">
-                    <div class="row">
-                        <div class="tech-spec-element col-xs-20 col-sm-10 col-md-5"><span title="File Size"
-                                class="icon-folder"></span> 807.65 MB <div></div>
-                        </div>
-                        <div class="tech-spec-element col-xs-20 col-sm-10 col-md-5"> <span title="Resolution"
-                                class="icon-expand"></span> 1280*720 <div></div>
-                        </div>
-                        <div class="tech-spec-element col-xs-20 col-sm-10 col-md-5"> <span title="Language"
-                                class="icon-volume-medium"></span> English 2.0 <div></div>
-                        </div>
-                        <div class="tech-spec-element col-xs-20 col-sm-10 col-md-5"> <span title="MPA Rating"
-                                class="icon-eye"></span> PG - 13 <div></div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="tech-spec-element col-xs-20 col-sm-10 col-md-5"> <span title="Subtitles"
-                                class="glyphicon glyphicon-subtitles"></span> <a href="" target="_blank">Subtitles</a>
-                            <div class="hidden-md hidden-lg"></div>
-                        </div>
-                        <div class="tech-spec-element col-xs-20 col-sm-10 col-md-5"> <span title="Frame Rate"
-                                class="icon-film"></span> 23.976 fps <div class="hidden-md hidden-lg"></div>
-                        </div>
-                        <div class="tech-spec-element col-xs-20 col-sm-10 col-md-5"> <span title="Runtime"
-                                class="icon-clock"></span> 1 hr 45 min <div class="visible-xs"></div>
-                        </div>
-                        <div class="tech-spec-element col-xs-20 col-sm-10 col-md-5"> <span title="Peers and Seeds"
-                                class="tech-peers-seeds">P/S</span> 4 / 59 </div>
-                    </div>
-                </div>
-                <div class="tech-spec-info col-xs-20 hidden-tech-info">
-                    <div class="row">
-                        <div class="tech-spec-element col-xs-20 col-sm-10 col-md-5"><span title="File Size"
-                                class="icon-folder"></span> 1.64 GB <div></div>
-                        </div>
-                        <div class="tech-spec-element col-xs-20 col-sm-10 col-md-5"> <span title="Resolution"
-                                class="icon-expand"></span> 1920*1080 <div></div>
-                        </div>
-                        <div class="tech-spec-element col-xs-20 col-sm-10 col-md-5"> <span title="Language"
-                                class="icon-volume-medium"></span> English 2.0 <div></div>
-                        </div>
-                        <div class="tech-spec-element col-xs-20 col-sm-10 col-md-5"> <span title="MPA Rating"
-                                class="icon-eye"></span> PG - 13 <div></div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="tech-spec-element col-xs-20 col-sm-10 col-md-5"> <span title="Subtitles"
-                                class="glyphicon glyphicon-subtitles"></span> <a
-                                href="https://yifysubtitles.org/movie-imdb/tt2582496" target="_blank">Subtitles</a>
-                            <div class="hidden-md hidden-lg"></div>
-                        </div>
-                        <div class="tech-spec-element col-xs-20 col-sm-10 col-md-5"> <span title="Frame Rate"
-                                class="icon-film"></span> 23.976 fps <div class="hidden-md hidden-lg"></div>
-                        </div>
-                        <div class="tech-spec-element col-xs-20 col-sm-10 col-md-5"> <span title="Runtime"
-                                class="icon-clock"></span> 1 hr 45 min <div class="visible-xs"></div>
-                        </div>
-                        <div class="tech-spec-element col-xs-20 col-sm-10 col-md-5"> <span title="Peers and Seeds"
-                                class="tech-peers-seeds">P/S</span> 1 / 21 </div>
-                    </div>
-                </div>
-            </div> -->
 
     <!-- TODO Movie reviews -->
     <div id="movie-bottom" class="row">

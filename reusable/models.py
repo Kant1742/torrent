@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.urls import reverse
 
 from PIL import Image
 
@@ -16,7 +17,7 @@ class ReusableFields(models.Model):
     title = models.CharField(max_length=100, null=True, blank=True)
     slug = models.SlugField(max_length=100, unique=True, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    image = models.FileField(upload_to=image_path, null=True, blank=True)
+    image = models.ImageField(upload_to=image_path, null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -48,6 +49,10 @@ class Collection(ReusableFields):
 
     class Meta:
         ordering = ('-published',)
+
+    def get_absolute_url(self):
+        return reverse('reusable:collection_items',
+                       kwargs={'slug': self.slug})
 
 
 class Company(ReusableFields):
