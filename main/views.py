@@ -103,7 +103,7 @@ class MovieDetailView(DetailView):
         return context
 
 
-class AddReview(View):
+class AddReview(LoginRequiredMixin, View):
     """Reviews"""
 
     def post(self, request, pk):

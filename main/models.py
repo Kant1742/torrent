@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from reusable.models import Collection, Merch, Company
-
+from django.conf import settings
 from PIL import Image
 from django.urls import reverse
 
@@ -85,7 +85,10 @@ class Movie(models.Model):
     cast = models.ManyToManyField(Cast)
     collection = models.ManyToManyField(Collection, blank=True)
     merch = models.ManyToManyField(Merch, blank=True)
-    company = models.ForeignKey(Company, on_delete=models.DO_NOTHING,null=True, blank=True)
+    company = models.ForeignKey(
+        Company, on_delete=models.DO_NOTHING, null=True, blank=True)
+    users_like = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                        blank=True)
 
     description_full = models.TextField(null=True, blank=True)
     yt_trailer_code = models.CharField(max_length=25, null=True, blank=True)
