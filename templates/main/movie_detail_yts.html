@@ -377,13 +377,17 @@
         </div>
       </div>
 
+      {% if movie.collection.all %}
       <div id="movie-related" class="col-md-6 hidden-xs hidden-sm">
-        <p><h3 style="color:#6ac045;"><b>Collections</b></h3></p>
+        <p>
+        <h3 style="color:#6ac045;"><b>Collections</b></h3>
+        </p>
         {% for col in movie.collection.all %}
         <a href="{{ col.get_absolute_url }}" title="{{ col.title }}"><img src="{{ col.image.url }}"
             alt="{{ col.title }}"></a>
         {% endfor %}
       </div>
+      {% else %}
 
       <!-- TODO include similar movies -->
       <div id="movie-related" class="col-md-6 hidden-xs hidden-sm">
@@ -403,6 +407,7 @@
             alt="The Lord of the Rings: The Return of the King (2003) download"></a>
       </div>
     </div><br>
+    `{% endif %}
     {% if movie.yt_trailer_code %}
     <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ movie.yt_trailer_code }}?rel=0"
       frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
@@ -526,7 +531,7 @@
         {% for rev in movie.get_review %}
         <div id="comments" class="comments-scroll ps-container">
           <div class="comment" data-comment-id="35331878">
-            <a title="View profile" href="https://yts.mx/user/{{ rev.name }}" class="avatar-thumb">
+            <a title="View profile" href="{{ rev.user }}" class="avatar-thumb">
               <img alt="3million profile" src="{% static 'images/default-user.jpg' %}"></a>
             <div class="comment-text">
               <div class="pull-right comment-likes">

@@ -6,7 +6,7 @@ from .models import Collection
 
 class CollectionListView(ListView):
     model = Collection
-    paginate_by = 4
+    paginate_by = 8
     template_name = 'reusable/collection_list.html'
 
 
@@ -19,8 +19,3 @@ class CollectionItemsView(DetailView):
         print(context)
         return context
 
-
-class CollectionRandomView(ListView):
-    model = Collection
-    paginate_by = 4
-    template_name = 'reusable/collection_random.html'

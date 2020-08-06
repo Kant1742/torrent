@@ -13,6 +13,7 @@ from .forms import ReviewForm
 
 
 class MovieListView(ListView):
+    # Buil-in template filter "random"
     model = Movie
     queryset = Movie.objects.filter(
         Q(download_count__gte=10000) & Q(rating__gte=7) & Q(year__gte=1995)).order_by('-rating')

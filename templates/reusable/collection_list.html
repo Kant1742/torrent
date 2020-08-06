@@ -16,17 +16,21 @@
       <div class="browse-movie-wrap col-xs-10 col-sm-5">
         <a href="{% url 'reusable:collection_items' collection.slug %}" class="browse-movie-link">
           <figure>
-            <img src="{{ collection.image.url }}" alt="{{ collection.title }} download">
-              <figcaption class="hidden-xs hidden-sm">
-                <h4>{{ collection.title }}</h4>
-                <span class="button-green-download2-big">View Details</span>
-              </figcaption>
+            <img
+              src="{{ collection.image }}"
+              alt="{{ collection.title }} download">
+            <figcaption class="hidden-xs hidden-sm">
               <h4>{{ collection.title }}</h4>
+              <span class="button-green-download2-big">View Details</span>
+            </figcaption>
+            <h4>{{ collection.title }}</h4>
           </figure>
+        </a>
         </a>
       </div>
       {% endfor %}
     </div>
   </div>
 </div>
+{% include "includes/pagination.html" with page=page_obj %}
 {% endblock content %}
