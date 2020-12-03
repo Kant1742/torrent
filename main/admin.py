@@ -57,7 +57,7 @@ class CharacterNameInline(admin.TabularInline):
     show_change_link = True
 
 
-@ admin.register(Cast)
+@admin.register(Cast)
 class CastAdmin(admin.ModelAdmin):
     """Acotrs and directors"""
     list_display = ("name", "url_small_image", "imdb_code")
@@ -71,7 +71,7 @@ class CastAdmin(admin.ModelAdmin):
     get_image.short_description = "Image"
 
 
-@ admin.register(Movie)
+@admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
     list_display = ('title', 'description_full', 'year')
     list_display_links = ('title',)
@@ -117,13 +117,13 @@ class MovieAdmin(admin.ModelAdmin):
     )
 
 
-@ admin.register(Genre)
+@admin.register(Genre)
 class GenreAdmin(admin.ModelAdmin):
     """Genres"""
     list_display = ("title",)
 
 
-@ admin.register(Reviews)
+@admin.register(Reviews)
 class ReviewAdmin(admin.ModelAdmin):
     """Reviews to a movie"""
     list_display = ("name", "email", "parent", "movie", "id")

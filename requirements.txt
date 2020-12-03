@@ -23,7 +23,7 @@ mccabe==0.6.1
 newrelic==5.14.1.144
 oauthlib==3.1.0
 Pillow==7.1.2
-psycopg2==2.8.5
+psycopg2-binary==2.8.5
 pycodestyle==2.6.0
 Pygments==2.6.1
 pylint==2.5.3

@@ -1,15 +1,56 @@
-from django.shortcuts import get_object_or_404, redirect, render
-from django.views.generic import ListView, DetailView
-from django.views.generic.base import View
+import random
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http import HttpResponse
-from .services import get_all_movie_slugs
-from django.db.models import Max, Min
-import random
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.generic import DetailView, ListView
+from django.views.generic.base import View
 
-from .models import Movie, Genre, Torrents, Cast
 from .forms import ReviewForm
+from .models import Cast, Genre, Movie, Torrents
+from .services import get_all_movie_slugs
+
+
+class MovieTestListView(ListView):
+    model = Movie
+    template_name = 'main/movie_test_list.html'
+    queryset = Movie.objects.filter(
+        Q(download_count__gte=10000) & Q(rating__gte=7) & Q(year__gte=1995)).order_by('-rating')[:25]
+
+    def get_queryset(self):
+        context = super().get_queryset()[:4]
+
+        # похую, сколько жанров у фильма
+
+        # добавляет 2 запроса (context[0] и .count())
+        # print(context[0].genres.all().count())
+
+        # добавляет тоже 2 запроса. Схуя ли? Без понятия
+        # INNER JOIN и второй запрос WHERE
+        # print(context[0].genres.all())
+
+        # тоже + 2 запроса (where id и еще один select)
+        # похую, сколько жанров
+        # for i in context[1].genres.all():
+        #     print(i)
+
+        # 3 запроса, так как обращаемся к context[0]
+        first_movie_genres = context[0].genres.all()
+        # second_movie_collection = context[1].genres.all()
+        # third_movie_genres = context[2].genres.all()
+
+        # + еще 2 запроса
+        some_filter = first_movie_genres[0]
+        some_filter = first_movie_genres[1]
+        # print(second_movie_collection)
+
+        # Не делает запросы, так как нет ничегов collection
+        # KEKWait. Делает 2 запроса, когда больше нет никакого кода
+        # print(context[0].collection.all())
+        # print(context[1].collection.all())
+        # print(context[2].collection.all())
+        return context
 
 
 class MovieListView(ListView):
@@ -20,7 +61,7 @@ class MovieListView(ListView):
     paginate_by = 4
     template_name = 'main/movie_list.html'
 
-    def all_filtered_ids(self, object_list=queryset):
+    def all_filtered_ids(self, object_list=queryset): # (?) what's the point?
         # object_list = self.object_list
         ids = []
         obj_iteration = 0
@@ -46,6 +87,7 @@ class MovieListView(ListView):
                 continue
         return movies
 
+    # the same as above?
     def random_movies(self):
         ids = self.all_filtered_ids()
         stored_movies = []
@@ -62,6 +104,7 @@ class MovieListView(ListView):
         return stored_movies
 
     def get_context_data(self, *args, **kwargs):
+        # we have 2 exactly the same methods -> 2 times more queries
         context = super().get_context_data(*args, **kwargs)
         context['stored_movies'] = self.random_movies()
         context['random_popular_movies'] = self.random_popular_movies()
@@ -86,6 +129,7 @@ class SearchResultsView(ListView):
     paginate_by = 16
 
     def get_queryset(self):
+        print(self.request.content_params)
         query = self.request.GET.get('q')
         object_list = Movie.objects.all().prefetch_related('genres', 'cast').filter(
             (Q(title__icontains=query) | Q(year__icontains=query))).order_by('-rating')

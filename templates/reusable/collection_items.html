@@ -15,7 +15,7 @@ style="background: url({{ object.image }}) no-repeat center center; background-s
 <div class="container home-content">
   <div class="home-movies">
     <div class="row">
-      {% for item in object.movie_set.all %}
+      {% for item in object.collection_movies.all %}
       <div class="browse-movie-wrap col-xs-10 col-sm-5">
         <a href="{% url 'main:movie_detail' item.slug %}" class="browse-movie-link">
           <figure>

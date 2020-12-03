@@ -83,7 +83,7 @@ class Movie(models.Model):
 
     genres = models.ManyToManyField(Genre)
     cast = models.ManyToManyField(Cast)
-    collection = models.ManyToManyField(Collection, blank=True)
+    collection = models.ManyToManyField(Collection, related_name='collection_movies', blank=True)
     merch = models.ManyToManyField(Merch, blank=True)
     company = models.ForeignKey(
         Company, on_delete=models.DO_NOTHING, null=True, blank=True)
