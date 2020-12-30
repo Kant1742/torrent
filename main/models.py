@@ -45,10 +45,10 @@ class Cast(models.Model):
 
 
 class CharacterName(models.Model):
-    character_name = models.CharField(max_length=100, blank=True, null=True)
+    character_name = models.CharField(max_length=100, blank=True, null=True) # name=...
     cast = models.ForeignKey(
         Cast, on_delete=models.CASCADE,
-        related_name='character_name',
+        related_name='character_name', # related_name='character' I think is better
         blank=True, null=True)
 
     def __str__(self):

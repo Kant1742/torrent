@@ -350,11 +350,16 @@
               target="_blank"> <img src="{% static 'images/logo-imdb.svg' %}" alt="IMDb Rating"> </a>
             <span itemprop="ratingValue">{{ movie.rating }}</span>
           </div>
+
+
           <div class="rating-row" itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">
             <img class="image-center" src="{% static 'images/icomoon/download-icon.svg' %}" alt="Downloads"
               title="Downloads">
             <span itemprop="ratingCount">{{ movie.download_count }}</span>
           </div>
+
+
+          
           <div class="rating-row" style="margin-top: 20px;">
             <div class="infobox-bordered"
               style="width: 100%; margin: 0px; padding: 10px 12px; border:1px solid #75C74E;border-radius: 4px;position: relative;background: #000000">

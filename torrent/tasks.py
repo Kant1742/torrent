@@ -1,4 +1,3 @@
-from celery import group
 import smtplib
 from datetime import datetime
 
@@ -7,6 +6,7 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.template import Context, Engine
 
+from celery import group
 from celery.schedules import crontab
 from torrent.celery import app
 
@@ -27,7 +27,7 @@ def render_template(template, context):
     return tmpl.render(Context(context))
 
 
-@celery_app.task(bind=True, default_retry_delay=10 * 60)
+@celery_app.task(bind=True, default_retry_delay=10*60)
 def send_mail_task(self, recipients, subject, template, context):
     message = render_template(f'{template}.txt', context)
     html_message = render_template(f'{template}.html', context)
@@ -44,17 +44,16 @@ def send_mail_task(self, recipients, subject, template, context):
         self.retry(exc=ex)
 # ----------- #
 
-
 # ----------- #
-send_mail_task.apply_sync(
+send_mail_task.apply_async(
     (('noreply@example.com', ), 'Celery cookbook test', 'test', {}),
-    countdown=15 * 60  # every 15 minutes
+    countdown=15*60  # every 15 minutes
 )
 # ----------- #
 
 
 # ----------- #
-send_mail_task.apply_sync(
+send_mail_task.apply_async(
     (('noreply@example.com', ), 'Celery cookbook test', 'test', {}),
     eta=datetime(2020, 5, 20, 7, 0)  # 7 часов утра 20 мая.
 )

@@ -1,19 +1,12 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
+from requests.models import Response
 from rest_framework import status, viewsets
 
-from requests.models import Response
-
-from main.services import (get_all_cast_names,
-                           get_all_char_names,
-                           get_all_genre_titles,
-                           get_all_movie_slugs)
-from main.models import Torrents, Movie, Genre, Cast, CharacterName
-from .serializers import (
-    MovieSerializer,
-    GenreSerializer,
-    TorrentsSerializer,
-)
+from main.models import Cast, CharacterName, Genre, Movie, Torrents
+from main.services import (get_all_cast_names, get_all_char_names,
+                           get_all_genre_titles, get_all_movie_slugs)
+from .serializers import GenreSerializer, MovieSerializer, TorrentsSerializer
 
 
 class MovieViewSet(viewsets.ModelViewSet):

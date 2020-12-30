@@ -79,6 +79,12 @@ class MovieSerializer(serializers.ModelSerializer):
             Torrents.objects.create(movie=movie, **tor)
         movie.genres.add(*genres)
         movie.save()
+
+        # An example
+        # profile_data = validated_data.pop('profile', {})
+        # for (key, value) in profile_data.items():
+        #     setattr(instance.profile, key, value)
+
         try:
             number_of_casts = len(cast)
             for c in range(number_of_casts):
@@ -100,6 +106,51 @@ class MovieSerializer(serializers.ModelSerializer):
         print(f'serializers --- {self.iteration_num}')
         self.iteration_num += 1
         return movie
+
+
+    ''' 
+    # From django-real-world-examples
+
+
+    def update(self, instance, validated_data):
+        """Performs an update on a User."""
+
+        # Passwords should not be handled with `setattr`, unlike other fields.
+        # This is because Django provides a function that handles hashing and
+        # salting passwords, which is important for security. What that means
+        # here is that we need to remove the password field from the
+        # `validated_data` dictionary before iterating over it.
+        password = validated_data.pop('password', None)
+
+        # Like passwords, we have to handle profiles separately. To do that,
+        # we remove the profile data from the `validated_data` dictionary.
+        profile_data = validated_data.pop('profile', {})
+
+        for (key, value) in validated_data.items():
+            # For the keys remaining in `validated_data`, we will set them on
+            # the current `User` instance one at a time.
+            setattr(instance, key, value)
+
+        if password is not None:
+            # `.set_password()` is the method mentioned above. It handles all
+            # of the security stuff that we shouldn't be concerned with.
+            instance.set_password(password)
+
+        # Finally, after everything has been updated, we must explicitly save
+        # the model. It's worth pointing out that `.set_password()` does not
+        # save the model.
+        instance.save()
+
+        for (key, value) in profile_data.items():
+            # We're doing the same thing as above, but this time we're making
+            # changes to the Profile model.
+            setattr(instance.profile, key, value)
+            
+        # Save the profile just like we saved the user.
+        instance.profile.save()
+
+        return instance
+    '''
 
     def to_representation(self, instance):
         representation = super().to_representation(instance)

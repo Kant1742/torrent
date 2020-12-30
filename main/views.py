@@ -1,5 +1,4 @@
 import random
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http import HttpResponse
@@ -10,7 +9,6 @@ from django.views.generic.base import View
 from .forms import ReviewForm
 from .models import Cast, Genre, Movie, Torrents
 from .services import get_all_movie_slugs
-
 
 class MovieTestListView(ListView):
     model = Movie
@@ -32,17 +30,17 @@ class MovieTestListView(ListView):
 
         # тоже + 2 запроса (where id и еще один select)
         # похую, сколько жанров
-        # for i in context[1].genres.all():
-        #     print(i)
+        for i in context[1].genres.all():
+            print(i)
 
         # 3 запроса, так как обращаемся к context[0]
-        first_movie_genres = context[0].genres.all()
+        # first_movie_genres = context[0].genres.all()
         # second_movie_collection = context[1].genres.all()
         # third_movie_genres = context[2].genres.all()
 
         # + еще 2 запроса
-        some_filter = first_movie_genres[0]
-        some_filter = first_movie_genres[1]
+        # some_filter = first_movie_genres[0]
+        # some_filter = first_movie_genres[1]
         # print(second_movie_collection)
 
         # Не делает запросы, так как нет ничегов collection
@@ -53,6 +51,7 @@ class MovieTestListView(ListView):
         return context
 
 
+
 class MovieListView(ListView):
     # Buil-in template filter "random"
     model = Movie
@@ -61,7 +60,41 @@ class MovieListView(ListView):
     paginate_by = 4
     template_name = 'main/movie_list.html'
 
-    def all_filtered_ids(self, object_list=queryset): # (?) what's the point?
+    """ 
+    def check_sprinkles(request):
+        if request.user.can_sprinkle or request.user.is_staff:
+            # By adding this value here it means our display templates
+            # can be more generic. We don't need to have
+            # {% if request.user.can_sprinkle or request.user.is_staff %}
+            # instead just using
+            # {% if request.can_sprinkle %}
+
+            request.can_sprinkle = True
+            return request
+            # Return a HTTP 403 back to the user
+        raise PermissionDenied 
+    
+    """
+
+
+    def check_user_is_staff(self):
+        from django.core.exceptions import PermissionDenied
+        
+        # if not self.request.user.is_staff:  # 403 Forbidden
+        if self.request.user.is_staff:
+            # By adding this value here it means our display templates
+            # can be more generic. We don't need to have
+            # {% if request.user.can_sprinkle or request.user.is_staff %}
+            # instead just using
+            # {% if request.check_user_is_staff %}
+
+            # request.check_user_is_staff = True
+            print('ALOOOOOOOOOOOO')
+            return self.request
+            # Return a HTTP 403 back to the user
+        raise PermissionDenied
+
+    def all_filtered_ids(self, object_list=queryset):  # (?) what's the point?
         # object_list = self.object_list
         ids = []
         obj_iteration = 0
@@ -108,6 +141,8 @@ class MovieListView(ListView):
         context = super().get_context_data(*args, **kwargs)
         context['stored_movies'] = self.random_movies()
         context['random_popular_movies'] = self.random_popular_movies()
+        context['check_user_is_staff'] = self.check_user_is_staff()
+        # print(self.model.objects.all())
         return context
 
 
@@ -129,21 +164,39 @@ class SearchResultsView(ListView):
     paginate_by = 16
 
     def get_queryset(self):
-        print(self.request.content_params)
         query = self.request.GET.get('q')
         object_list = Movie.objects.all().prefetch_related('genres', 'cast').filter(
             (Q(title__icontains=query) | Q(year__icontains=query))).order_by('-rating')
         return object_list
 
 
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
+
 class MovieDetailView(DetailView):
     model = Movie
     template_name = 'main/movie_detail_yts.html'
 
+    def views_counter(self, movie_slug):
+        """ Increase `download_count` by 1 every refresh of the page.
+        """
+        movie = get_object_or_404(Movie, slug=movie_slug)
+        movie.download_count += 1  # We will use 'download_count' by now
+        movie.save()
+        return movie
+
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         movie = context['movie']
+        # ip = get_client_ip(self.request)
         context['movie_cast'] = Cast.objects.filter(movie=movie)
+        context['download_count'] = self.views_counter(movie.slug)
         cast = context['movie_cast']
         return context
 
@@ -163,3 +216,27 @@ class AddReview(LoginRequiredMixin, View):
             form.email = request.user.email
             form.save()
         return redirect(movie.get_absolute_url())
+
+
+# core/views.py
+class TitleSearchMixin:
+
+    def get_queryset(self):
+        # fetch the queryset from the parent's get_queryset
+        queryset = self.super().get_queryset()
+
+        # Get the `q` GET parameter
+        q = self.request.GET.get('q')
+        if q:
+            # return a filtered queryset
+            return queryset.filter(title__icontains=q)
+        # no `q` if specified, so we return queryset
+        return queryset
+
+# # flavors/views.py
+# class FlavorListView(TitleSearchMixin, ListView):
+#     model = Flavor
+
+
+# class IceCreamStoreListView(TitleSearchMixin, ListView):
+#     model = Store
