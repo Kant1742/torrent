@@ -1,12 +1,5 @@
 {
     "python.pythonPath": "env/bin/python",
-    "sqltools.connections": [
-        {
-            "previewLimit": 50,
-            "driver": "SQLite",
-            "name": "tets-sqlite-conntection",
-            "database": "${workspaceFolder:yts-torrent-analog-subov.net}/db.sqlite3"
-        }
-    ],
-    "sqltools.useNodeRuntime": true
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
 }
