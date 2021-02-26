@@ -39,3 +39,48 @@ print(my_tuple)
 # for Dict the type of the keys and the type of the values
 my_dict: Dict[str, str] = {'Some shit': 'has flavour', 'other shit': 'has not'}
 print(my_dict)
+
+
+class MyClass:
+    
+    TOTAL_OBJECTS=0
+    
+    def __init__(self):
+        MyClass.TOTAL_OBJECTS = MyClass.TOTAL_OBJECTS+1
+       
+    @classmethod
+    def total_objects(cls):
+        print("Total objects: ", cls.TOTAL_OBJECTS)
+
+# Creating objects of parent class       
+my_obj1 = MyClass()
+my_obj2 = MyClass()
+
+
+# Creating a child class
+class ChildClass(MyClass):
+    TOTAL_OBJECTS=0    
+    pass
+
+ChildClass.total_objects()
+
+
+class MyClassStatic:
+    
+    TOTAL_OBJECTS=0
+    
+    def __init__(self):
+        MyClassStatic.TOTAL_OBJECTS += 1
+       
+    @staticmethod
+    def total_objects(self):
+        print("Total objects: ", self.TOTAL_OBJECTS)
+
+my_static_class = MyClassStatic()
+my_static_class_2 = MyClassStatic()
+
+# Creating a child class
+class ChildClass(MyClassStatic):
+    TOTAL_OBJECTS=0
+
+ChildClass.total_objects(my_static_class_2)

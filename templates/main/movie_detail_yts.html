@@ -2,13 +2,14 @@
 {% load static %}
 
 {% block title %}{{ movie.title }}{% endblock title %}
+
 {% block background-image %}
 <div id="background-image"
   style="background: url({{ movie.background_image }}); no-repeat center center; background-size: cover; -webkit-background-size: cover;-moz-background-size: cover; -o-background-size: 100%; filter: blur(15px);">
 </div>
 {% endblock background-image %}
-{% block content %}
 
+{% block content %}
 <body class="non-touch" data-gr-c-s-loaded="true">
   <!-- <div class="modal modal-auth hidden-xs hidden-sm">
         <div class="modal-container">
@@ -357,8 +358,6 @@
               title="Downloads">
             <span itemprop="ratingCount">{{ movie.download_count }}</span>
           </div>
-
-
           
           <div class="rating-row" style="margin-top: 20px;">
             <div class="infobox-bordered"

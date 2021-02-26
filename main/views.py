@@ -51,7 +51,6 @@ class MovieTestListView(ListView):
         return context
 
 
-
 class MovieListView(ListView):
     # Buil-in template filter "random"
     model = Movie
@@ -73,26 +72,25 @@ class MovieListView(ListView):
             return request
             # Return a HTTP 403 back to the user
         raise PermissionDenied 
-    
     """
 
 
-    def check_user_is_staff(self):
-        from django.core.exceptions import PermissionDenied
+    # def check_user_is_staff(self):
+    #     from django.core.exceptions import PermissionDenied
         
-        # if not self.request.user.is_staff:  # 403 Forbidden
-        if self.request.user.is_staff:
-            # By adding this value here it means our display templates
-            # can be more generic. We don't need to have
-            # {% if request.user.can_sprinkle or request.user.is_staff %}
-            # instead just using
-            # {% if request.check_user_is_staff %}
+    #     # if not self.request.user.is_staff:  # 403 Forbidden
+    #     if self.request.user.is_staff:
+    #         # By adding this value here it means our display templates
+    #         # can be more generic. We don't need to have
+    #         # {% if request.user.can_sprinkle or request.user.is_staff %}
+    #         # instead just using
+    #         # {% if request.check_user_is_staff %}
 
-            # request.check_user_is_staff = True
-            print('ALOOOOOOOOOOOO')
-            return self.request
-            # Return a HTTP 403 back to the user
-        raise PermissionDenied
+    #         # request.check_user_is_staff = True
+    #         print('ALOOOOOOOOOOOO')
+    #         return self.request
+    #         # Return a HTTP 403 back to the user
+    #     raise PermissionDenied
 
     def all_filtered_ids(self, object_list=queryset):  # (?) what's the point?
         # object_list = self.object_list
@@ -141,7 +139,7 @@ class MovieListView(ListView):
         context = super().get_context_data(*args, **kwargs)
         context['stored_movies'] = self.random_movies()
         context['random_popular_movies'] = self.random_popular_movies()
-        context['check_user_is_staff'] = self.check_user_is_staff()
+        # context['check_user_is_staff'] = self.check_user_is_staff()
         # print(self.model.objects.all())
         return context
 
@@ -233,10 +231,14 @@ class TitleSearchMixin:
         # no `q` if specified, so we return queryset
         return queryset
 
-# # flavors/views.py
-# class FlavorListView(TitleSearchMixin, ListView):
-#     model = Flavor
 
+# class PostDetailView(DetailView):
+#     model = Post
+    
+#     def get_queryset(self):
 
-# class IceCreamStoreListView(TitleSearchMixin, ListView):
-#     model = Store
+#         The other way of using related fields
+#         category = self.kwargs.get('category_slug', '')
+#         q = super().get_queryset()
+#         return q.filter(category__slug=category).select_related('category')
+
