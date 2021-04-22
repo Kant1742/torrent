@@ -8,7 +8,7 @@ coverage==5.2
 defusedxml==0.6.0
 Django==3.0.14
 django-allauth==0.42.0
-django-debug-toolbar==2.2
+django-debug-toolbar==2.2.1
 djangorestframework==3.11.2
 gprof2dot==2019.11.30
 gunicorn==20.0.4
